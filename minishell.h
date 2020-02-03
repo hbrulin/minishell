@@ -6,7 +6,11 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 14:11:02 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:52:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
+#include "libft.h"
