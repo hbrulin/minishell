@@ -9,6 +9,18 @@ Dans le processus fils valeur de retour = zéro.
 Sinon
 Dans le processus père valeur de retour = -1.
 
+/*
+	fork s utilise si executable, avec execve
+	test fork
+	pid_t pid;
+
+	//va print deux fois, une fois par processus. Pere id fils, et fils 0.
+	pid = fork();
+	printf("%i\n", pid);
+
+	exit(0);*/
+
+
 #wait
 pid_t wait(int *ptr_etat)
 Le processus pere attend son fils.

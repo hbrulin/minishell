@@ -6,35 +6,33 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 16:41:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/03 17:33:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-/*
+
 int		exe(char **args)
 {
-	fork s utilise si executable, avec execve
-	test fork
-	pid_t pid;
+	int status;
+	status = 1;
 
-	//va print deux fois, une fois par processus. Pere id fils, et fils 0.
+	pid_t	pid;
 	pid = fork();
-	printf("%i\n", pid);
-
-	exit(0);
-
-	// chercher et lancer le bon executable comme dans bash, base sur une variable d’environnement path ou en utilisant un path absolu 
-	//->ici il faudra utiliser ce qui est passe en arg du main
-
-	//vu que cette ft est par defaut, il faudra prevoir si l'executable n'est pas bon
-
+	if (pid == 0) //pour dire que je suis dans le processus fils. Quid si erreur de fork?
+	{
+		execve(args[0], NULL, env); //revoir l'arg[0] -> tout dependra de comment est fait le parser?
+		exit(0);
+	}
+	wait(&status); //le pere attend le fils pour repartir
+	//il faudra prevoir si l'executable n'est pas bon ou permission denied -> check access control
 	return (1); //return 1 pour que le shell continue de tourner
-} */
+} 
 
 int	run_dmc(char **args)
 {
+	
 	if (!args || !*args || !**args)
 		return (1);
 	/*if (ft_strcmp(*args, "echo") == 0)
@@ -51,7 +49,7 @@ int	run_dmc(char **args)
 		return (ft_env());*/
 	if (ft_strncmp(*args, "exit", ft_strlen("exit")) == 0)
 		return (0); //set status a 0 et donc quit shell
-	//else
-	//	return (exe(args)); //si executable passe en param
+	else
+		return (exe(args)); //si executable passe en param
 	return(1);
 }
