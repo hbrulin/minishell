@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 16:21:31 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/03 16:07:15 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
+#include <stdio.h>
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-#include "libft.h"
+/*; doit separer les commandes
+'’' et '"' doivent marcher comme dans bash, à l’exception du multiligne.*/ 
 
-char **env;
-
-int	run_dmc(char **args);
-char **parser(char *input);
-char **copy_tab(char **envp);
-
-
-#endif
+char **parser(char *input)
+{
+	
+}

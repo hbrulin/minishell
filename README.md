@@ -54,3 +54,5 @@ Pour accéder à une variable d'environnement particulière à partir de son nom
 ```
 valeur = getenv("PATH");
 ```
+putenv(char *s) -> pour assigner une variable d'environnement.
+
