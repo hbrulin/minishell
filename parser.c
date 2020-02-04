@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 18:09:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 18:48:45 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,20 @@ char **parse_arg(char *args)
 
 	i = 0;
 	j = 0;
+	int open = 0;
+	char c;
 	while (trim[i])
 	{
 		while (trim[i] != '\'' && trim[i] != '\"')
-			i++;
-		if (i != 0)
 		{
-			tmp = ft_substr(trim, j, i - j + 1);
+			i++;
+		}
+		open = !open;
+		if (open)
+			c = trim[i];
+		if (i != 0 && trim[i] == c)
+		{
+			tmp = ft_substr(trim, j, i - j + 2);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
 			if (!(temp->content = ft_strtrim(tmp, " ")))
@@ -49,7 +56,7 @@ char **parse_arg(char *args)
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
 			free(tmp);
-			j = i + 1;
+			j = i + 2;
 			i++;
 			while (ft_is_space(trim[i]))
 				i++;
@@ -69,6 +76,7 @@ char **parse_arg(char *args)
 		i++;
 	}
 	ft_lstiter(list, (void (*)(void *))&ft_putstr);
+	//mettre dans un *tab
 	return (ret);
 }
 
