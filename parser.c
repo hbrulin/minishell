@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 17:55:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 18:09:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ char **parse_arg(char *args)
 			i++;
 			while (ft_is_space(trim[i]))
 				i++;
+			if (!(ft_strchr(trim + i, '\'')) && !(ft_strchr(trim + i, '\"')))
+			{
+				tmp = ft_strtrim(trim + i, " ");
+				if (!(temp = malloc(sizeof(t_list))))
+					return (NULL);
+				if (!(temp->content = ft_strtrim(tmp, " ")))
+					return (NULL);
+				temp->next = 0;
+				ft_lstadd_back(&list, temp);
+				free(tmp);
+				break;
+			}
 		}
 		i++;
 	}
