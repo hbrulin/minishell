@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 16:21:31 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 13:36:52 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ char **env;
 int	run_dmc(char **args);
 char **parser(char *input);
 char **copy_tab(char **envp);
+int		parse_exit(char *args);
+char **parse_exe(char *args);
+size_t		ft_tablen(char **arr);
+int		ft_is_space(char c);
 
 
 #endif
