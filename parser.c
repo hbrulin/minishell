@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 19:40:19 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 20:49:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ char **parse_arg(char *args)
 	char c;
 	while (trim[i])
 	{
-		if (trim[i] != '\'' && trim[i] != '\"')
+		if ((trim[i] != '\'') && (trim[i] != '\"'))
 		{
-			while (trim[i] != ' ')
+			j = i;
+			while (trim[i] != ' ' && (trim[i] != '\'') && (trim[i] != '\"'))
 				i++;
-			tmp = ft_substr(trim, j, i - j + 1);
+			tmp = ft_substr(trim, j, i - j);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
 			if (!(temp->content = ft_strtrim(tmp, " ")))
@@ -51,21 +52,26 @@ char **parse_arg(char *args)
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
 			free(tmp);
-			j = i;
-			i++;
-			while (ft_is_space(trim[i]))
-				i++;
 		}
 		else
 		{
-			while (trim[i] != '\'' && trim[i] != '\"')
-				i++;
+			j = i;
 			open = !open;
 			if (open)
-				c = trim[i];
-			if (i != 0 && trim[i] == c)
 			{
-				tmp = ft_substr(trim, j, i - j + 2);
+				c = trim[i];
+				i++;
+				while (trim[i] != c)
+					i++;
+			}
+			else
+			{
+				while ((trim[i] != '\'') && (trim[i] != '\"'))
+					i++;
+			}
+			if (open && trim[i] == c)
+			{
+				tmp = ft_substr(trim, j, i - j + 1);
 				if (!(temp = malloc(sizeof(t_list))))
 					return (NULL);
 				if (!(temp->content = ft_strtrim(tmp, " ")))
@@ -73,23 +79,21 @@ char **parse_arg(char *args)
 				temp->next = 0;
 				ft_lstadd_back(&list, temp);
 				free(tmp);
-				j = i + 2;
 				i++;
-				while (ft_is_space(trim[i]))
-					i++;
-				if (!(ft_strchr(trim + i, '\'')) && !(ft_strchr(trim + i, '\"')))
-				{
-					tmp = ft_strtrim(trim + i, " ");
-					if (!(temp = malloc(sizeof(t_list))))
-						return (NULL);
-					if (!(temp->content = ft_strtrim(tmp, " ")))
-						return (NULL);
-					temp->next = 0;
-					ft_lstadd_back(&list, temp);
-					free(tmp);
-					break;
-				}
+				open = !open;
 			}
+		}
+		if (!(ft_strchr(trim + i, '\'')) && !(ft_strchr(trim + i, '\"')))
+		{
+			tmp = ft_strtrim(trim + i, " ");
+			if (!(temp = malloc(sizeof(t_list))))
+				return (NULL);
+			if (!(temp->content = ft_strtrim(tmp, " ")))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
+			free(tmp);
+			break;
 		}
 		i++;
 	}
