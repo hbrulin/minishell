@@ -6,27 +6,58 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 13:35:36 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 17:47:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-//error checking si pas d'espace entre une cmd et option par ex
-//char **parse_echo
-//->strtrim '’' et '"' doivent marcher comme dans bash, à l’exception du multiligne.*/ 
 
-int		ft_is_space(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f')
-		return (1);
-	return (0);
-}
 
-char **parse_exe(char *args)
+char **parse_arg(char *args)
 {
-	char **exec = ft_split(args, ' ');
-	return(exec);
+	char **ret = NULL;
+	char *trim;
+	t_list *list = NULL;
+	t_list *temp = NULL;
+	int i;
+	int j;
+	char *tmp;
+	
+	trim = ft_strtrim(args, " ");
+
+	if (ft_strchr(trim, '\'') == NULL && ft_strchr(trim, '\"') == NULL)
+	{
+		ret = ft_split(trim, ' '); 
+		free(trim);
+		return(ret);
+	}
+
+	i = 0;
+	j = 0;
+	while (trim[i])
+	{
+		while (trim[i] != '\'' && trim[i] != '\"')
+			i++;
+		if (i != 0)
+		{
+			tmp = ft_substr(trim, j, i + 1);
+			if (!(temp = malloc(sizeof(t_list))))
+				return (NULL);
+			if (!(temp->content = ft_strtrim(tmp, " ")))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
+			free(tmp);
+			j = i + 1;
+			i++;
+			while (ft_is_space(trim[i]))
+				i++;
+		}
+		i++;
+	}
+	ft_lstiter(list, (void (*)(void *))&ft_putstr);
+	return (ret);
 }
 
 int		parse_exit(char *args)

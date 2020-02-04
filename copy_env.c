@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 16:11:41 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 16:24:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 13:40:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include <stdio.h>
 
 //mettre dans libft
+
+int		ft_is_space(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f')
+		return (1);
+	return (0);
+}
+
+
 size_t		ft_tablen(char **arr)
 {
 	size_t i;
