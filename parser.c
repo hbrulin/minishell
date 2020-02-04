@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 17:47:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/04 17:55:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char **parse_arg(char *args)
 			i++;
 		if (i != 0)
 		{
-			tmp = ft_substr(trim, j, i + 1);
+			tmp = ft_substr(trim, j, i - j + 1);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
 			if (!(temp->content = ft_strtrim(tmp, " ")))
