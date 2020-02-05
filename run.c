@@ -6,28 +6,28 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 18:31:44 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 18:45:11 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-/*int	parse(cmd)
+int	parsexec(cmd)
 {
 	char **args;
-	char **inter;
+	//char **inter;
 	args = ft_parse_arg(cmd); //renvoie arg separes pour UNE commade
-	inter = interpreteur(args);
+	//inter = interpreteur(args);
 	ft_tabdel(args);
-	if (!(run_dmc(inter)))
+	/*if (!(run_dmc(inter)))
 	{
 		ft_tabdel(inter);
 		return(0); //pour exit
 	}
-	ft_tabdel(inter);
+	ft_tabdel(inter);*/
 	return(1);
-}*/
+}
 
 
 int run(char *s)
@@ -37,16 +37,16 @@ int run(char *s)
 	int open;
 	char quote;
 	char *cmd;
-		//1 cmd
+	//1 cmd
 	if (ft_strchr(s, ';') == NULL)
 	{
 		cmd = ft_strdup(s);
 		ft_putstr(cmd);
-		/*if(!(parse(cmd)))
+		if(!(parsexec(cmd)))
 		{
-			free(cmd)
+			free(cmd);
 			return(0); //pour exit
-		}*/
+		}
 		free(cmd);
 		return(1);
 	}
@@ -62,11 +62,12 @@ int run(char *s)
 			cmd = ft_strdup(s + j);
 			ft_putstr(cmd);
 			ft_putstr("\n");
-			/*if(!(parse(cmd)))
+			if(!(parsexec(cmd)))
 			{
-				free(cmd)
+				free(cmd);
 				return(0); //pour exit
-			}	*/
+			}
+			free(cmd);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -85,11 +86,11 @@ int run(char *s)
 			while(ft_is_space(s[i]))
 				i++;
 			j = i;
-			/*if(!(parse(cmd)))
+			if(!(parsexec(cmd)))
 			{
-				free(cmd)
+				free(cmd);
 				return(0); //pour exit
-			}	*/
+			}
 			free(cmd);
 		}
 		i++;
