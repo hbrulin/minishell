@@ -6,13 +6,13 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/03 16:39:04 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/05 18:48:34 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c copy_env.c parser.c run.c
+SRCS = main.c utils.c parser.c run.c
 
 HEADER = minishell.h 
 
