@@ -6,20 +6,20 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 18:45:11 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 18:56:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-int	parsexec(cmd)
+int	parsexec(char *cmd)
 {
 	char **args;
 	//char **inter;
-	args = ft_parse_arg(cmd); //renvoie arg separes pour UNE commade
+	args = parse_arg(cmd); //renvoie arg separes pour UNE commade
 	//inter = interpreteur(args);
-	ft_tabdel(args);
+	ft_tabdel((void *)args);
 	/*if (!(run_dmc(inter)))
 	{
 		ft_tabdel(inter);
