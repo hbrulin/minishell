@@ -3,7 +3,7 @@
 
 /*
 ** Single quotes : all interpreted as string literal but single quote itself
-** escapes do not work in single quotes
+** !!! escapes do not work in single quotes !!!
 ** [> bash: unexpected EOF while looking for matching `'']
 ** [bash: syntax error: unexpected end of file]
 **
