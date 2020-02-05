@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 19:06:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 19:45:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	parsexec(char *cmd)
 {
 	char **args;
-	//char **inter;
+	//char **inter; pas besoin, modif de args
 
 	args = parse_arg(cmd); //renvoie arg separes pour UNE commande
 	//inter = interpreteur(args);
@@ -40,7 +40,7 @@ int run(char *s)
 	char quote;
 	char *cmd;
 	//1 cmd
-	if (ft_strchr(s, ';') == NULL)
+	if (ft_strchr(s, ';') == NULL) //retirer en fixant erreur free si 0 ;
 	{
 		cmd = ft_strdup(s);
 		//ft_putstr(cmd);
@@ -49,7 +49,7 @@ int run(char *s)
 			free(cmd);
 			return(0); //pour exit
 		}
-		//free(cmd);
+		//free(cmd); //voir pour leak
 		return(1);
 	}
 
@@ -99,14 +99,7 @@ int run(char *s)
 	}
 	return(1);
 }
-/*
-	if (ft_strchr(s + i - j + 1, ';') == NULL)
-			{
-				cmd = ft_strdup(s + i - j + 1);
-				break;
-			}
 
-*/
 
 
 /*

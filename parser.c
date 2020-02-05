@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 19:23:36 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 19:35:36 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char **parse_arg(char *s)
 	if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
 	{
 		ret = ft_split(s, ' '); 
+		printf("%s\n", ret[0]);
 		free(s);
 		return(ret);
 	}
@@ -74,8 +75,6 @@ char **parse_arg(char *s)
 		i++;
 	}
 	ft_lstiter(list, (void (*)(void *))&ft_putstr);
-	int size = ft_lstsize(list);
-	ft_putnbr_fd(size, 1);
 	//mettre dans un *tab
 	return (ret);
 }
