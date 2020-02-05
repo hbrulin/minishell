@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/03 16:53:56 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 17:55:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	prompt(void)
 {
 	int status;
 	char *input;
-	char *trim;
-	char **args;
+	char *s;
 
 	status = 1;
 	input = NULL;
@@ -26,13 +25,11 @@ void	prompt(void)
 	{
 		ft_putstr("minishell > ");
 		if (get_next_line(STDIN_FILENO, &input) == -1)
-			ft_putstr("Error reading stdin"); //systeme d'erreurs a faire
-		trim = ft_strtrim(input, " ");
-		free(input); //set to NULL?
-		args = parser(trim);
-		free(trim);
-		status = run_dmc(args);
-		ft_tabdel((void **)args);
+			ft_putstr("Error reading stdin");
+		s = ft_strtrim(input, " ");
+		free(input);
+		status = run(s);
+		free(s);
 	}
 }
 

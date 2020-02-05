@@ -6,13 +6,107 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 19:00:04 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 18:31:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
+/*int	parse(cmd)
+{
+	char **args;
+	char **inter;
+	args = ft_parse_arg(cmd); //renvoie arg separes pour UNE commade
+	inter = interpreteur(args);
+	ft_tabdel(args);
+	if (!(run_dmc(inter)))
+	{
+		ft_tabdel(inter);
+		return(0); //pour exit
+	}
+	ft_tabdel(inter);
+	return(1);
+}*/
+
+
+int run(char *s)
+{
+	int i;
+	int j;
+	int open;
+	char quote;
+	char *cmd;
+		//1 cmd
+	if (ft_strchr(s, ';') == NULL)
+	{
+		cmd = ft_strdup(s);
+		ft_putstr(cmd);
+		/*if(!(parse(cmd)))
+		{
+			free(cmd)
+			return(0); //pour exit
+		}*/
+		free(cmd);
+		return(1);
+	}
+
+	i = 0;
+	j = 0;
+	open = 0;
+	//several cmds
+	while (s[i])
+	{
+		if (ft_strchr(s + i, ';') == NULL)
+		{
+			cmd = ft_strdup(s + j);
+			ft_putstr(cmd);
+			ft_putstr("\n");
+			/*if(!(parse(cmd)))
+			{
+				free(cmd)
+				return(0); //pour exit
+			}	*/
+			break;
+		}
+		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
+		{
+			open = !open;
+			quote = s[i];
+		}
+		else if (open == 1 && s[i] == quote)
+			open = !open;
+		if (s[i] == ';' && open == 0)
+		{
+			cmd = ft_substr(s, j, i - j);
+			ft_putstr(cmd);
+			ft_putstr("\n");
+			i++;
+			while(ft_is_space(s[i]))
+				i++;
+			j = i;
+			/*if(!(parse(cmd)))
+			{
+				free(cmd)
+				return(0); //pour exit
+			}	*/
+			free(cmd);
+		}
+		i++;
+	}
+	return(1);
+}
+/*
+	if (ft_strchr(s + i - j + 1, ';') == NULL)
+			{
+				cmd = ft_strdup(s + i - j + 1);
+				break;
+			}
+
+*/
+
+
+/*
 int		exe(char **args)
 {
 	int status;
@@ -36,34 +130,21 @@ int		exe(char **args)
 
 int	run_dmc(char **args)
 {
-	int i;
 	int j;
-	char **param = NULL;
 	if (!args || !*args || !**args)
 		return (1);
-	i = 0;
-	while (args[i])
+	j = 0;
+	while (ft_is_space(args[i][j]))
+		j++;
+	if ((ft_strncmp(args[i] + j, "echo", ft_strlen("echo")) == 0)) //regler si jamais echop - faire ft command not found
+
+	else if (ft_strncmp(args[i] + j, "exit", ft_strlen("exit")) == 0)
 	{
-		j = 0;
-		while (ft_is_space(args[i][j]))
-			j++;
-		if ((ft_strncmp(args[i] + j, "echo", ft_strlen("echo")) == 0)) //regler si jamais echop - faire ft command not found
-		{
-			param = parse_arg(args[i]);
-			//ft_echo(param);
-		}
-		else if (ft_strncmp(args[i] + j, "exit", ft_strlen("exit")) == 0)
-		{
-			if(!(parse_exit(args[i])))
-				return (0); //set status a 0 et donc quit shell, sauf si command inconnue
-		}
-		else
-		{
-			param = parse_arg(args[i]);
-			exe(param); //si executable passe en param
-		}
-		i++;
-		ft_tabdel((void *)param);
+		if(!(parse_exit(args[i])))
+			return (0); //set status a 0 et donc quit shell, sauf si command inconnue
 	}
+	else
+		exe()
 	return(1);
 }
+*/

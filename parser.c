@@ -6,13 +6,12 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/04 20:49:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/05 17:32:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-
 
 char **parse_arg(char *args)
 {
@@ -100,39 +99,4 @@ char **parse_arg(char *args)
 	ft_lstiter(list, (void (*)(void *))&ft_putstr);
 	//mettre dans un *tab
 	return (ret);
-}
-
-int		parse_exit(char *args)
-{
-	char *exit;
-	int i = 4;
-	exit = ft_strtrim(args, " ");
-	int len = ft_strlen(exit);
-	if (len == i)
-		return(0);
-	else if (ft_isprint(exit[i]) && !(ft_is_space(exit[i])))
-	{
-		ft_putstr("minishell: command not found\n"); //ajouter printf ici
-		free(exit);
-		return(1);
-	}
-	while (ft_is_space(exit[i]) && exit[i])
-		i++;
-	if (ft_isprint(exit[i]))
-	{
-		ft_putstr("minishell: exit: unknown argument\n"); //ajouter printf ici pour l'argment inconnu
-		free(exit);
-	}
-	return(0);
-}
-
-
-char **parser(char *input)
-{
-	char **argv;
-
-	if (!input || !*input)
-		return (NULL);
-	argv = ft_split(input, ';');
-	return(argv);
 }
