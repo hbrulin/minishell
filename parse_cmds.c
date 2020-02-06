@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run.c                                              :+:      :+:    :+:   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:22:00 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:34:13 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,23 +124,5 @@ int		exe(char **args)
 	return (1); //return 1 pour que le shell continue de tourner
 } 
 
-int	run_dmc(char **args)
-{
-	int j;
-	if (!args || !*args || !**args)
-		return (1);
-	j = 0;
-	while (ft_is_space(args[i][j]))
-		j++;
-	if ((ft_strncmp(args[i] + j, "echo", ft_strlen("echo")) == 0))
 
-	else if (ft_strncmp(args[i] + j, "exit", ft_strlen("exit")) == 0)
-	{
-		if(!(parse_exit(args[i])))
-			return (0); //set status a 0 et donc quit shell, sauf si command inconnue
-	}
-	else
-		exe()
-	return(1);
-}
 */
