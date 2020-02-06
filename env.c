@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 16:45:13 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/06 16:47:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_dmc(char **args)
+int		ft_env(char **args)
 {
-	if (!args || !*args || !**args)
+	int i;
+	if (ft_tablen(args) > 1)
+	{
+		ft_putstr("minishell: env: too many arguments\n");
 		return (1);
-	if ((ft_strcmp(args[0], "exit") == 0))
-		return(ft_exit(args));
-	if ((ft_strcmp(args[0], "env") == 0))
-		return(ft_env(args));
-	else
-		ft_printf("minishell: %s: command not found\n", args[0]);
-	return(1);
+	}
+	i = 0;
+	while(g_env[i])
+	{
+		ft_putstr(g_env[i]);
+		ft_putstr("\n");
+		i++;
+	}
+	return (1);
 }

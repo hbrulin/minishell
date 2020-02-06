@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 16:12:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:41:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 	g_env = copy_tab(envp);
 	prompt();
-	ft_printf("%i\n", g_ret);
+	//ft_printf("%i\n", g_ret);
 	return(g_ret);
 }
