@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 16:46:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 17:24:32 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int parse_cmds(char *s);
 char **parse_arg(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
+int		ft_pwd(char **args);
 
 
 #endif

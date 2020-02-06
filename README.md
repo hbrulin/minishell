@@ -40,3 +40,12 @@ Créent une copie du descripteur de fichier oldfd.
 #signal
 signal() installe le gestionnaire handler pour le signal signum. handler peut être SIG_IGN, SIG_DFL ou l'adresse d'une fonction définie par le programmeur (un « gestionnaire de signal »).
 La fonction signal permet de spécifier ou de connaître le comportement du processus à la réception d'un signal donné, il faut donner en paramètre à la fonction le numéro du signal sig que l'on veut détourner et la fonction de traitement action à réaliser à la réception du signal.
+
+
+#pwd
+The getcwd() function copies the absolute pathname of the current working directory into
+     the memory referenced by buf and returns a pointer to buf.  The size argument is the
+     size, in bytes, of the array referenced by buf.
+
+     If buf is NULL, space is allocated as necessary to store the pathname and size is
+     ignored.  -> MALLOC tout seul, pas de size necessaire

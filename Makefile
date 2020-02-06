@@ -6,13 +6,13 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/06 16:46:25 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/06 17:26:06 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c parse_cmds.c parse_args.c exe.c exit.c env.c
+SRCS = main.c parse_cmds.c parse_args.c exe.c builtins.c
 
 HEADER = minishell.h 
 
