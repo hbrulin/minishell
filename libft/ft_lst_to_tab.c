@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lst_to_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2019/11/13 09:56:05 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/06 11:17:41 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/06 11:18:17 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+char **ft_lst_to_tab(t_list *list)
 {
-	t_list *next;
+	char **ret;
+	t_list	*tmp;
+	int i;
 
-	if (!lst || !f)
-		return ;
-	while (lst)
+	if (!(ret = (char**)malloc(sizeof(char *) * ft_lstsize(list) + 1)))
+		return (NULL);
+	i = 0;
+	tmp = list;
+	while (tmp)
 	{
-		next = lst->next;
-		f(lst->content);
-		lst = next;
+		if (!(ret[i] = ft_strdup(tmp->content)))
+			return (NULL);
+		tmp = tmp->next;
+		i++;
 	}
+	ret[i] = 0;
+	return (ret);
 }

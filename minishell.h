@@ -3,35 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmouhali <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 10:57:35 by pmouhali          #+#    #+#             */
-/*   Updated: 2020/02/06 10:57:38 by pmouhali         ###   ########.fr       */
+/*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/06 13:24:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
+#include "printf.h"
 
 # define TRUE  1
 # define FALSE 0
 
 typedef short int t_boolean;
 
-char **env;
+typedef char **t_env;
 
 int	run_dmc(char **args);
-int run(char *s);
-char **copy_tab(char **envp);
-size_t	ft_tablen(char **arr);
-int		ft_is_space(char c);
+int parse_cmds(char *s);
 char **parse_arg(char *args);
 
 

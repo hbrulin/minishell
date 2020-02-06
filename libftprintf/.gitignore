@@ -1,0 +1,13 @@
+libftprintf.a
+*.o 
+*.d 
+.DS_Store
+/obj
+a.out
+.vscode
+/tests vrai printf
+main.c
+main2.c
+/tests
+pft_2019/
+pft_2019/

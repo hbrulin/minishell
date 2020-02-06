@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 19:45:37 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:22:00 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parsexec(char *cmd)
 }
 
 
-int run(char *s)
+int parse_cmds(char *s)
 {
 	int i;
 	int j;
@@ -46,7 +46,7 @@ int run(char *s)
 		//ft_putstr(cmd);
 		if(!(parsexec(cmd)))
 		{
-			free(cmd);
+			//free(cmd);
 			return(0); //pour exit
 		}
 		//free(cmd); //voir pour leak
@@ -66,10 +66,10 @@ int run(char *s)
 			//ft_putstr("\n");
 			if(!(parsexec(cmd)))
 			{
-				free(cmd);
+				//free(cmd);
 				return(0); //pour exit
 			}
-			free(cmd);
+			//free(cmd);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -90,10 +90,10 @@ int run(char *s)
 			j = i;
 			if(!(parsexec(cmd)))
 			{
-				free(cmd);
+				//free(cmd);
 				return(0); //pour exit
 			}
-			free(cmd);
+			//free(cmd);
 		}
 		i++;
 	}
@@ -132,7 +132,7 @@ int	run_dmc(char **args)
 	j = 0;
 	while (ft_is_space(args[i][j]))
 		j++;
-	if ((ft_strncmp(args[i] + j, "echo", ft_strlen("echo")) == 0)) //regler si jamais echop - faire ft command not found
+	if ((ft_strncmp(args[i] + j, "echo", ft_strlen("echo")) == 0))
 
 	else if (ft_strncmp(args[i] + j, "exit", ft_strlen("exit")) == 0)
 	{
