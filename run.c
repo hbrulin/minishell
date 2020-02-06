@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:18:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:22:00 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parsexec(char *cmd)
 }
 
 
-int run(char *s)
+int parse_cmds(char *s)
 {
 	int i;
 	int j;

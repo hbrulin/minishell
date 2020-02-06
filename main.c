@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 12:08:40 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:22:40 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt(void)
 			ft_putstr("Error reading stdin");
 		s = ft_strtrim(input, " ");
 		free(input);
-		status = run(s);
+		status = parse_cmds(s);
 		free(s);
 	}
 }
