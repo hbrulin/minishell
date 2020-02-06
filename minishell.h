@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmouhali <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 17:33:34 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/06 10:57:35 by pmouhali          #+#    #+#             */
+/*   Updated: 2020/02/06 10:57:38 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
+
+# define TRUE  1
+# define FALSE 0
+
+typedef short int t_boolean;
 
 char **env;
 
