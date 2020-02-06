@@ -5,52 +5,42 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/06 11:45:35 by hbrulin          ###   ########.fr        #
+#    Created: 2019/11/08 15:50:08 by hbrulin           #+#    #+#              #
+#    Updated: 2020/02/06 11:58:16 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = libftprintf.a
 
-SRCS = main.c parser.c run.c
+SRCS =	ft_printf.c ft_struct.c ft_conversion.c ft_flags.c ft_output.c \
+		ft_precision.c ft_width.c ft_zero.c ft_conversion_pt2.c \
+		ft_precision_data.c ft_width_data.c ft_precision_spec.c ft_precision_s.c
 
-HEADER = minishell.h 
-
-CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g
+HEADER = printf.h
+INC_LIBFT = ../libft
+CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -I$(INC_LIBFT)
 BUILD_DIR = obj
 
 OBJS = $(SRCS:.c=.o)
 OBJ = $(addprefix $(BUILD_DIR)/,$(OBJS))
 DPD = $(OBJ:.o=.d)
 
-FTDIR	= libft
-FT_LIB	= $(addprefix $(FTDIR)/,libft.a)
-FT_INC	= -I $(FTDIR)
-FT_LNK	= -L $(FTDIR) -l ft
-
-FTDIRP	= libftprintf
-FT_LIBP	= $(addprefix $(FTDIRP)/,libftprintf.a)
-FT_INCP	= -I $(FTDIRP)
-FT_LNKP	= -L $(FTDIRP) -l ftprintf
-
 opti :
 	@make -j all
 
-all : make_ft make_ftp $(NAME)
+all : $(NAME)
 
-make_ft:
-	@make -C $(FTDIR)
-
-make_ftp:
-	@make -C $(FTDIRP)
-
-$(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
+$(NAME): $(OBJ)
+	@make -C ../libft all
+	@cp ../libft/libft.a ./$(NAME)
+	@ar rc $(NAME) $(OBJ)
 	@echo "$(NAME) created"
+	@ranlib $(NAME)
+	@echo "$(NAME) indexed"
 
 $(BUILD_DIR)/%.o: %.c Makefile
 	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) $(FT_INC) $(FT_INCP) -o $@ -c $<
+	@gcc $(CFLAGS) -c $< -o $@
 
 clean:
 	@/bin/rm -rf $(BUILD_DIR)
@@ -58,12 +48,13 @@ clean:
 
 fclean: clean
 	@/bin/rm -f $(NAME)
+	@make -C libft fclean
 	@echo "Lib deleted"
 
 re : 
 	@make fclean
 	@make opti
 
-.PHONY: all, clean, fclean, re, opti, make_ft
+.PHONY: all, clean, fclean, re, opti
 
 -include $(DPD)

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 12:27:14 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/01/24 11:51:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 11:21:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,10 @@ char				*ft_uitoa(unsigned int n);
 int					get_next_line(int fd, char **line);
 size_t				tab_size(char **tab);
 int					ft_atoi_base(char *str, char *base);
+int					ft_is_space(char c);
+size_t				ft_tablen(char **tab);
+char				**copy_tab(char **tab);
+char 				**ft_lst_to_tab(t_list *list);
+int					ft_strcmp(const char *s1, const char *s2);
 
 #endif

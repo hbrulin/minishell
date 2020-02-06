@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 17:55:12 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 11:59:07 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,5 @@ int			main(int ac, char **av, char **envp)
 	(void)av;
 	env = copy_tab(envp);
 	prompt();
-
-/*print env var
-	int i = 0;
-	while(env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-*/
-	ft_tabdel((void **)env);
 	return(0);
 }

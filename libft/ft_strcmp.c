@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2019/11/13 09:56:05 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/06 11:19:16 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/06 11:21:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_list *next;
-
-	if (!lst || !f)
-		return ;
-	while (lst)
-	{
-		next = lst->next;
-		f(lst->content);
-		lst = next;
-	}
+	return (ft_memcmp(s1, s2, ft_strlen(s1) + 1));
 }
