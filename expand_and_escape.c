@@ -6,7 +6,7 @@
 /*   By: pmouhali <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:32:25 by pmouhali          #+#    #+#             */
-/*   Updated: 2020/02/06 13:29:53 by pmouhali         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:14:24 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 012345678911111111112
 //	     01234567890
 
-int seq[7] = {92, 39, 34, 36, 124, 60, 62};
+int seq[7] = {'\\', '$', '\"', '\'', '|', '<', '>'};
 
 int	clean_arg(char *s)
 {
@@ -39,16 +39,23 @@ int	clean_arg(char *s)
 	dq = FALSE;
 	while (s[i])
 	{
-		if (!sq && !sq && s[i] == 92) // si no mod et escape char escape all
+		if (!sq && !dq && s[i] == 92) // si no mod et escape char escape all
 		{
 			j = 0;
 			while (j < 7 && seq[j] != s[i + 1])
 				j++;
 			if (j != 7)
-			{
 				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
-				i++;
-			}
+			i++;
+		}
+		else if (!sq && dq && s[i] == 92) // si dq et escape char escape all
+		{
+			j = 0;
+			while (j < 3 && seq[j] != s[i + 1])
+				j++;
+			if (j != 3)
+				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
+			i = j == 0 ? i + 2 : i + 1;
 		}
 		else if (!sq && !dq && s[i] == 39) // si dq FALSE, sq FALSE, on active et on clear, l'escape n'existe pas en sq mode 
 		{
@@ -60,12 +67,12 @@ int	clean_arg(char *s)
 			sq = FALSE;
 			ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
 		}
-		else if (!sq && !dq && s[i] == 34 && (i == 0 || s[i - 1] != 92)) // si sqdq FALSE et single quotes et index = 0 ou index -1 diff de escapechar, on active et on clear 
+		else if (!sq && !dq && s[i] == 34) // si sqdq FALSE et single quotes et index = 0 ou index -1 diff de escapechar, on active et on clear 
 		{
 			dq = TRUE;
 			ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
 		}
-		else if (dq && !sq && s[i] == 34 && s[i - 1] != 92) // si sq TRUE et dq FALSE et pas d'escape derriere on desactive et on clear
+		else if (dq && !sq && s[i] == 34) // si sq TRUE et dq FALSE et pas d'escape derriere on desactive et on clear
 		{
 			dq = FALSE;
 			ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
