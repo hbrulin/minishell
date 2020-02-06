@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 10:37:08 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:18:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int run(char *s)
 		//ft_putstr(cmd);
 		if(!(parsexec(cmd)))
 		{
-			free(cmd);
+			//free(cmd);
 			return(0); //pour exit
 		}
 		//free(cmd); //voir pour leak
@@ -66,10 +66,10 @@ int run(char *s)
 			//ft_putstr("\n");
 			if(!(parsexec(cmd)))
 			{
-				free(cmd);
+				//free(cmd);
 				return(0); //pour exit
 			}
-			free(cmd);
+			//free(cmd);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -90,10 +90,10 @@ int run(char *s)
 			j = i;
 			if(!(parsexec(cmd)))
 			{
-				free(cmd);
+				//free(cmd);
 				return(0); //pour exit
 			}
-			free(cmd);
+			//free(cmd);
 		}
 		i++;
 	}
