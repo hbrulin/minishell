@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 11:46:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 12:08:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "libft.h"
 #include "printf.h"
 
-char **env;
+typedef char **t_env;
 
 int	run_dmc(char **args);
 int run(char *s);
