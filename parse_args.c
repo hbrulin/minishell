@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:18:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:20:57 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 char **parse_arg(char *s)
 {
@@ -27,7 +26,6 @@ char **parse_arg(char *s)
 	if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
 	{
 		ret = ft_split(s, ' '); 
-		printf("%s\n", ret[0]);
 		free(s);
 		return(ret);
 	}
@@ -74,7 +72,7 @@ char **parse_arg(char *s)
 		}
 		i++;
 	}
-	ft_lstiter(list, (void (*)(void *))&ft_putstr);
+	//ft_lstiter(list, (void (*)(void *))&ft_putstr);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	return (ret);

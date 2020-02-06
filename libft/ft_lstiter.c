@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2019/11/13 09:56:05 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:18:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 	{
 		next = lst->next;
 		f(lst->content);
+		ft_putstr("\n");
 		lst = next;
 	}
 }

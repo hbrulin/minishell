@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:34:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:21:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,17 @@
 int	parsexec(char *cmd)
 {
 	char **args;
-	//char **inter; pas besoin, modif de args
 
-	args = parse_arg(cmd); //renvoie arg separes pour UNE commande
-	//inter = interpreteur(args);
-	ft_tabdel((void *)args);
-	
+	args = parse_arg(cmd); 
+	//interpreteur(args);
+		
 	/*if (!(run_dmc(inter)))
 	{
 		ft_tabdel(inter);
 		return(0); //pour exit
 	}
 	ft_tabdel(inter);*/
+	ft_tabdel((void *)args);
 	return(1);
 }
 
@@ -99,30 +98,3 @@ int parse_cmds(char *s)
 	}
 	return(1);
 }
-
-
-
-/*
-int		exe(char **args)
-{
-	int status;
-	status = 1;
-
-	pid_t	pid;
-	pid = fork();
-	if (pid == 0) //pour dire que je suis dans le processus fils. Quid si erreur de fork?
-	{
-		if (ft_tablen(args) == 1)
-			execve(args[0], NULL, env);
-		else if (ft_tablen(args) > 1)
-			execve(args[0], args + 1, env); //controler si parametre passes au programme 
-		exit(0);
-	}
-	wait(&status); //le pere attend le fils pour repartir
-	//il faudra prevoir si l'executable n'est pas bon ou permission denied -> check access control
-	//OU si command not found
-	return (1); //return 1 pour que le shell continue de tourner
-} 
-
-
-*/
