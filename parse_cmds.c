@@ -6,12 +6,11 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:21:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:47:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 int	parsexec(char *cmd)
 {
@@ -20,12 +19,11 @@ int	parsexec(char *cmd)
 	args = parse_arg(cmd); 
 	//interpreteur(args);
 		
-	/*if (!(run_dmc(inter)))
+	if (!(run_dmc(args)))
 	{
-		ft_tabdel(inter);
-		return(0); //pour exit
+		ft_tabdel((void *)args);
+		return(0); 
 	}
-	ft_tabdel(inter);*/
 	ft_tabdel((void *)args);
 	return(1);
 }

@@ -6,14 +6,14 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:22:40 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:12:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
-t_env	g_env;
+t_env g_env = NULL;
+t_ret g_ret = 0;
 
 void	prompt(void)
 {
@@ -41,5 +41,6 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 	g_env = copy_tab(envp);
 	prompt();
-	return(0);
+	ft_printf("%i\n", g_ret);
+	return(g_ret);
 }

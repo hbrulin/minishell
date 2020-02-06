@@ -6,12 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:40:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:03:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-int		exe(char **args)
+#include "minishell.h"
+
+int		ft_execve(char **args)
 {
 	int status;
 	status = 1;
@@ -21,9 +22,9 @@ int		exe(char **args)
 	if (pid == 0) //pour dire que je suis dans le processus fils. Quid si erreur de fork?
 	{
 		if (ft_tablen(args) == 1)
-			execve(args[0], NULL, env);
+			execve(args[0], NULL, g_env);
 		else if (ft_tablen(args) > 1)
-			execve(args[0], args + 1, env); //controler si parametre passes au programme 
+			execve(args[0], args + 1, g_env); //controler si parametre passes au programme 
 		exit(0);
 	}
 	wait(&status); //le pere attend le fils pour repartir
@@ -33,4 +34,4 @@ int		exe(char **args)
 } 
 
 
-*/
+
