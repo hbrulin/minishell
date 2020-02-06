@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 14:11:01 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/05 17:39:10 by pmouhali         ###   ########.fr       */
+/*   Created: 2019/11/05 12:01:34 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/05 13:21:59 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
 #include "libft.h"
 
-# define TRUE  1
-# define FALSE 0
-
-typedef short int t_boolean;
-
-char **env;
-
-int	run_dmc(char **args);
-char **parser(char *input);
-char **copy_tab(char **envp);
-
-
-#endif
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	return (ft_memcmp(s1, s2, ft_strlen(s1) + 1));
+}
