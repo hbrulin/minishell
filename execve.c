@@ -40,7 +40,8 @@ char *get_path(char **args)
 	if ((path = bin_search(args[0])) != NULL)
 		return (path);
 	else
-		return(args[0]);
+		path = ft_strdup(args[0]);
+	return(path);
 }
 
 int		ft_execve(char **args)
@@ -58,7 +59,8 @@ int		ft_execve(char **args)
 		exit(0);
 	}
 	wait(&pid);
-	free(path);
+	if (path)
+		free(path);
 	return (1); 
 } 
 
