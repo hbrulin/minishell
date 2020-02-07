@@ -22,7 +22,9 @@ int	run_dmc(char **args)
 		return(ft_env(args));
 	if ((ft_strcmp(args[0], "pwd") == 0))
 		return(ft_pwd(args));
-	else
-		ft_printf("minishell: %s: command not found\n", args[0]);
+	if ((ft_strcmp(args[0], "cd") == 0))
+		return(ft_cd(args));
+	else if (ft_execve(args))
+		return (1);
 	return(1);
 }

@@ -19,6 +19,7 @@
 # include <signal.h>
 # include "libft.h"
 #include "printf.h"
+# include <dirent.h>
 
 # define TRUE  1
 # define FALSE 0
@@ -36,6 +37,10 @@ char **parse_arg(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
+int		ft_execve(char **args);
+char    *get_var(char *key);
+void    set_var(char *key, char *value);
+int		ft_cd(char **args);
 
 
 #endif
