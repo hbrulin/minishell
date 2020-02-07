@@ -53,3 +53,6 @@ Ctrl -\ : This sends the QUIT signal, which by default terminates an application
 
 #path
 https://www.alsacreations.com/astuce/lire/78-quelle-est-la-diffrence-entre-les-chemins-relatifs-et-absolus.html
+
+#expand 
+https://www.commentcamarche.net/faq/5444-bash-les-arguments-parametres
