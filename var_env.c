@@ -23,7 +23,7 @@ void    set_var(char *key, char *value)
 char    *get_var(char *key)
 {
     int i;
-    char * tmp;
+    char *tmp = NULL;
 
     i = 0;
 	while(g_env[i])
