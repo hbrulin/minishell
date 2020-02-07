@@ -53,7 +53,8 @@ int		ft_execve(char **args)
 	pid = fork();
 	if (pid == 0)  //Quid si erreur de fork?
 	{
-		execve(path, args, g_env); 
+		if ((execve(path, args, g_env)) == -1)
+			 ft_printf("minishell: %s: command not found\n", args[0]);
 		exit(0);
 	}
 	wait(&pid); 
