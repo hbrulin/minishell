@@ -57,7 +57,8 @@ int		ft_execve(char **args)
 			 ft_printf("minishell: %s: command not found\n", args[0]);
 		exit(0);
 	}
-	wait(&pid); 
+	wait(&pid);
+	free(path);
 	return (1); 
 } 
 
