@@ -40,12 +40,12 @@ int		ft_cd(char **args)
 	else if (len == 1)
 	{
 		if ((chdir(get_var("HOME="))) == -1)
-			ft_putstr("minishell: cd: error\n");
+			ft_putstr("minishell: cd: error finding home directory\n");
 	}
 	else if (len == 2)
 	{
 		if ((chdir(args[1])) == -1)
-			ft_putstr("minishell: cd: error\n");
+			ft_printf("minishell: cd: %s: No such file or directory\n", args[1]);
 	}
 	return(update_pwd());
 }
