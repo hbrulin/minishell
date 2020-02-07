@@ -12,6 +12,44 @@
 
 #include "minishell.h"
 
+int	update_pwd(void)
+{
+	char *dir;
+
+	dir = NULL;
+	if (!(dir = getcwd(dir, 0)))
+	{
+		ft_printf("PWD malloc fail\n");
+		return(0);
+	}
+	set_var("PWD=", dir);
+	free(dir);
+	return (1);
+}
+
+int		ft_cd(char **args)
+{
+	int len;
+
+	len = ft_tablen(args);
+	if (len > 2)
+	{
+		ft_putstr("minishell: cd: too many arguments\n"); 
+		return (1);
+	}
+	else if (len == 1)
+	{
+		if ((chdir(get_var("HOME="))) == -1)
+			ft_putstr("minishell: cd: error\n");
+	}
+	else if (len == 2)
+	{
+		if ((chdir(args[1])) == -1)
+			ft_putstr("minishell: cd: error\n");
+	}
+	return(update_pwd());
+}
+
 int		ft_pwd(char **args)
 {
 	char *dir;
