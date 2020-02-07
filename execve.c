@@ -29,8 +29,8 @@ static char	*bin_search(char *cmd)
 		}
 		bins++;
 	}
-	closedir(path_to_bin);
-	return (NULL);
+	closedir(path_to_bin); //quid si error? opendir et closedir utilisent errno. faire sortie d'erreurs?
+	return (NULL); 
 }
 
 char *get_path(char **args)

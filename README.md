@@ -56,3 +56,20 @@ https://www.alsacreations.com/astuce/lire/78-quelle-est-la-diffrence-entre-les-c
 
 #expand 
 https://www.commentcamarche.net/faq/5444-bash-les-arguments-parametres
+
+#dirent.h
+DIR : type representing a directory stream : rdered sequence of all the directory entries in a particular directory.
+char d_name[] : name of an entry
+struct dirent * > returned by readdir.
+The readdir() function returns a pointer to a structure representing the directory entry at the current position in the directory stream specified by the argument dirp, and positions the directory stream at the next entry. 
+It returns a null pointer upon reaching the end of the directory stream. The structure dirent defined by the dirent.h header describes a directory entry.
+
+```c
+struct dirent *readdir(DIR *dirp);
+```
+
+opendir : The opendir() function opens a directory stream corresponding to the directory named by the dirname argument. The directory stream is positioned at the first entry. Upon successful completion, opendir() returns a pointer to an object of type DIR. Otherwise, a null pointer is returned and errno is set to indicate the error.
+
+```c
+DIR *opendir(const char *dirname);
+```
