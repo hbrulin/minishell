@@ -9,17 +9,17 @@ Dans le processus fils valeur de retour = zéro.
 Sinon
 Dans le processus père valeur de retour = -1.
 
-/*
-	fork s utilise si executable, avec execve
-	test fork
-	pid_t pid;
+test fork: 
 
-	//va print deux fois, une fois par processus. Pere id fils, et fils 0.
-	pid = fork();
-	printf("%i\n", pid);
+```c
+pid_t pid;
 
-	exit(0);*/
+//va print deux fois, une fois par processus. Pere id fils, et fils 0.
+pid = fork();
+printf("%i\n", pid);
 
+exit(0);*/
+```
 
 #wait
 pid_t wait(int *ptr_etat)
@@ -30,7 +30,7 @@ Donne comme valeur de retour le pid du fils qui a terminé, et le code de fin es
 On peut également attendre la fin du fils grâce à son pid : pid_t waitpid(pid_t pid, int *ptr_etat, int options).
 
 #exit 
-prend un etat/status en parametre
+prend un etat/status en parametre -> exit le processus
 
 #dup
 int dup(int oldfd);
@@ -41,11 +41,12 @@ Créent une copie du descripteur de fichier oldfd.
 signal() installe le gestionnaire handler pour le signal signum. handler peut être SIG_IGN, SIG_DFL ou l'adresse d'une fonction définie par le programmeur (un « gestionnaire de signal »).
 La fonction signal permet de spécifier ou de connaître le comportement du processus à la réception d'un signal donné, il faut donner en paramètre à la fonction le numéro du signal sig que l'on veut détourner et la fonction de traitement action à réaliser à la réception du signal.
 
+#getcwd
+The getcwd() function copies the absolute pathname of the current working directory into the memory referenced by buf and returns a pointer to buf.  The size argument is the size, in bytes, of the array referenced by buf.
+If buf is NULL, space is allocated as necessary to store the pathname and size is ignored.  -> MALLOC tout seul, pas de size necessaire
 
-#pwd
-The getcwd() function copies the absolute pathname of the current working directory into
-     the memory referenced by buf and returns a pointer to buf.  The size argument is the
-     size, in bytes, of the array referenced by buf.
-
-     If buf is NULL, space is allocated as necessary to store the pathname and size is
-     ignored.  -> MALLOC tout seul, pas de size necessaire
+#Background, foreground
+Ctrl-Z - processus en background - fg pour le ramener en foreground. On peut voir les numéros de job a gauche entre [].
+Ctrl -C tells the terminal to send a SIGINT to the current foreground process, which by default translates into terminating the application.
+Ctrl -D tells the terminal that it should register a EOF on standard input, which bash interprets as a desire to exit. Ctrl -D means end of file. It only works at the beginning of a line (I'm simplifying a little), and has no effect if the program isn't reading input from the terminal. In your experiment, ^D told the shell that you weren't going to type any more commands, so it exited; then the terminal exited because its subprogram had terminated.
+Ctrl -\ : This sends the QUIT signal, which by default terminates an application.
