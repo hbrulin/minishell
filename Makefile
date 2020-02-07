@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-SRCS = main.c parse_cmds.c parse_args.c exe.c builtins.c
+SRCS = main.c parse_cmds.c parse_args.c exe.c builtins.c execve.c
 
 HEADER = minishell.h 
 
