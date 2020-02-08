@@ -53,6 +53,8 @@ int		main(void)
 	test_simple_arg("uni\\\\\"corn", "", 1);	
 	test_simple_arg("uni\\'\\", "uni'", 0);	
 	test_simple_arg("'uni\\corn'\\\\'", "", 1);	
+	test_simple_arg("$PWD", "", 0);	
+	test_simple_arg("$PWD", "", 0);	
 	// DOUBLE QUOTES
 	test_simple_arg("\"unicorn\"", "unicorn", 0);	
 	test_simple_arg("\"\\unicorn\"", "\\unicorn", 0);	
