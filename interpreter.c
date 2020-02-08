@@ -8,19 +8,44 @@
 **	Check for syntax error
 */
 
-int seq[7] = {'\\', '$', '\"', '\'', '|', '<', '>'};
+char seq[7] = {'\\', '$', '\"', '\'', '|', '<', '>'};
 
-int	clean_arg(char *s)
+char	*expand_var(char *arg, int dr, int *i) // dr = $ lc = last char of var
+{
+	char *tmp;
+	char *key;
+
+	tmp = ft_substr(arg, dr + 1, (*i + 1) - dr);
+//	printf("isole var: %s\n", tmp);
+	key = ft_strjoin(tmp, "=");
+//	printf("var to key: %s\n", key);
+	free(tmp);
+	tmp = get_var(key);
+//	printf("value for key: %s\n", tmp);
+	free(key);
+	key = ft_strnjoin(arg, tmp, dr); 
+//	printf("join previous arg content with interpolated value: %s\n", key);
+	free(tmp);
+	tmp = ft_strjoin(key, &arg[*i]);
+	*i = !key ? -1 : ft_strlen(key);
+	free(key);
+//	printf("final new arg: %s\n", tmp);
+	return (tmp);
+}
+
+int	clean_arg(char **arg)
 {
 	t_boolean sq;
 	t_boolean dq;
 	int i;
 	int j;
+	char *tmp;
+	char *s = *arg;
 
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
-	while (s[i])
+	while (s && s[i])
 	{
 		if (!sq && !dq && s[i] == 92) // si no mod et escape char escape all
 		{
@@ -35,6 +60,22 @@ int	clean_arg(char *s)
 			if (j != 3)
 				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
 			i = j == 1 ? i + 2 : i + 1;
+		}
+		else if (!sq && !dq && s[i] == '$')
+		{
+			j = i;
+			i++;
+			if (s[i] == '_' || (s[i] >= 65 && s[i] <= 90) || (s[i] >= 97 && s[i] <= 122)) // si first char auth expand else ignore
+			{
+				while ((s[i] >= 65 && s[i] <= 90) || (s[i] >= 97 && s[i] <= 122) || (s[i] >= 48 && s[i] <= 57))
+					i++;
+				tmp = *arg;
+				*arg = expand_var(s, j, &i);
+				free(tmp);
+			//	printf("i = %d\n", i);
+				if (i == -1)
+					return (1);
+			}
 		}
 		else if (!sq && !dq && s[i] == 39) // si dq FALSE, sq FALSE, on active et on clear, l'escape n'existe pas en sq mode 
 		{
@@ -61,15 +102,5 @@ int	clean_arg(char *s)
 	}
 	if (sq || dq) // si sq ou dq TRUE la matching quote n'as pas ete trouvee donc syntx error
 		return (1);
-	return (0);
-}
-
-int	foreach_escape(char **args)
-{
-	int i;
-
-	i = 0;
-	while (args[++i])
-		clean_arg(args[i]);
 	return (0);
 }
