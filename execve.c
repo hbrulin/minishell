@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 15:52:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 16:02:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		ft_execve(char **args)
 			wpid = wait(&status);
 		if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of the child is returned to the calling process.
 		{
-			is_forking(0); //l'enfant est mort, je reset a 0
+			is_forking(0); //l'enfant est mort, je ne fork plus
 			free(path);
 			return(1);
 		}

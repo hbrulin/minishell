@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 15:45:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 17:40:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void signal_handler(int n)
 {
 	//signal(SIGINT, signal_handler); //faire un retour a la ligne
 	//signal(SIGQUIT, signal_handler); //afficher infos
-	if (is_forking(2) && n == SIGINT)
+	if (is_forking(2) && n == SIGINT) //je passe 2 car je ne veux pas que le statut change
 		ft_putstr("\n");
 	if (is_forking(2) && n == SIGQUIT)
 		ft_putstr("Quit: 3\n");
@@ -40,7 +40,7 @@ void	prompt(void)
 		if (get_next_line(STDIN_FILENO, &input) == 0) //EOF, ctrl D. Prevoir si -1?
 		{
 			ft_putstr("exit\n");
-			exit(0); //leaks?
+			exit(0); //free automatiquement
 		}
 		s = ft_strtrim(input, " ");
 		free(input);

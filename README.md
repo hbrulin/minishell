@@ -40,6 +40,8 @@ Créent une copie du descripteur de fichier oldfd.
 #signal
 signal() installe le gestionnaire handler pour le signal signum. handler peut être SIG_IGN, SIG_DFL ou l'adresse d'une fonction définie par le programmeur (un « gestionnaire de signal »).
 La fonction signal permet de spécifier ou de connaître le comportement du processus à la réception d'un signal donné, il faut donner en paramètre à la fonction le numéro du signal sig que l'on veut détourner et la fonction de traitement action à réaliser à la réception du signal.
+http://www-igm.univ-mlv.fr/~dr/NCSPDF/chapitre11.pdf
+https://fr.wikipedia.org/wiki/Signal_(informatique) 
 
 #getcwd
 The getcwd() function copies the absolute pathname of the current working directory into the memory referenced by buf and returns a pointer to buf.  The size argument is the size, in bytes, of the array referenced by buf.
@@ -81,6 +83,22 @@ retourne un struct stat *buf, le remplit avec plusieurs champ, donc un champ st_
 if (buf.st_mode & S_IXUSR)
         return (1);
 ```
-#signal
-http://www-igm.univ-mlv.fr/~dr/NCSPDF/chapitre11.pdf
-https://fr.wikipedia.org/wiki/Signal_(informatique) 
+
+#pipe
+```c
+int pipe(int fildes[2]);
+```
+The pipe() function creates a pipe (an object that allows unidirectional data flow) and allocates a pair of file descriptors.  The first descriptor connects to the read end of the pipe; the second connects to the write end.
+Data written to fildes[1] appears on (i.e., can be read from) fildes[0].
+
+#dup, dup2, 
+ dup() duplicates an existing object descriptor and returns its value to the calling process (fildes2 = dup(fildes))
+ In dup2(), the value of the new descriptor fildes2 is specified.  If fildes and fildes2 are equal, then dup2() just returns fildes2; no other changes are made to the existing descriptor.
+ ```c
+ int dup2(int fildes, int fildes2);
+ ```
+
+#Redirections
+'>' : rediriger le résultat dans un nouveau fichier. creation si non existant. ecrase si existant.
+'>>' : rediriger a la fin d'un fichier. creation si non existant.
+'<' : lire depuis un fichier
