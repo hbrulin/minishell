@@ -69,9 +69,9 @@ int		ft_execve(char **args)
 	else if (pid > 0)//je suis dans le pere
 	{
 		is_forking(1); //pour signal
-		wpid = wait(&status);
+		wpid = wait(&status); //check err
 		while (wpid != pid)
-			wpid = wait(&status);
+			wpid = wait(&status); //erreur msg
 		if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of the child is returned to the calling process.
 		{
 			is_forking(0); //l'enfant est mort, je ne fork plus

@@ -25,6 +25,21 @@ exit(0);
 pid_t wait(int *ptr_etat)
 Le processus pere attend son fils.
 Donne comme valeur de retour le pid du fils qui a terminé, et le code de fin est stocké dans ptr_etat. A recuperer &ptr_etat.
+```c
+pid = fork();
+if (pid == 0)  //execution par le fils
+        execve(path, args, g_env);
+else if (pid > 0) //execution par le pere
+{
+	wpid = wait(&status); //pere attend fils, valeur retour dans wpid
+	while (wpid != pid)
+		wpid = wait(&status); //on attend tant que le pid du fils n'est pqs retourne
+	if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of                    the child is returned to the calling process.
+	{
+		free(path);
+		return(1);
+	}
+```
 
 #waitpid
 On peut également attendre la fin du fils grâce à son pid : pid_t waitpid(pid_t pid, int *ptr_etat, int options).
