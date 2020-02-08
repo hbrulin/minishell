@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 17:13:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 11:12:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_execve(char **args)
 	//ft_putstr(path);
 	//ft_putstr("\n");
 	pid = fork();
-	if (pid == 0)  //Quid si erreur de fork?
+	if (pid == 0 && ft_access(path))  //Quid si erreur de fork?
 	{
 		if ((execve(path, args, g_env)) == -1)
 			 ft_printf("minishell: %s: command not found\n", args[0]);

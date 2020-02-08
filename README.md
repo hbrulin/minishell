@@ -73,3 +73,11 @@ opendir : The opendir() function opens a directory stream corresponding to the d
 ```c
 DIR *opendir(const char *dirname);
 ```
+
+#stat
+http://manpagesfr.free.fr/man/man2/stat.2.html
+retourne un struct stat *buf, le remplit avec plusieurs champ, donc un champ st_mode, qui se compare avec des valeurs ENUM comme un flagbit -> permet de connaitre les droits.
+```c
+if (buf.st_mode & S_IXUSR)
+        return (1);
+```

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 17:24:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 11:13:07 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
-#include "printf.h"
+# include "printf.h"
 # include <dirent.h>
+# include <sys/stat.h>
 
 # define TRUE  1
 # define FALSE 0
@@ -38,9 +39,10 @@ int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
 int		ft_execve(char **args);
-char    *get_var(char *key);
-void    set_var(char *key, char *value);
+char	*get_var(char *key);
+void	set_var(char *key, char *value);
 int		ft_cd(char **args);
+int		ft_access(char *path);
 
 
 #endif
