@@ -15,15 +15,19 @@
 int	update_pwd(void)
 {
 	char *dir;
+	char *old_dir;
 
 	dir = NULL;
+	old_dir = get_var("PWD=");
 	if (!(dir = getcwd(dir, 0)))
 	{
 		ft_printf_fd(2, "PWD malloc fail\n");
 		return(0);
 	}
 	set_var("PWD=", dir);
+	set_var("OLDPWD=", old_dir);
 	free(dir);
+	free(old_dir);
 	return (1);
 }
 
