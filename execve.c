@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 13:07:15 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 14:09:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ char *get_path(char **args)
 	return(path);
 }
 
+void signal_print(int n) 
+{
+	if (n == SIGINT)
+		ft_putstr("\n");
+	if (n == SIGQUIT)
+		ft_putstr("Quit: 3\n");
+	return;
+}
+
 int		ft_execve(char **args)
 {
 	pid_t	pid;
@@ -58,6 +67,8 @@ int		ft_execve(char **args)
 			 ft_printf("minishell: %s: command not found\n", args[0]);
 		exit(0);
 	}
+	signal(SIGINT, signal_print);
+	signal(SIGQUIT, signal_print);
 	wait(&pid);
 	if (path)
 		free(path);

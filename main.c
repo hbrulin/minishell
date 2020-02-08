@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 13:08:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 14:05:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_ret g_ret = 0;
 
 void signal_handler(int n) 
 {
+	signal(SIGINT, signal_handler); //faire un retour a la ligne
+	signal(SIGQUIT, signal_handler); //afficher infos
 	(void)n;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 }
 
 void	prompt(void)
@@ -33,8 +33,11 @@ void	prompt(void)
 	while(status)
 	{
 		ft_putstr("minishell > ");
-		if (get_next_line(STDIN_FILENO, &input) == 0) //EOF. Prevoir si -1?
-			exit(0);
+		if (get_next_line(STDIN_FILENO, &input) == 0) //EOF, ctrl D. Prevoir si -1?
+		{
+			ft_putstr("exit\n");
+			exit(0); //leaks?
+		}
 		s = ft_strtrim(input, " ");
 		free(input);
 		status = parse_cmds(s);

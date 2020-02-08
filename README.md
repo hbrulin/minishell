@@ -48,7 +48,7 @@ If buf is NULL, space is allocated as necessary to store the pathname and size i
 #Background, foreground
 Ctrl-Z - processus en background - fg pour le ramener en foreground. On peut voir les numéros de job a gauche entre [].
 Ctrl -C tells the terminal to send a SIGINT to the current foreground process, which by default translates into terminating the application.
-Ctrl -D tells the terminal that it should register a EOF on standard input, which bash interprets as a desire to exit. Ctrl -D means end of file. It only works at the beginning of a line (I'm simplifying a little), and has no effect if the program isn't reading input from the terminal. In your experiment, ^D told the shell that you weren't going to type any more commands, so it exited; then the terminal exited because its subprogram had terminated.
+Ctrl -D tells the terminal that it should register a EOF on standard input, which bash interprets as a desire to exit. Ctrl -D means end of file. It only works at the beginning of a line (I'm simplifying a little), and has no effect if the program isn't reading input from the terminal. In your experiment, ^D told the shell that you weren't going to type any more commands, so it exited; then the terminal exited because its subprogram had terminated. -> ctrl-D n'est pas un signal, mais un retour de read.
 Ctrl -\ : This sends the QUIT signal, which by default terminates an application.
 
 #path
