@@ -49,7 +49,16 @@ int parse_cmds(char *s)
 		//free(cmd); //voir pour leak
 		return(1);
 	}
-
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == ';' && s[i + 1] == ';')
+		{
+			ft_printf_fd(2, "syntax error near unexpected token `;;'\n");
+			return (1);
+		}
+		i++;
+	}
 	i = 0;
 	j = 0;
 	open = 0;

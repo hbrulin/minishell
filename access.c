@@ -18,10 +18,9 @@ int ft_access(char *path)
 
 	if ((stat(path, &buf)) == -1)
 	{
-		ft_printf_fd(2, "%i, minishell: %s: command not found\n", path);
+		ft_printf_fd(2, "minishell: %s: command not found\n", path);
 		return(0);
 	}
-
     if (buf.st_mode & S_IXUSR)
         return (1);
 	else

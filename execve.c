@@ -60,16 +60,14 @@ int		ft_execve(char **args)
 	int status;
 	char *path = NULL;
 	path = get_path(args);
-	pid = fork();
+	if ((pid = fork()) == -1)
+		return (1); // avec erreur msg
 	if (pid == 0)  //Quid si erreur de fork?
 	{
 		if(ft_access(path))
-		{
-			if ((execve(path, args, g_env)) == -1)
-				ft_printf_fd(2, "minishell: %s: command not found\n", args[0]);
-		}
+			execve(path, args, g_env);
 	}
-	else //je suis dans le pere
+	else if (pid > 0)//je suis dans le pere
 	{
 		is_forking(1); //pour signal
 		wpid = wait(&status);
