@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 15:42:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 15:52:21 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char *get_path(char **args)
 int		ft_execve(char **args)
 {
 	pid_t	pid;
-	pid_t tpid;
+	pid_t wpid;
 	int status;
 	char *path = NULL;
 	path = get_path(args);
@@ -67,25 +67,21 @@ int		ft_execve(char **args)
 		{
 			if ((execve(path, args, g_env)) == -1)
 				ft_printf("minishell: %s: command not found\n", args[0]);
-			exit(0); //besoin?
 		}
 	}
-	else 
+	else //je suis dans le pere
 	{
-		is_forking(1);
-		tpid = wait(&status);
-		while (tpid != pid)
-			tpid = wait(&status);
-		if (tpid == pid) 
+		is_forking(1); //pour signal
+		wpid = wait(&status);
+		while (wpid != pid)
+			wpid = wait(&status);
+		if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of the child is returned to the calling process.
 		{
-			is_forking(0);
+			is_forking(0); //l'enfant est mort, je reset a 0
 			free(path);
 			return(1);
 		}
 	}
-	//wait(&status);
-	//if (path)
-	//	free(path);
 	return (1); 
 } 
 

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 15:42:39 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 15:45:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_ret g_ret = 0;
 
 void signal_handler(int n) 
 {
-	signal(SIGINT, signal_handler); //faire un retour a la ligne
-	signal(SIGQUIT, signal_handler); //afficher infos
+	//signal(SIGINT, signal_handler); //faire un retour a la ligne
+	//signal(SIGQUIT, signal_handler); //afficher infos
 	if (is_forking(2) && n == SIGINT)
 		ft_putstr("\n");
 	if (is_forking(2) && n == SIGQUIT)
