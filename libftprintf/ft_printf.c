@@ -32,9 +32,9 @@ int		ft_get_data(t_data *data, const char *str, va_list ap)
 	return (0);
 }
 
-void	ft_launch_output(t_data *data)
+void	ft_launch_output(t_data *data, int fd)
 {
-	ft_output(data);
+	ft_output(data, fd);
 	if (data->flags != NULL)
 		data->i += ft_strlen(data->flags);
 	data->i++;
@@ -47,7 +47,7 @@ void	data_init(t_data *data)
 	data->i = 0;
 }
 
-int		ft_printf(const char *str, ...)
+int		ft_printf_fd(int fd, const char *str, ...)
 {
 	va_list		ap;
 	t_data		data;
@@ -60,11 +60,11 @@ int		ft_printf(const char *str, ...)
 		{
 			if (ft_get_data(&data, str, ap) != 0)
 				return (data.error);
-			ft_launch_output(&data);
+			ft_launch_output(&data, fd);
 		}
 		else
 		{
-			ft_putchar(str[data.i]);
+			ft_putchar_fd(str[data.i], fd);
 			data.value++;
 		}
 		data.i++;

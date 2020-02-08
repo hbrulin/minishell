@@ -19,7 +19,7 @@ int	update_pwd(void)
 	dir = NULL;
 	if (!(dir = getcwd(dir, 0)))
 	{
-		ft_printf("PWD malloc fail\n");
+		ft_printf_fd(2, "PWD malloc fail\n");
 		return(0);
 	}
 	set_var("PWD=", dir);
@@ -34,18 +34,18 @@ int		ft_cd(char **args)
 	len = ft_tablen(args);
 	if (len > 2)
 	{
-		ft_putstr("minishell: cd: too many arguments\n"); 
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2); 
 		return (1);
 	}
 	else if (len == 1)
 	{
 		if ((chdir(get_var("HOME="))) == -1)
-			ft_putstr("minishell: cd: error finding home directory\n");
+			ft_putstr_fd("minishell: cd: error finding home directory\n", 2);
 	}
 	else if (len == 2)
 	{
 		if ((chdir(args[1])) == -1)
-			ft_printf("minishell: cd: %s: No such file or directory\n", args[1]);
+			ft_printf_fd(2, "minishell: cd: %s: No such file or directory\n", args[1]);
 	}
 	return(update_pwd());
 }
@@ -57,15 +57,15 @@ int		ft_pwd(char **args)
 	dir = NULL;
 	if (ft_tablen(args) > 1)
 	{
-		ft_putstr("minishell: pwd: too many arguments\n"); //pas obligé
+		ft_putstr_fd("minishell: pwd: too many arguments\n", 2); //pas obligé
 		return (1);
 	}
 	if (!(dir = getcwd(dir, 0)))
 	{
-		ft_printf("Malloc fail\n");
+		ft_printf_fd(2, "Malloc fail\n"); //preciser
 		return(0);
 	}
-	ft_printf("%s\n", dir);
+	ft_printf_fd(2, "%s\n", dir);
 	free(dir);
 	return (1);
 }
@@ -75,7 +75,7 @@ int		ft_env(char **args)
 	int i;
 	if (ft_tablen(args) > 1)
 	{
-		ft_putstr("minishell: env: too many arguments\n");
+		ft_putstr_fd("minishell: env: too many arguments\n", 2);
 		return (1);
 	}
 	i = 0;
@@ -94,7 +94,7 @@ int		ft_exit(char **args)
 	i = 0;
 	if (ft_tablen(args) > 2)
 	{
-		ft_putstr("minishell: exit: too many arguments\n");
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return(1);
 	}
 	if (ft_tablen(args) == 1)
@@ -103,7 +103,7 @@ int		ft_exit(char **args)
 	{
 		if (!(ft_isdigit(args[1][i])))
 		{
-			ft_printf("minishell: exit: %s: numeric argument required\n", args[1]);
+			ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n", args[1]);
 			return (0);
 		}
 		i++;

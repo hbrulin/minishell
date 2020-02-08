@@ -66,7 +66,7 @@ int		ft_execve(char **args)
 		if(ft_access(path))
 		{
 			if ((execve(path, args, g_env)) == -1)
-				ft_printf("minishell: %s: command not found\n", args[0]);
+				ft_printf_fd(2, "minishell: %s: command not found\n", args[0]);
 		}
 	}
 	else //je suis dans le pere

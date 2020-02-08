@@ -54,7 +54,7 @@ typedef struct	s_data
 	int			error;
 }				t_data;
 
-int				ft_printf(const char *str, ...);
+int				ft_printf_fd(int fd, const char *str, ...);
 int				ft_assign_data(t_data *data);
 char			get_format(const char *str, int i);
 int				ft_index(t_data *data);
@@ -70,7 +70,7 @@ void			get_flags(const char *str, int i, t_data *data);
 void			get_flag_bit(t_data *data);
 int				ft_launch_flags(t_data *data);
 int				ft_precision_s(t_data *data);
-void			ft_output(t_data *data);
+void			ft_output(t_data *data, int fd);
 int				ft_precision(t_data *data);
 void			get_precision_nbr(t_data *data);
 void			get_width_nbr(t_data *data);
@@ -79,7 +79,7 @@ int				ft_zero(t_data *data);
 void			ft_minus(t_data *data);
 void			ft_free(t_data *data);
 int				ft_width_c(t_data *data);
-void			ft_output_c (t_data *data);
+void			ft_output_c(t_data *data, int fd);
 int				ft_precision_neg_i(t_data *data);
 int				ft_zero_neg_i(t_data *data);
 int				ft_star_precision(t_data *data);

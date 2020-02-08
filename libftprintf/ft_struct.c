@@ -15,7 +15,7 @@
 
 int		set_error(t_data *data)
 {
-	ft_putstr("MALLOC_FAIL");
+	ft_putstr_fd("MALLOC_FAIL\n", 2);
 	data->error = MALLOC_FAIL;
 	return (data->error);
 }
