@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 11:12:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 12:43:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		ft_execve(char **args)
 	{
 		if ((execve(path, args, g_env)) == -1)
 			 ft_printf("minishell: %s: command not found\n", args[0]);
+		//signal(SIGABRT, SIG_DFL);
 		exit(0);
 	}
 	wait(&pid);

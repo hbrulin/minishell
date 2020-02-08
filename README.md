@@ -81,3 +81,6 @@ retourne un struct stat *buf, le remplit avec plusieurs champ, donc un champ st_
 if (buf.st_mode & S_IXUSR)
         return (1);
 ```
+#signal
+http://www-igm.univ-mlv.fr/~dr/NCSPDF/chapitre11.pdf
+https://fr.wikipedia.org/wiki/Signal_(informatique) 
