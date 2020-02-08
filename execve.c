@@ -60,13 +60,12 @@ int		ft_execve(char **args)
 	int status;
 	char *path = NULL;
 	path = get_path(args);
+	if(!(ft_access(path)))
+		return(1);
 	if ((pid = fork()) == -1)
 		return (1); // avec erreur msg
 	if (pid == 0)  //Quid si erreur de fork?
-	{
-		if(ft_access(path))
 			execve(path, args, g_env);
-	}
 	else if (pid > 0)//je suis dans le pere
 	{
 		is_forking(1); //pour signal
