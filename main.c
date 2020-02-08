@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 12:59:19 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 13:08:32 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void signal_handler(int n)
 {
 	(void)n;
 	signal(SIGINT, signal_handler);
-	//signal(SIGABRT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 }
 
 void	prompt(void)
@@ -47,6 +47,7 @@ int		main(int ac, char **av, char **envp)
 	(void)ac; 
 	(void)av;
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	g_env = copy_tab(envp);
 	prompt();
 	//ft_printf("%i\n", g_ret);
