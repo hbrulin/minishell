@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 13:30:19 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 15:41:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	set_var(char *key, char *value);
 int		ft_cd(char **args);
 int		ft_access(char *path);
 void signal_handler(int n);
+int is_forking(int val);
 
 #endif

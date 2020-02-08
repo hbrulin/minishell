@@ -6,11 +6,20 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 14:09:42 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/08 15:42:45 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int is_forking(int val)
+{
+	static int is_forking = 0;
+
+	if (val != 2)
+		is_forking = val;
+	return (is_forking);
+}
 
 static char	*bin_search(char *cmd)
 {
@@ -44,34 +53,39 @@ char *get_path(char **args)
 	return(path);
 }
 
-void signal_print(int n) 
-{
-	if (n == SIGINT)
-		ft_putstr("\n");
-	if (n == SIGQUIT)
-		ft_putstr("Quit: 3\n");
-	return;
-}
-
 int		ft_execve(char **args)
 {
 	pid_t	pid;
+	pid_t tpid;
+	int status;
 	char *path = NULL;
 	path = get_path(args);
-	//ft_putstr(path);
-	//ft_putstr("\n");
 	pid = fork();
-	if (pid == 0 && ft_access(path))  //Quid si erreur de fork?
+	if (pid == 0)  //Quid si erreur de fork?
 	{
-		if ((execve(path, args, g_env)) == -1)
-			 ft_printf("minishell: %s: command not found\n", args[0]);
-		exit(0);
+		if(ft_access(path))
+		{
+			if ((execve(path, args, g_env)) == -1)
+				ft_printf("minishell: %s: command not found\n", args[0]);
+			exit(0); //besoin?
+		}
 	}
-	signal(SIGINT, signal_print);
-	signal(SIGQUIT, signal_print);
-	wait(&pid);
-	if (path)
-		free(path);
+	else 
+	{
+		is_forking(1);
+		tpid = wait(&status);
+		while (tpid != pid)
+			tpid = wait(&status);
+		if (tpid == pid) 
+		{
+			is_forking(0);
+			free(path);
+			return(1);
+		}
+	}
+	//wait(&status);
+	//if (path)
+	//	free(path);
 	return (1); 
 } 
 
