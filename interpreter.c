@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <stdio.h>
 
 /*
 **	Receive splitted arguments.
@@ -15,7 +16,8 @@ char	*expand_var(char *arg, int dr, int *i) // dr = $ lc = last char of var
 	char *tmp;
 	char *key;
 
-	tmp = ft_substr(arg, dr + 1, (*i + 1) - dr);
+//	printf("received arg: %s\n", arg);
+	tmp = ft_substr(arg, dr + 1, *i - 1 - dr);
 //	printf("isole var: %s\n", tmp);
 	key = ft_strjoin(tmp, "=");
 //	printf("var to key: %s\n", key);
@@ -31,6 +33,20 @@ char	*expand_var(char *arg, int dr, int *i) // dr = $ lc = last char of var
 	free(key);
 //	printf("final new arg: %s\n", tmp);
 	return (tmp);
+}
+
+char	*expand_rvar(char *arg, int *i)
+{
+	char *tmp;
+	char *value;
+
+	value = ft_itoa(g_ret);
+	tmp = ft_strnjoin(arg, value, *i - 1); 
+	free(value);
+	value = ft_strjoin(tmp, &arg[*i + 1]);
+	*i = !tmp ? -1 : ft_strlen(tmp);
+	free(tmp);
+	return (value);
 }
 
 int	clean_arg(char **arg)
@@ -61,18 +77,30 @@ int	clean_arg(char **arg)
 				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
 			i = j == 1 ? i + 2 : i + 1;
 		}
-		else if (!sq && !dq && s[i] == '$')
+		else if (!sq && s[i] == '$')
 		{
 			j = i;
 			i++;
-			if (s[i] == '_' || (s[i] >= 65 && s[i] <= 90) || (s[i] >= 97 && s[i] <= 122)) // si first char auth expand else ignore
+			if (!dq && (s[i] == '\'' || s[i] == '"'))
+			{
+				ft_memmove(&s[i - 1], &s[i], ft_strlen(s) - (i - 1));
+				i--;
+			}
+			else if (s[i] == '?')
+			{
+				tmp = s;
+				s = expand_rvar(s, &i);
+				free(tmp);
+				if (i == -1)
+					return (1);
+			}
+			else if (s[i] == '_' || (s[i] >= 65 && s[i] <= 90) || (s[i] >= 97 && s[i] <= 122)) // si first char auth expand else ignore
 			{
 				while ((s[i] >= 65 && s[i] <= 90) || (s[i] >= 97 && s[i] <= 122) || (s[i] >= 48 && s[i] <= 57))
 					i++;
-				tmp = *arg;
-				*arg = expand_var(s, j, &i);
+				tmp = s;
+				s = expand_var(s, j, &i);
 				free(tmp);
-			//	printf("i = %d\n", i);
 				if (i == -1)
 					return (1);
 			}
@@ -100,6 +128,7 @@ int	clean_arg(char **arg)
 		else
 			i++;
 	}
+	*arg = s;
 	if (sq || dq) // si sq ou dq TRUE la matching quote n'as pas ete trouvee donc syntx error
 		return (1);
 	return (0);

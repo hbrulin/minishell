@@ -50,3 +50,7 @@ re :
 .PHONY: all, clean, fclean, re
 
 -include $(DPD)
+
+for_linux:
+	gcc -c $(FLAGS) $(SRCS) -I./ libft.h
+	ar rc $(NAME) $(OBJS)
