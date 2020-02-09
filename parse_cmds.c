@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:29:31 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:54:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@ int	parsexec(char *cmd)
 {
 	char **args = NULL;
 
-	args = parse_arg(cmd);
+	if(!(args = parse_arg(cmd)))
+	{
+		ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
+		free(cmd);
+		return(0);
+	}
 	free(cmd);
 
 	//interpreteur(args);
 		
-	if (!(run_dmc(args)))
+	if (!(run_dmc(args))) //cas ou cmd == exit
 	{
-		ft_tabdel((void *)args);
+		ft_tabdel((void *)args); 
 		return(0); 
 	}
 	ft_tabdel((void *)args);
@@ -38,11 +43,13 @@ int parse_cmds(char *s)
 	int open;
 	char quote;
 	char *cmd = NULL;
-	//1 cmd
 	if (ft_strchr(s, ';') == NULL) //retirer en fixant erreur free si 0 ;
 	{
-		cmd = ft_strdup(s);
-		//ft_putstr(cmd);
+		if(!(cmd = ft_strdup(s)))
+		{
+			ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
+			return(0);
+		}
 		if(!(parsexec(cmd)))
 			return(0); //pour exit
 		return(1);
@@ -60,16 +67,17 @@ int parse_cmds(char *s)
 	i = 0;
 	j = 0;
 	open = 0;
-	//several cmds
 	while (s[i])
 	{
 		if (ft_strchr(s + i, ';') == NULL)
 		{
-			cmd = ft_strdup(s + j);
-			//ft_putstr(cmd);
-			//ft_putstr("\n");
+			if(!(cmd = ft_strdup(s + j)))
+			{
+				ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
+				return(0);
+			}
 			if(!(parsexec(cmd)))
-				return(0); //pour exit
+				return(0);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -81,15 +89,17 @@ int parse_cmds(char *s)
 			open = !open;
 		if (s[i] == ';' && open == 0)
 		{
-			cmd = ft_substr(s, j, i - j);
-			//ft_putstr(cmd);
-			//ft_putstr("\n");
+			if(!(cmd = ft_substr(s, j, i - j)))
+			{
+				ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
+				return(0);
+			}
 			i++;
 			while(ft_is_space(s[i]))
 				i++;
 			j = i;
 			if(!(parsexec(cmd)))
-				return(0); //pour exit
+				return(0);
 		}
 		i++;
 	}

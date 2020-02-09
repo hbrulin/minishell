@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 12:45:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:00:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	update_pwd(void)
 	old_dir = get_var("PWD=");
 	if (!(dir = getcwd(dir, 0)))
 	{
-		ft_printf_fd(2, "PWD malloc fail\n");
+		ft_printf_fd(2, "minishell: error fatal: getcwd did not allocate properly\n");
 		return(0);
 	}
 	set_var("PWD=", dir);
@@ -61,15 +61,15 @@ int		ft_pwd(char **args)
 	dir = NULL;
 	if (ft_tablen(args) > 1)
 	{
-		ft_putstr_fd("minishell: pwd: too many arguments\n", 2); //pas obligé
+		ft_putstr_fd("minishell: pwd: too many arguments\n", 2); 
 		return (1);
 	}
 	if (!(dir = getcwd(dir, 0)))
 	{
-		ft_printf_fd(2, "Malloc fail\n"); //preciser
+		ft_printf_fd(2, "minishell: error fatal: getcwd did not allocate properly\n");
 		return(0);
 	}
-	ft_printf_fd(2, "%s\n", dir);
+	ft_printf_fd(1, "%s\n", dir);
 	free(dir);
 	return (1);
 }

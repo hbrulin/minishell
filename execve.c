@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:32:22 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:19:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*bin_search(char *cmd)
 		}
 		bins++;
 	}
-	closedir(path_to_bin); //quid si error? opendir et closedir utilisent errno. faire sortie d'erreurs?
+	closedir(path_to_bin); //quid si error? 
 	return (NULL); 
 }
 
@@ -59,22 +59,48 @@ int		ft_execve(char **args)
 	pid_t wpid;
 	int status;
 	char *path = NULL;
-	path = get_path(args);
+	if(!(path = get_path(args)))
+	{
+		ft_printf_fd(2, "minishell : error fatal: path was not allocated properly\n");
+		return (0);
+	}
 	if(!(ft_access(path)))
 	{
 		free(path);
 		return(1);
 	}
 	if ((pid = fork()) == -1)
-		return (1); // avec erreur msg
-	if (pid == 0)  //Quid si erreur de fork?
-			execve(path, args, g_env);
+	{
+		ft_printf_fd(2, "minishell : error fatal: fork was unsuccessful\n");
+		free(path);
+		return (0);
+	}
+	if (pid == 0)
+	{
+		if((execve(path, args, g_env)) == -1)
+		{
+			ft_printf_fd(2, "minishell : command could not be executed\n");
+			return (1);
+		}
+	}
 	else if (pid > 0)//je suis dans le pere
 	{
 		is_forking(1); //pour signal
-		wpid = wait(&status); //check err
+		if((wpid = wait(&status)) == -1)
+		{
+			free(path);
+			ft_printf_fd(2, "minishell : error fatal: wait for child process\n");
+			return (0);
+		}
 		while (wpid != pid)
-			wpid = wait(&status); //erreur msg
+		{
+			if((wpid = wait(&status)) == -1)
+			{
+				free(path);
+				ft_printf_fd(2, "minishell : error fatal: wait for child process\n");
+				return (0);
+			}
+		}
 		if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of the child is returned to the calling process.
 		{
 			is_forking(0); //l'enfant est mort, je ne fork plus

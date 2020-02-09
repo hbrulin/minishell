@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:18:48 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:57:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char **parse_arg(char *s)
 	{
 		if (ft_strchr(s + i, ' ') == NULL) //ou alors is_space
 		{
-			tmp = ft_strdup(s + j);
+			if(!(tmp = ft_strdup(s + j)))
+				return (NULL);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
 			if (!(temp->content = ft_strdup(tmp)))
@@ -56,7 +57,8 @@ char **parse_arg(char *s)
 			open = !open;
 		if (s[i] == ' ' && open == 0)
 		{
-			tmp = ft_substr(s, j, i - j);
+			if(!(tmp = ft_substr(s, j, i - j)))
+				return (NULL);
 			i++;
 			while(ft_is_space(s[i]))
 				i++;
@@ -71,7 +73,6 @@ char **parse_arg(char *s)
 		}
 		i++;
 	}
-	//ft_lstiter(list, (void (*)(void *))&ft_putstr);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	return (ret);
