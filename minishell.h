@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:57:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 16:04:31 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef int	t_ret;
 t_env	g_env;
 t_ret	g_ret;
 
-int	run_dmc(char **args);
-int parse_cmds(char *s);
-char **parse_arg(char *args);
+int		run_dmc(char **args);
+int		parse_cmds(char *s);
+char	**parse_arg(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);

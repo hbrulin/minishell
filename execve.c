@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 16:02:39 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 16:16:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,42 @@ int is_forking(int val)
 	return (is_forking);
 }
 
-static char	*bin_search(char *cmd)
+char	*bin_search(char *cmd)
 {
-	struct dirent	*bins = NULL;
-	DIR				*path_to_bin = NULL;
-	char *location = "/bin/";
-	path_to_bin = opendir(location);
-	if (path_to_bin == NULL)
+	struct dirent	*bins;
+	DIR				*path_to_bin;
+	char *location;
+	char *ret;
+	
+	bins = NULL;
+	path_to_bin = NULL;
+	location = ft_strdup("/bin/");
+	ret = NULL;
+	if(!(path_to_bin = opendir(location)))
+	{
+		ft_error("minishell: dir /bin/ could not be opened", 0, location, NULL);
 		return (NULL);
+	}
 	while ((bins = readdir(path_to_bin)) != NULL)
 	{
 		if (ft_strcmp(bins->d_name, cmd) == 0)
 		{
-			closedir(path_to_bin);
-			return (ft_strjoin(location, cmd));
+			if (closedir(path_to_bin) == -1)
+			{
+				ft_error("minishell: fatal_error\n", 0, location, NULL);
+				exit(EXIT_FAILURE);
+			}
+			ret = ft_strjoin(location, cmd);
+			free(location);
+			return (ret);
 		}
 		bins++;
 	}
-	closedir(path_to_bin); //quid si error? 
+	if (closedir(path_to_bin) == -1)
+	{
+		ft_error("minishell: fatal_error\n", 0, location, NULL);
+		exit(EXIT_FAILURE);
+	}
 	return (NULL); 
 }
 
