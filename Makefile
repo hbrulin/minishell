@@ -6,13 +6,14 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/09 17:49:24 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/09 18:37:37 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c error_and_access.c
+SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c error_and_access.c \
+	ft_lstiter_custom.c
 
 HEADER = minishell.h 
 

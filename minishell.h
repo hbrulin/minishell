@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 17:49:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 18:38:10 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	signal_handler(int n);
 int		is_forking(int val);
 int		ft_error(char *msg, int ret, char *befree, void *param);
 int		ft_export(char **args);
+int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int));
 
 #endif
