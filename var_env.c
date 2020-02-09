@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 17:49:37 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 18:09:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,27 @@ char    *get_var(char *key)
 
 int		ft_export(char **args)
 {
+	int i;
+	int j;
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
+	{
 		ft_lstiter(export, (void (*)(void *))&ft_putstr);
+		return(1);
+	}
+	i = 1;
+	while (args[i])
+	{
+		if(ft_isdigit(args[i][0]))
+			ft_error("export: not an identifier: %s\n", 1, NULL, args[i]);
+		j = 0;
+		while (args[i][j])
+		{
+			if (!(ft_isalnum(args[i][j])))
+				ft_error("export: syntax error: %s\n", 1, NULL, args[i]);
+			j++;
+		}
+		i++;
+	}
 	return (1);
 }
