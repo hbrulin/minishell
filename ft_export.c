@@ -6,16 +6,36 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 19:16:52 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 19:43:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+int		export_error(char *arg)
+{
+	int i = 0;
+
+	if(ft_isdigit(arg[0]))
+		return(ft_error("export: not an identifier: %s\n", 1, NULL, arg)); //passer un tour
+	while (arg[i])
+	{
+		if (!(ft_isalnum(arg[i])))
+		{
+			if (arg[i] != '=')
+				return(ft_error("export: syntax error: %s\n", 1, NULL, arg)); //ici il faut passer un tour
+		}
+		i++;
+	}
+	return(0);
+}
+
+
 int		ft_export(char **args)
 {
 	int i;
-	int j;
+	int k;
 
 	t_list *temp = NULL;
 	ft_list_sort(export);
@@ -25,33 +45,42 @@ int		ft_export(char **args)
 		return(1);
 	}
 	i = 1;
+	k = 0;
 	while (args[i])
 	{
-		if(ft_isdigit(args[i][0]))
-			ft_error("export: not an identifier: %s\n", 1, NULL, args[i]); //passer un tour
-		j = 0;
-		while (args[i][j])
+		while (args[i][k] != '=' && args[i][k])
+			k++;
+		if(!(export_error(args[i])))
 		{
-			if (!(ft_isalnum(args[i][j])))
+			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
-				if (args[i][j] != '=')
-					ft_error("export: syntax error: %s\n", 1, NULL, args[i]); //ici il faut passer un tour
+				//si = avec rien derrire, env = rien, export = ''
+				//si 0 = ->rien a faire
+				//sinon reset
+				ft_putstr("je suis trouvé\n");
 			}
-			j++;
-		}
-		if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
-		{
-			ft_putstr("je suis trouvé\n");
-		}
-		else
-		{
-			ft_putstr("je suis pas là\n");
-			if (!(temp = malloc(sizeof(t_list))))
-				return (0); //il faut msg error
-			if (!(temp->content = ft_strdup(args[i])))
-				return (0); //idem
-			temp->next = 0;
-			ft_lstadd_back(&export, temp);
+			else
+			{
+				if (!(temp = malloc(sizeof(t_list))))
+					return (0); //il faut msg error, ft_error
+				if (!(ft_strchr(args[i], '=')))
+				{
+					if (!(temp->content = ft_strjoin(args[i], "=''")))
+						return (0); //idem
+				}	
+				else if (ft_strchr(args[i], '=') && args[i][k + 1] == '\0')
+				{
+					if (!(temp->content = ft_strjoin(args[i], "''")))
+						return (0); //idem
+				}	
+				else
+				{
+					if (!(temp->content = ft_strdup(args[i])))
+					return (0); //idem
+				}
+				temp->next = 0;
+				ft_lstadd_back(&export, temp);
+			}
 		}
 		i++;
 	}
