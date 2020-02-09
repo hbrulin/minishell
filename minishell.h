@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 16:04:31 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 17:27:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef int	t_ret;
 t_env	g_env;
 t_ret	g_ret;
 
+extern	t_list *export;
+
 int		run_dmc(char **args);
 int		parse_cmds(char *s);
 char	**parse_arg(char *args);
@@ -46,5 +48,6 @@ int		ft_access(char *path);
 void	signal_handler(int n);
 int		is_forking(int val);
 int		ft_error(char *msg, int ret, char *befree, void *param);
+int		ft_export(char **args);
 
 #endif

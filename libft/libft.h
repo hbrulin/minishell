@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:24:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:24:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 17:27:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ size_t				ft_tablen(char **tab);
 char				**copy_tab(char **tab);
 char 				**ft_lst_to_tab(t_list *list);
 int					ft_strcmp(const char *s1, const char *s2);
+t_list				*ft_tab_to_list(t_list *lst, char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 16:48:36 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 17:30:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ char    *get_var(char *key)
 		i++;
 	}
     return (tmp);
+}
+
+int		ft_export(char **args)
+{
+	if (ft_tablen(args) > 1)
+		ft_lstiter(export, (void (*)(void *))&ft_putstr);
+	return (1);
 }

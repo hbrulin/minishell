@@ -6,13 +6,14 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:24:12 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 17:26:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_env g_env = NULL;
+t_list *export = NULL;
 t_ret g_ret = 0;
 
 void signal_handler(int n) 
@@ -57,6 +58,7 @@ int		main(int ac, char **av, char **envp)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	g_env = copy_tab(envp);
+	export = ft_tab_to_list(export, g_env);
 	prompt();
 	//ft_printf("%i\n", g_ret);
 	return(g_ret);
