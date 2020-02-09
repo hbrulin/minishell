@@ -6,18 +6,18 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/09 18:37:37 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/09 19:17:55 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c error_and_access.c \
-	ft_lstiter_custom.c
+	ft_lstiter_custom.c ft_export.c
 
 HEADER = minishell.h 
 
-CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g
+CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g -fsanitize=address
 BUILD_DIR = obj
 
 OBJS = $(SRCS:.c=.o)
@@ -46,7 +46,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: %.c Makefile
