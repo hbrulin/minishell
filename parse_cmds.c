@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:47:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 13:44:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int parse_cmds(char *s)
 	{
 		if (s[i] == ';' && s[i + 1] == ';')
 		{
-			ft_printf_fd(2, "syntax error near unexpected token `;;'\n");
+			ft_printf_fd(2, "minishell: syntax error near unexpected token `;;'\n");
 			return (1);
 		}
 		i++;
