@@ -36,15 +36,15 @@ int    set_var(char *key, char *value)
 
 char    *get_var(char *key)
 {
-    int i;
-    char *tmp = NULL;
+	int i;
+	char *tmp = NULL;
 
-    i = 0;
+    	i = 0;
 	while(g_env[i])
 	{
 		if (ft_strncmp(g_env[i], key, ft_strlen(key)) == 0)
-            tmp = ft_substr(g_env[i], ft_strlen(key), ft_strlen(g_env[i]) - ft_strlen(key));
+			tmp = ft_substr(g_env[i], ft_strlen(key), ft_strlen(g_env[i]) - ft_strlen(key));
 		i++;
 	}
-    return (tmp);
+    	return (tmp);
 }
