@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 11:09:03 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:34:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void    set_var(char *key, char *value)
             tmp = ft_strjoin(key, value);
             free(g_env[i]);
             g_env[i] = ft_strdup(tmp);
+			free(tmp);
         }
 		i++;
 	}

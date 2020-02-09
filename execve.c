@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 16:02:50 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:32:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int		ft_execve(char **args)
 	char *path = NULL;
 	path = get_path(args);
 	if(!(ft_access(path)))
+	{
+		free(path);
 		return(1);
+	}
 	if ((pid = fork()) == -1)
 		return (1); // avec erreur msg
 	if (pid == 0)  //Quid si erreur de fork?

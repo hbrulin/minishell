@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 17:40:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:24:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	prompt(void)
 
 	status = 1;
 	input = NULL;
+	s = NULL;
 	while(status)
 	{
 		ft_putstr("minishell > ");

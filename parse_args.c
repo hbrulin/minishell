@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:20:57 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:18:48 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char **parse_arg(char *s)
 	if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
 	{
 		ret = ft_split(s, ' '); 
-		free(s);
 		return(ret);
 	}
 

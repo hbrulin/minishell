@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 13:44:22 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:29:31 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	parsexec(char *cmd)
 {
-	char **args;
+	char **args = NULL;
 
-	args = parse_arg(cmd); 
+	args = parse_arg(cmd);
+	free(cmd);
+
 	//interpreteur(args);
 		
 	if (!(run_dmc(args)))
@@ -35,18 +37,14 @@ int parse_cmds(char *s)
 	int j;
 	int open;
 	char quote;
-	char *cmd;
+	char *cmd = NULL;
 	//1 cmd
 	if (ft_strchr(s, ';') == NULL) //retirer en fixant erreur free si 0 ;
 	{
 		cmd = ft_strdup(s);
 		//ft_putstr(cmd);
 		if(!(parsexec(cmd)))
-		{
-			//free(cmd);
 			return(0); //pour exit
-		}
-		//free(cmd); //voir pour leak
 		return(1);
 	}
 	i = 0;
@@ -71,11 +69,7 @@ int parse_cmds(char *s)
 			//ft_putstr(cmd);
 			//ft_putstr("\n");
 			if(!(parsexec(cmd)))
-			{
-				//free(cmd);
 				return(0); //pour exit
-			}
-			//free(cmd);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -95,11 +89,7 @@ int parse_cmds(char *s)
 				i++;
 			j = i;
 			if(!(parsexec(cmd)))
-			{
-				//free(cmd);
 				return(0); //pour exit
-			}
-			//free(cmd);
 		}
 		i++;
 	}
