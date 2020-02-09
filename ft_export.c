@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 19:43:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 20:51:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int		ft_export(char **args)
 {
 	int i;
 	int k;
-
+	char *key = NULL;
 	t_list *temp = NULL;
+	
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
@@ -54,10 +55,21 @@ int		ft_export(char **args)
 		{
 			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
-				//si = avec rien derrire, env = rien, export = ''
-				//si 0 = ->rien a faire
-				//sinon reset
-				ft_putstr("je suis trouvé\n");
+				if (ft_strchr(args[i], '=') && args[i][k + 1] == '\0')
+				{
+					key = ft_substr(args[i], 0, k + 1);
+					del_var_export(key);
+					set_var_export(key, "''"); 
+					set_var(key, NULL);
+				}
+				else if (ft_strchr(args[i], '='))
+				{
+					key = ft_substr(args[i], 0, k + 1);
+					del_var_export(key);
+					set_var_export(key, args[i] + k + 1);
+					set_var(key, args[i] + k +1);
+				}
+				free(key);
 			}
 			else
 			{
