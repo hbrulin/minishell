@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:00:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:36:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	update_pwd(void)
 	dir = NULL;
 	old_dir = get_var("PWD=");
 	if (!(dir = getcwd(dir, 0)))
-	{
-		ft_printf_fd(2, "minishell: error fatal: getcwd did not allocate properly\n");
-		return(0);
-	}
+		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, NULL, NULL));
 	set_var("PWD=", dir);
 	set_var("OLDPWD=", old_dir);
 	free(dir);
@@ -37,10 +34,7 @@ int		ft_cd(char **args)
 
 	len = ft_tablen(args);
 	if (len > 2)
-	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", 2); 
-		return (1);
-	}
+		return(ft_error("minishell: cd: too many arguments\n", 1, NULL, NULL));
 	else if (len == 1)
 	{
 		if ((chdir(get_var("HOME="))) == -1)
@@ -60,15 +54,9 @@ int		ft_pwd(char **args)
 
 	dir = NULL;
 	if (ft_tablen(args) > 1)
-	{
-		ft_putstr_fd("minishell: pwd: too many arguments\n", 2); 
-		return (1);
-	}
+		return(ft_error("minishell: pwd: too many arguments\n", 1, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
-	{
-		ft_printf_fd(2, "minishell: error fatal: getcwd did not allocate properly\n");
-		return(0);
-	}
+		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, NULL, NULL));
 	ft_printf_fd(1, "%s\n", dir);
 	free(dir);
 	return (1);
@@ -78,10 +66,7 @@ int		ft_env(char **args)
 {
 	int i;
 	if (ft_tablen(args) > 1)
-	{
-		ft_putstr_fd("minishell: env: too many arguments\n", 2);
-		return (1);
-	}
+		return(ft_error("minishell: env: too many arguments\n", 1, NULL, NULL));
 	i = 0;
 	while(g_env[i])
 	{
@@ -97,19 +82,13 @@ int		ft_exit(char **args)
 	int i;
 	i = 0;
 	if (ft_tablen(args) > 2)
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return(1);
-	}
+		return(ft_error("minishell: exit: too many arguments\n", 1, NULL, NULL));
 	if (ft_tablen(args) == 1)
 		return(0);
 	while (args[1][i])
 	{
 		if (!(ft_isdigit(args[1][i])))
-		{
-			ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n", args[1]);
-			return (0);
-		}
+			return(ft_error("minishell: exit: %s: numeric argument required\n", 0, NULL, args[1]));
 		i++;
 	}
 	g_ret = ft_atoi(args[1]);

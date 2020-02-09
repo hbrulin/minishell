@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:54:26 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:35:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ int	parsexec(char *cmd)
 	char **args = NULL;
 
 	if(!(args = parse_arg(cmd)))
-	{
-		ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
-		free(cmd);
-		return(0);
-	}
+		return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, cmd, NULL));
 	free(cmd);
 
 	//interpreteur(args);
@@ -46,10 +42,7 @@ int parse_cmds(char *s)
 	if (ft_strchr(s, ';') == NULL) //retirer en fixant erreur free si 0 ;
 	{
 		if(!(cmd = ft_strdup(s)))
-		{
-			ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
-			return(0);
-		}
+			return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
 		if(!(parsexec(cmd)))
 			return(0); //pour exit
 		return(1);
@@ -58,10 +51,7 @@ int parse_cmds(char *s)
 	while (s[i])
 	{
 		if (s[i] == ';' && s[i + 1] == ';')
-		{
-			ft_printf_fd(2, "minishell: syntax error near unexpected token `;;'\n");
-			return (1);
-		}
+			return(ft_error("minishell: syntax error near unexpected token `;;'\n", 1, NULL, NULL));
 		i++;
 	}
 	i = 0;
@@ -72,10 +62,7 @@ int parse_cmds(char *s)
 		if (ft_strchr(s + i, ';') == NULL)
 		{
 			if(!(cmd = ft_strdup(s + j)))
-			{
-				ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
-				return(0);
-			}
+				return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
 			if(!(parsexec(cmd)))
 				return(0);
 			break;
@@ -90,10 +77,7 @@ int parse_cmds(char *s)
 		if (s[i] == ';' && open == 0)
 		{
 			if(!(cmd = ft_substr(s, j, i - j)))
-			{
-				ft_printf_fd(2, "minishell: error fatal: command was not allocated properly\n");
-				return(0);
-			}
+				return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
 			i++;
 			while(ft_is_space(s[i]))
 				i++;
