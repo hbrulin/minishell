@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:23:48 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:24:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:57:21 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_env(char **args);
 int		ft_pwd(char **args);
 int		ft_execve(char **args);
 char	*get_var(char *key);
-void	set_var(char *key, char *value);
+int		set_var(char *key, char *value);
 int		ft_cd(char **args);
 int		ft_access(char *path);
 void	signal_handler(int n);

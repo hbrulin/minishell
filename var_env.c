@@ -6,13 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 14:34:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:59:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    set_var(char *key, char *value)
+int    set_var(char *key, char *value)
 {
     int i;
     char * tmp;
@@ -22,13 +22,16 @@ void    set_var(char *key, char *value)
 	{
 		if (ft_strncmp(g_env[i], key, ft_strlen(key)) == 0)
         {
-            tmp = ft_strjoin(key, value);
+            if(!(tmp = ft_strjoin(key, value)))
+				return (-1);
             free(g_env[i]);
-            g_env[i] = ft_strdup(tmp);
+            if(!(g_env[i] = ft_strdup(tmp)))
+				return(ft_error(NULL, -1, tmp, NULL));
 			free(tmp);
         }
 		i++;
 	}
+	return (1);
 }
 
 char    *get_var(char *key)

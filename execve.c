@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:44:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 16:02:39 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ static char	*bin_search(char *cmd)
 
 char *get_path(char **args)
 {
-	char *path = NULL;
-
+	char *path;
+	
+	path = NULL;
 	if ((path = bin_search(args[0])) != NULL)
 		return (path);
 	else

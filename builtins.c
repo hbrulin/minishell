@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:36:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/09 16:00:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,21 @@ int	update_pwd(void)
 	char *old_dir;
 
 	dir = NULL;
-	old_dir = get_var("PWD=");
+	old_dir = NULL;
+	if(!(old_dir = get_var("PWD=")))
+		return(ft_error("minishell: error fatal: malloc fail in get_env\n", 0, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
-		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, NULL, NULL));
-	set_var("PWD=", dir);
-	set_var("OLDPWD=", old_dir);
+		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, old_dir, NULL));
+	if((set_var("PWD=", dir)) == -1)
+	{
+		free(dir);
+		return(ft_error("minishell: error fatal: malloc fail in set_env\n", 0, old_dir, NULL));
+	}
+	if((set_var("OLDPWD=", old_dir)) == -1)
+	{
+		free(dir);
+		return(ft_error("minishell: error fatal: malloc fail in set_env\n", 0, old_dir, NULL));
+	}
 	free(dir);
 	free(old_dir);
 	return (1);
