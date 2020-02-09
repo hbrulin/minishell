@@ -9,7 +9,7 @@ void	test_simple_arg(const char *arg, const char *expected_arg, int expected_ret
 
 		if (!(test = strdup(arg)))
 		{ printf("Error: could't allocate memory for test.\n"); return ; }
-		ret = clean_arg(&test);
+		ret = interpret_arg(&test);
 		if (ret == expected_ret && strcmp(test, expected_arg) == 0)
 			printf(".");
 		else if (ret == expected_ret && expected_ret == 1)
@@ -40,6 +40,7 @@ int		main(void)
 	g_env[4] = strdup("TRAP2=$VAR$USER$TRAP1$");
 	g_env[5] = NULL;
 
+	test_args();
 	// NO QUOTES
 	test_simple_arg("unicorn", "unicorn", 0);	
 	test_simple_arg("\\unicorn", "unicorn", 0);	
@@ -68,7 +69,7 @@ int		main(void)
 	test_simple_arg("uni\\\\\"corn", "", 1);	
 	test_simple_arg("uni\\'\\", "uni'", 0);	
 	test_simple_arg("'uni\\corn'\\\\'", "", 1);	
-	test_simple_arg("$?", "0", 0);	
+	test_simple_arg("$?", "0", 0);
 	test_simple_arg("$?$USER", "0alien", 0);	
 	test_simple_arg("$USER", "alien", 0);	
 	test_simple_arg("$VAR", "spaceship", 0);	
@@ -179,6 +180,7 @@ int		main(void)
 	g_ret = 255;
 	test_simple_arg("'Last cmd returned '$?\" $??\"", "Last cmd returned 255 255?", 0);
 
+
 	printf("\n");
 
 	free(g_env[0]);
@@ -187,4 +189,5 @@ int		main(void)
 	free(g_env[3]);
 	free(g_env[4]);
 	free(g_env[5]);
+	free(g_env);
 }
