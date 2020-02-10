@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/10 15:31:28 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/10 16:05:34 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c erro
 
 HEADER = minishell.h 
 
-CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g
 BUILD_DIR = obj
 
 OBJS = $(SRCS:.c=.o)
@@ -46,7 +46,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: %.c Makefile

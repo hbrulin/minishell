@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 14:53:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 16:03:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 int		export_error(char *arg)
 {
-	int i = 0;
+	//int i = 0;
 
 	if (ft_strcmp(arg, "=") == 0)
 		return(ft_error("export: bad assignment\n", 1, NULL, NULL));
 	if(ft_isdigit(arg[0]) || arg[0] == '=')
 		return(ft_error("export: not an identifier: %s\n", 1, NULL, arg));
-	while (arg[i])
+	/*while (arg[i])
 	{
 		if (!(ft_isalnum(arg[i])))
 		{
@@ -29,7 +29,7 @@ int		export_error(char *arg)
 				return(ft_error("export: syntax error: %s\n", 1, NULL, arg));
 		}
 		i++;
-	}
+	}*/
 	return(0);
 }
 
