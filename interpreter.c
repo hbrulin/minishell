@@ -10,7 +10,7 @@ void	expand_envvar(char **arg, int dr, int *i)
 	free(tmp);
 	tmp = get_var(env, key);
 	free(key);
-	key = ft_strnjoin(*arg, tmp, dr); 
+	key = ft_strnjoin(*arg, (char *)&tmp[ft_strlen(key)], dr);  //changement ici
 	free(tmp);
 	tmp = ft_strjoin(key, &((*arg)[*i]));
 	*i = !key ? -1 : ft_strlen(key);

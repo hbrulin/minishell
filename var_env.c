@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:23:56 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 18:22:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char    *get_var(t_list *lst, char *key)
 	return(NULL);
 }
 
-int		set_var(t_list *lst, char *key, char *value)
+/*int		set_var(t_list *lst, char *key, char *value)
 {
 	t_list *temp = NULL;
 	char *tmp;
@@ -44,6 +44,34 @@ int		set_var(t_list *lst, char *key, char *value)
 	temp->next = 0;
 	ft_lstadd_back(&lst, temp);
 	return (1);
+}*/
+
+int		set_var(t_list *lst, char *key, char *value)
+{
+	t_list *next;
+	char *tmp;
+	char *new;
+
+	if (!value)
+		new = ft_strdup(key);
+	else
+	{
+		if(!(new = ft_strjoin(key, value)))
+		return (-1);
+	}
+
+	while (lst)
+	{
+		next = lst->next;
+		if (!(ft_strncmp(lst->content, key, (int)ft_strlen(key))))
+		{
+			tmp = ft_strdup(lst->content);
+			lst->content = new;
+			free(tmp);
+		}
+		lst = next;
+	}
+	return(1);
 }
 
 t_list    *del_var(t_list *lst, char *key)

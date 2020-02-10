@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 14:50:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 18:15:38 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,40 @@ int	update_pwd(void)
 	if (!(dir = getcwd(dir, 0)))
 		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, old_dir, NULL));
 
-	del_var(env, "PWD=");
 	set_var(env, "PWD=", dir);
-	del_var(export, "PWD="); //reunir ca en 2 si pour env camarche
 	set_var(export, "PWD=", dir);
-	del_var(env, "OLDPWD=");
 	set_var(env, "OLDPWD=", old_dir);
-	del_var(export, "OLDPWD="); //reunir ca en 2 si pour env camarche
 	set_var(export, "OLDPWD=", old_dir);
 	free(dir);
 	//free(old_dir);
 	return (1);
 }
 
+char	*get_home()
+{
+	char *ret;
+	char *var;
+
+	var = get_var(env, "HOME=");
+	ret = ft_substr(var, ft_strlen("HOME="), ft_strlen(var) - ft_strlen("HOME"));
+	//free(var);
+	return(ret);
+}
+
 int		ft_cd(char **args)
 {
 	int len;
+	char *home;
 
 	len = ft_tablen(args);
 	if (len > 2)
 		return(ft_error("minishell: cd: too many arguments\n", 1, NULL, NULL));
 	else if (len == 1)
 	{
-		if ((chdir(get_var(env, "HOME="))) == -1)
-			ft_putstr_fd("minishell: cd: error finding home directory\n", 2);
+		home = get_home();
+		if ((chdir(home)) == -1)
+			ft_printf_fd(2, "minishell: cd: error finding home directory\n", home, NULL);
+		free(home);
 	}
 	else if (len == 2)
 	{
