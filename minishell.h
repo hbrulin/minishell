@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 16:23:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:43:00 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ int		ft_unset(char **args);
 int		set_var(t_list *lst, char *key, char *value);
 int		interpreter(char **args);
 int		envvar_authorized_character(char c, int first_char);
+char 	**tab_cpy_custom(char **tab);
 
 #endif

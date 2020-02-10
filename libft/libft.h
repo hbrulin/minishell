@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:24:10 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:24:19 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:28:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ t_list				*ft_tab_to_list(t_list *lst, char **tab);
 void				ft_list_sort(t_list *lst);
 void				ft_lstprint(t_list *lst);
 t_list				*ft_lst_search_n_destroy(t_list *lst, char *key);
+void				ft_tab_print(char **tab);
 
 #endif
