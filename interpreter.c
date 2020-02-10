@@ -8,7 +8,7 @@ void	expand_envvar(char **arg, int dr, int *i)
 	tmp = ft_substr(*arg, dr + 1, (*i - 1) - dr);
 	key = ft_strjoin(tmp, "=");
 	free(tmp);
-	tmp = get_var(key);
+	tmp = get_var(env, key);
 	free(key);
 	key = ft_strnjoin(*arg, tmp, dr); 
 	free(tmp);

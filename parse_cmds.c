@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:35:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 15:31:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ int	parsexec(char *cmd)
 		return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, cmd, NULL));
 	free(cmd);
 
-	//interpreteur(args);
-		
+	if (interpreter(args) == 1)
+	{
+		ft_tabdel((void *)args); 
+		return(1); 
+	}
 	if (!(run_dmc(args))) //cas ou cmd == exit
 	{
 		ft_tabdel((void *)args); 
