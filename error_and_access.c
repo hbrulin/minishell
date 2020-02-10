@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 15:35:38 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:12:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,4 @@ int		ft_error(char *msg, int ret, char *befree, void *param)
 		free(befree);
 	return(ret);
 }
+

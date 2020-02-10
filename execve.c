@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:21:46 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:09:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int		ft_execve(char **args)
 	pid_t wpid;
 	int status;
 	char *path = NULL;
-	char **tab_env = ft_lst_to_tab(env); //A FREE APRES!!!!
+	char **tab_env = NULL;
+	
 	if(!(path = get_path(args)))
 		return(ft_error("minishell : error fatal: path was not allocated properly\n", 0, NULL, NULL));
 	if(!(ft_access(path)))
@@ -87,8 +88,13 @@ int		ft_execve(char **args)
 		return(ft_error("minishell : error fatal: fork was unsuccessful\n", 0, path, NULL));
 	if (pid == 0)
 	{
+		tab_env = ft_lst_to_tab(env);
 		if((execve(path, args, tab_env)) == -1)
+		{
+			ft_tabdel((void *)tab_env);
 			return(ft_error("minishell: %s: command could not be executed\n", 1, path, path));
+		}
+		ft_tabdel((void *)tab_env);
 	}
 	else if (pid > 0)
 	{
