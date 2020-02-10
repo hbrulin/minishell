@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 18:15:38 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 18:59:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	update_pwd(void)
 
 	dir = NULL;
 	old_dir = NULL;
-	old_dir = get_var(env, "PWD=");
+	old_dir = ft_substr(get_var(env, "PWD="), ft_strlen("PWD="), ft_strlen(get_var(env, "PWD=")) - ft_strlen("PWD="));
 	if (!(dir = getcwd(dir, 0)))
 		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, old_dir, NULL));
 
@@ -28,7 +28,7 @@ int	update_pwd(void)
 	set_var(env, "OLDPWD=", old_dir);
 	set_var(export, "OLDPWD=", old_dir);
 	free(dir);
-	//free(old_dir);
+	free(old_dir);
 	return (1);
 }
 
@@ -39,7 +39,6 @@ char	*get_home()
 
 	var = get_var(env, "HOME=");
 	ret = ft_substr(var, ft_strlen("HOME="), ft_strlen(var) - ft_strlen("HOME"));
-	//free(var);
 	return(ret);
 }
 
