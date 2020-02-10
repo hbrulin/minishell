@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 13:17:08 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/10 14:30:04 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/10 14:34:07 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+int		ft_unset(char **args)
 {
-	t_list *next;
-
-	if (!lst || !f)
-		return ;
-	while (lst)
+	int i;
+	i = 0;
+	if (ft_tablen(args) == 1)
+		return(ft_error("unset: not enough arguments\n", 1, NULL, NULL));
+	while (args[i])
 	{
-		next = lst->next;
-		f(lst->content);
-		lst = next;
+		del_var(export, args[i]);
+		del_var(env, args[i]);
+		i++;
 	}
+	return (1);
 }

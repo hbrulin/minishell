@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 13:17:08 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/10 13:16:48 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/10 13:17:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstprint(t_list *lst)
 {
 	t_list *next;
 
-	if (!lst || !f)
+	if (!lst)
 		return ;
 	while (lst)
 	{
 		next = lst->next;
-		f(lst->content);
+		ft_putstr(lst->content);
+		ft_putstr("\n");
 		lst = next;
 	}
 }

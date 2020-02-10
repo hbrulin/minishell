@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 13:24:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/08 15:45:16 by pmouhali         ###   ########.fr       */
+/*   Created: 2020/02/10 15:24:10 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/10 15:24:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ typedef	struct		s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef enum		e_bool
+{
+	false,
+	true
+}					t_bool;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -88,5 +94,9 @@ size_t				ft_tablen(char **tab);
 char				**copy_tab(char **tab);
 char 				**ft_lst_to_tab(t_list *list);
 int					ft_strcmp(const char *s1, const char *s2);
+t_list				*ft_tab_to_list(t_list *lst, char **tab);
+void				ft_list_sort(t_list *lst);
+void				ft_lstprint(t_list *lst);
+t_list				*ft_lst_search_n_destroy(t_list *lst, char *key);
 
 #endif

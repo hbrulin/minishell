@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 16:00:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 14:50:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,20 @@ int	update_pwd(void)
 
 	dir = NULL;
 	old_dir = NULL;
-	if(!(old_dir = get_var("PWD=")))
-		return(ft_error("minishell: error fatal: malloc fail in get_env\n", 0, NULL, NULL));
+	old_dir = get_var(env, "PWD=");
 	if (!(dir = getcwd(dir, 0)))
 		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, old_dir, NULL));
-	if((set_var("PWD=", dir)) == -1)
-	{
-		free(dir);
-		return(ft_error("minishell: error fatal: malloc fail in set_env\n", 0, old_dir, NULL));
-	}
-	if((set_var("OLDPWD=", old_dir)) == -1)
-	{
-		free(dir);
-		return(ft_error("minishell: error fatal: malloc fail in set_env\n", 0, old_dir, NULL));
-	}
+
+	del_var(env, "PWD=");
+	set_var(env, "PWD=", dir);
+	del_var(export, "PWD="); //reunir ca en 2 si pour env camarche
+	set_var(export, "PWD=", dir);
+	del_var(env, "OLDPWD=");
+	set_var(env, "OLDPWD=", old_dir);
+	del_var(export, "OLDPWD="); //reunir ca en 2 si pour env camarche
+	set_var(export, "OLDPWD=", old_dir);
 	free(dir);
-	free(old_dir);
+	//free(old_dir);
 	return (1);
 }
 
@@ -47,7 +45,7 @@ int		ft_cd(char **args)
 		return(ft_error("minishell: cd: too many arguments\n", 1, NULL, NULL));
 	else if (len == 1)
 	{
-		if ((chdir(get_var("HOME="))) == -1)
+		if ((chdir(get_var(env, "HOME="))) == -1)
 			ft_putstr_fd("minishell: cd: error finding home directory\n", 2);
 	}
 	else if (len == 2)
@@ -78,12 +76,7 @@ int		ft_env(char **args)
 	if (ft_tablen(args) > 1)
 		return(ft_error("minishell: env: too many arguments\n", 1, NULL, NULL));
 	i = 0;
-	while(g_env[i])
-	{
-		ft_putstr(g_env[i]);
-		ft_putstr("\n");
-		i++;
-	}
+	ft_lstprint(env);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 16:16:28 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 15:21:46 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		ft_execve(char **args)
 	pid_t wpid;
 	int status;
 	char *path = NULL;
+	char **tab_env = ft_lst_to_tab(env); //A FREE APRES!!!!
 	if(!(path = get_path(args)))
 		return(ft_error("minishell : error fatal: path was not allocated properly\n", 0, NULL, NULL));
 	if(!(ft_access(path)))
@@ -86,12 +87,12 @@ int		ft_execve(char **args)
 		return(ft_error("minishell : error fatal: fork was unsuccessful\n", 0, path, NULL));
 	if (pid == 0)
 	{
-		if((execve(path, args, g_env)) == -1)
+		if((execve(path, args, tab_env)) == -1)
 			return(ft_error("minishell: %s: command could not be executed\n", 1, path, path));
 	}
 	else if (pid > 0)
 	{
-		is_forking(1); //pour signal
+		is_forking(1); 
 		if((wpid = wait(&status)) == -1)
 			return(ft_error("minishell : error fatal: wait for child process\n", 0, path, NULL));
 		while (wpid != pid)
@@ -99,9 +100,9 @@ int		ft_execve(char **args)
 			if((wpid = wait(&status)) == -1)
 				return(ft_error("minishell : error fatal: wait for child process\n", 0, path, NULL));
 		}
-		if (wpid == pid) //If wait() returns due to a stopped or terminated child process, the process ID of the child is returned to the calling process.
+		if (wpid == pid) 
 		{
-			is_forking(0); //l'enfant est mort, je ne fork plus
+			is_forking(0);
 			return(ft_error(NULL, 1, path, NULL));
 		}
 	}

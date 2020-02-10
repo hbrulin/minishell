@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 17:28:40 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 13:17:08 by hbrulin          ###   ########.fr       */
+/*   Created: 2018/07/26 13:36:47 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/09 17:47:00 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_list_sort(t_list *lst)
 {
-	t_list *next;
+	t_bool	sort;
+	t_list	*head;
+	void	*swp;
 
-	if (!lst || !f)
+	if (!lst->next)
 		return ;
-	while (lst)
+	sort = true;
+	head = lst;
+	while (sort)
 	{
-		next = lst->next;
-		f(lst->content);
-		lst = next;
+		sort = false;
+		while (lst)
+		{
+			while (lst->next && ft_strcmp(lst->content, lst->next->content) > 0)
+			{
+				sort = true;
+				swp = lst->next->content;
+				lst->next->content = lst->content;
+				lst->content = swp;
+			}
+			lst = lst->next;
+		}
+		lst = head;
 	}
 }
