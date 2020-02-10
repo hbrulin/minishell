@@ -6,11 +6,24 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:30:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 14:34:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:05:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		unset_error(char *arg)
+{
+	int i = 0;
+
+	while (arg[i])
+	{
+		if (envvar_authorized_character(arg[i], TRUE) == FALSE)
+			return(ft_error("unset: not a valid identifier: %s\n", 1, NULL, arg));
+		i++;
+	}
+	return(0);
+}
 
 int		ft_unset(char **args)
 {
@@ -20,8 +33,11 @@ int		ft_unset(char **args)
 		return(ft_error("unset: not enough arguments\n", 1, NULL, NULL));
 	while (args[i])
 	{
-		del_var(export, args[i]);
-		del_var(env, args[i]);
+		if (!(unset_error(args[i])))
+		{
+			del_var(export, args[i]);
+			del_var(env, args[i]);
+		}
 		i++;
 	}
 	return (1);
