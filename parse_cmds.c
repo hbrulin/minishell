@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:45:23 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 19:19:57 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int parse_cmds(char *s)
 	int open;
 	char quote;
 	char *cmd = NULL;
+	if (!s)
+		return(1);
 	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))

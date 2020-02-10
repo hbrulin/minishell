@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:45:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 19:22:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ char **tab_cpy_custom(char **tab)
 	int count = 0;
 	char **ret = NULL;
 
+	if (!tab)
+		return(NULL);
+
 	while (tab[i])
 	{
 		if(ft_strcmp(tab[i], "") != 0)
@@ -83,6 +86,6 @@ char **tab_cpy_custom(char **tab)
 		}
 		i++;
 	}
-	ret[j] = NULL;
+	ret[j] = 0;
 	return(ret);
 }
