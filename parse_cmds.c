@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:51:15 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 16:12:39 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parsexec(char *cmd)
 	if (interpreter(args) == 1)
 	{
 		ft_tabdel((void *)args); 
-		return(1); 
+		return(ft_error("minishell: error syntax\n", 1, NULL, NULL));
 	}
 	if (!(run_dmc(args))) //cas ou cmd == exit
 	{
@@ -42,12 +42,12 @@ int parse_cmds(char *s)
 	int open;
 	char quote;
 	char *cmd = NULL;
-	if (ft_strchr(s, ';') == NULL) //retirer en fixant erreur free si 0 ;
+	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))
 			return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
 		if(!(parsexec(cmd)))
-			return(0); //pour exit
+			return(0); 
 		return(1);
 	}
 	i = 0;
