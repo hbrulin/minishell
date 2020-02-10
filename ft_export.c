@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 20:51:16 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 13:22:13 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_export(char **args)
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
-		ft_lstiter(export, (void (*)(void *))&ft_putstr);
+		ft_lstprint(export);
 		return(1);
 	}
 	i = 1;

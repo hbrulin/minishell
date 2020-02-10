@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 18:08:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 13:13:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int		main(int ac, char **av, char **envp)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	g_env = copy_tab(envp);
-	export = ft_tab_to_list(export, g_env);
+	export = ft_tab_to_list_custom(export, g_env);
 	prompt();
-	ft_lstclear(&export, free); //+g_env
+	ft_lstclear(&export, free);
 	ft_tabdel((void *)g_env);
 	return(g_ret);
 }

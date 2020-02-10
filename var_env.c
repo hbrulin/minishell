@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/09 20:57:28 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 13:23:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_list    *del_var_export(char *key)
 	t_list *previous;
 	int ret;
 	previous = export;
-	if (!(ft_strncmp(export->content, key, ft_strlen(key))))
+	if (!(ft_strncmp(previous->content, key, ft_strlen(key))))
 	{
   		export = previous->next;
   		free(previous);
