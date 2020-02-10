@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 13:22:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/10 13:48:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ int		export_error(char *arg)
 {
 	int i = 0;
 
-	if(ft_isdigit(arg[0]))
-		return(ft_error("export: not an identifier: %s\n", 1, NULL, arg)); //passer un tour
+	if (ft_strcmp(arg, "=") == 0)
+		return(ft_error("export: bad assignment\n", 1, NULL, NULL));
+	if(ft_isdigit(arg[0]) || arg[0] == '=')
+		return(ft_error("export: not an identifier: %s\n", 1, NULL, arg));
 	while (arg[i])
 	{
 		if (!(ft_isalnum(arg[i])))
 		{
-			if (arg[i] != '=')
-				return(ft_error("export: syntax error: %s\n", 1, NULL, arg)); //ici il faut passer un tour
+			if (arg[i] != '=') //revoir char autorisees : _ + supprimer les "" -> segfault
+				return(ft_error("export: syntax error: %s\n", 1, NULL, arg));
 		}
 		i++;
 	}
