@@ -82,10 +82,8 @@ int		ft_pwd(char **args)
 
 int		ft_env(char **args)
 {
-	int i;
 	if (ft_tablen(args) > 1)
 		return(ft_error("minishell: env: too many arguments\n", 1, NULL, NULL));
-	i = 0;
 	ft_lstprint(env);
 	return (1);
 }

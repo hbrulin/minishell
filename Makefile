@@ -17,7 +17,7 @@ SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c erro
 
 HEADER = minishell.h 
 
-CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -g
+CFLAGS = -Wall -Werror -Wextra -MMD -I./$(HEADER) -g
 BUILD_DIR = obj
 
 OBJS = $(SRCS:.c=.o)
@@ -68,3 +68,6 @@ re :
 .PHONY: all, clean, fclean, re, opti, make_ft, make_ftp
 
 -include $(DPD)
+
+for_linux:
+	gcc -Wall -Wextra -Werror $(SRCS) minishell.h -L./libftprintf/ -lftprintf -I./libftprintf/ -L./libft/ -lft -I./libft/

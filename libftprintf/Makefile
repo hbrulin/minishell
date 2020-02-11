@@ -26,35 +26,40 @@ OBJ = $(addprefix $(BUILD_DIR)/,$(OBJS))
 DPD = $(OBJ:.o=.d)
 
 opti :
-	@make -j all
+	make -j all
 
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C ../libft all
-	@cp ../libft/libft.a ./$(NAME)
-	@ar rc $(NAME) $(OBJ)
-	@echo "$(NAME) created"
-	@ranlib $(NAME)
-	@echo "$(NAME) indexed"
+	make -C ../libft all
+	cp ../libft/libft.a ./$(NAME)
+	ar rc $(NAME) $(OBJ)
+	echo "$(NAME) created"
+	ranlib $(NAME)
+	echo "$(NAME) indexed"
 
 $(BUILD_DIR)/%.o: %.c Makefile
-	@mkdir -p $(BUILD_DIR)
-	@gcc $(CFLAGS) -c $< -o $@
+	mkdir -p $(BUILD_DIR)
+	gcc $(CFLAGS) -c $< -o $@
 
 clean:
-	@/bin/rm -rf $(BUILD_DIR)
-	@echo "Object and DPD files deleted"
+	/bin/rm -rf $(BUILD_DIR)
+	echo "Object and DPD files deleted"
 
 fclean: clean
-	@/bin/rm -f $(NAME)
-	@make -C libft fclean
-	@echo "Lib deleted"
+	/bin/rm -f $(NAME)
+	make -C libft fclean
+	echo "Lib deleted"
 
 re : 
-	@make fclean
-	@make opti
+	make fclean
+	make opti
 
 .PHONY: all, clean, fclean, re, opti
 
 -include $(DPD)
+
+for_linux:
+	cp ../libft/libft.a ./libft.a
+	gcc -c -Wall -Wextra -Werror $(SRCS) $(HEADER) -L./ -lft ../libft/libft.h
+	ar rc $(NAME) $(OBJS)

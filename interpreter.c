@@ -13,7 +13,7 @@ void	expand_envvar(char **arg, int dr, int *i)
 	key = ft_strnjoin(*arg, tmp, dr);
 	free(tmp);
 	tmp = ft_strjoin(key, &((*arg)[*i]));
-	*i = !key ? -1 : ft_strlen(key);
+	*i = !key ? -1 : (int)ft_strlen(key);
 	free(key);
 	key = *arg;
 	*arg = tmp;
@@ -29,7 +29,7 @@ void	expand_resvar(char **arg, int *i)
 	tmp = ft_strnjoin(*arg, value, *i - 1); 
 	free(value);
 	value = ft_strjoin(tmp, &((*arg)[*i + 1]));
-	*i = !tmp ? -1 : ft_strlen(tmp);
+	*i = !tmp ? -1 : (int)ft_strlen(tmp);
 	free(tmp);
 	tmp = *arg;
 	*arg = value;
