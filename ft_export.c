@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 19:15:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 13:12:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,15 @@ int		export_error(char *arg)
 {
 	int i = 0;
 
-	if (ft_strcmp(arg, "=") == 0)
-		return(ft_error("export: bad assignment\n", 1, NULL, NULL));
-	if(ft_isdigit(arg[0]) || arg[0] == '=')
-		return(ft_error("export: not an identifier: %s\n", 1, NULL, arg));
-	while (arg[i])
+	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
+		return(ft_error("export: not a valid identifier: %s\n", 1, NULL, arg));
+	while (arg[++i] && arg[i] != '=')
 	{
-		if (envvar_authorized_character(arg[i], TRUE) == FALSE)
-		{
-			if (arg[i] != '=' && !(ft_isdigit(arg[i])))
-				return(ft_error("export: not an identifier: %s\n", 1, NULL, arg));
-		}
-		i++;
+		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
+			return(ft_error("export: not a valid identifier: %s\n", 1, NULL, arg));
 	}
 	return(0);
 }
-
 
 int		ft_export(char **args)
 {

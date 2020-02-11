@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 19:28:46 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 13:04:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	update_pwd(void)
 
 	dir = NULL;
 	old_dir = NULL;
-	old_dir = ft_substr(get_var(env, "PWD="), ft_strlen("PWD="), ft_strlen(get_var(env, "PWD=")) - ft_strlen("PWD="));
+	old_dir = get_var(env, "PWD=");
 	if (!(dir = getcwd(dir, 0)))
 		return(ft_error("minishell: error fatal: getcwd did not allocate properly\n", 0, old_dir, NULL));
 	set_var(env, "PWD=", dir);
@@ -48,9 +48,9 @@ int		ft_cd(char **args)
 	char *home;
 
 	len = ft_tablen(args);
-	if (len > 2)
-		return(ft_error("minishell: cd: too many arguments\n", 1, NULL, NULL));
-	else if (len == 1)
+	//if (len > 2)
+	//	return(ft_error("minishell: cd: too many arguments\n", 1, NULL, NULL));
+	if (len == 1 || !(ft_strcmp(args[1], "")))
 	{
 		if(!(home = get_home()))
 			return(ft_error("cd: HOME not set\n", 1, NULL, NULL));

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:30:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:05:16 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 13:11:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int		unset_error(char *arg)
 {
 	int i = 0;
 
-	while (arg[i])
+	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
+		return(ft_error("unset: not a valid identifier: %s\n", 1, NULL, arg));
+	while (arg[++i])
 	{
-		if (envvar_authorized_character(arg[i], TRUE) == FALSE)
+		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
 			return(ft_error("unset: not a valid identifier: %s\n", 1, NULL, arg));
-		i++;
 	}
 	return(0);
 }

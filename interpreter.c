@@ -10,7 +10,7 @@ void	expand_envvar(char **arg, int dr, int *i)
 	free(tmp);
 	tmp = get_var(env, key);
 	free(key);
-	key = ft_strnjoin(*arg, (char *)&tmp[ft_strlen(key)], dr);  //changement ici
+	key = ft_strnjoin(*arg, tmp, dr);
 	free(tmp);
 	tmp = ft_strjoin(key, &((*arg)[*i]));
 	*i = !key ? -1 : ft_strlen(key);
@@ -76,31 +76,40 @@ int		escape_char(char **s, int i, int boolean_value)
 	return (boolean_value);
 }
 
-int		interpret_arg(char **s)
+int		interpret_arg(char **or)
 {
 	t_boolean sq;
 	t_boolean dq;
 	int i;
+	char *s = *or;
 
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
-	while (*s && i > -1 && (*s)[i])
+	ft_printf_fd(1, "8\n");
+	while (s)
 	{
-		if (!sq && !dq && (*s)[i] == 92)
-			i += escape_char(s, i, TRUE);
-		else if (!sq && dq && (*s)[i] == 92 && ((*s)[i + 1] == '\\'
-				|| (*s)[i + 1] == '$' || (*s)[i + 1] == '\"'))
-			i += escape_char(s, i, TRUE);
-		else if (!sq && (*s)[i] == '$')
-			i = expand(s, i, dq);
-		else if (!dq && (*s)[i] == 39) 
-			sq = escape_char(s, i, !sq);
-		else if (!sq && (*s)[i] == 34)
-			dq = escape_char(s, i, !dq);
+		if (i == -1)
+			break;
+		if (!(s[i]))
+			break;
+		ft_printf_fd(1, "7\n");
+		if (!sq && !dq && s[i] == 92)
+			i += escape_char(&s, i, TRUE);
+		else if (!sq && dq && s[i] == 92 && (s[i + 1] == '\\'
+				|| (s)[i + 1] == '$' || s[i + 1] == '\"'))
+			i += escape_char(&s, i, TRUE);
+		else if (!sq && (s)[i] == '$')
+			i = expand(&s, i, dq);
+		else if (!dq && (s)[i] == 39) 
+			sq = escape_char(&s, i, !sq);
+		else if (!sq && (s)[i] == 34)
+			dq = escape_char(&s, i, !dq);
 		else
 			i++;
 	}
+	*or = s;
+	//ft_printf_fd(1, "7");
 	i = sq == TRUE || dq == TRUE || i == -1 ? 1 : 0;
 	return (i);
 }
@@ -110,9 +119,12 @@ int		interpreter(char **args)
 	int i;
 	int r;
 	
+	if (!args && !*args)
+		return(1);
+	//ft_printf_fd(1, "6");
 	r = 0;
 	i = 0;
-	while (args && r != -1 && args[++i])
+	while (args && r != 1 && args[++i])
 		r = interpret_arg(&(args[i]));
 	return (r);
 }

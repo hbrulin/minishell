@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:26:15 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 14:56:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void signal_handler(int n)
 		ft_putstr("\n");
 	if (is_forking(2) && n == SIGQUIT)
 		ft_putstr("Quit: 3\n");
-	(void)n;
 }
 
 void	prompt(void)
@@ -30,6 +29,7 @@ void	prompt(void)
 	int		status;
 	char	*input;
 	char	*s;
+	int ret;
 
 	status = 1;
 	input = NULL;
@@ -37,7 +37,8 @@ void	prompt(void)
 	while(status)
 	{
 		ft_putstr("minishell > ");
-		if (get_next_line(STDIN_FILENO, &input) == 0) //EOF, ctrl D. Prevoir si -1?
+		ret = get_next_line(STDIN_FILENO, &input);
+		if (ret == 0) //EOF, ctrl D. Prevoir si -1?
 		{
 			ft_putstr("exit\n");
 			exit(0); //free automatiquement

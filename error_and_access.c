@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:12:12 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 13:01:21 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int ft_access(char *path)
     if (buf.st_mode & S_IXUSR)
         return (1);
 	else
-		ft_printf_fd(2, "minishell: %s: permission denied\n", path);
+		ft_printf_fd(2, "minishell: %s: permission denied\n", path); 
 	return (0);
 	
  }

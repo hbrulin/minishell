@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 18:07:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 14:56:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ extern	t_list *export;
 
 int		run_dmc(char **args);
 int		parse_cmds(char *s);
+int		parsexec(char *cmd);
 char	**parse_arg(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
@@ -54,6 +55,6 @@ int		ft_unset(char **args);
 int		set_var(t_list *lst, char *key, char *value);
 int		interpreter(char **args);
 int		envvar_authorized_character(char c, int first_char);
-char 	**tab_cpy_custom(char **tab);
+void	prompt(void);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/10 19:23:58 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/11 14:57:06 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: %.c Makefile
@@ -65,6 +65,6 @@ re :
 	@make fclean
 	@make opti
 
-.PHONY: all, clean, fclean, re, opti, make_ft
+.PHONY: all, clean, fclean, re, opti, make_ft, make_ftp
 
 -include $(DPD)

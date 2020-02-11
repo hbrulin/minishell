@@ -6,11 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 19:12:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 13:04:15 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//(char *)&tmp[ft_strlen(key)]
 
 char    *get_var(t_list *lst, char *key)
 {
@@ -20,7 +22,7 @@ char    *get_var(t_list *lst, char *key)
 	{
 		next = lst->next;
 		if (!(ft_strncmp(lst->content, key, (int)ft_strlen(key))))
-			return(lst->content);
+			return(ft_strdup((char *)&(lst->content)[ft_strlen(key)]));
 		lst = next;
 	}
 	return(NULL);

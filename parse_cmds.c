@@ -6,36 +6,11 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 19:34:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 14:25:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	parsexec(char *cmd)
-{
-	char **args = NULL;
-	char **cpy = NULL;
-
-	if(!(args = parse_arg(cmd)))
-		return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, cmd, NULL));
-	free(cmd);
-	if (interpreter(args) == 1)
-	{
-		ft_tabdel((void *)args); 
-		return(ft_error("minishell: error syntax\n", 1, NULL, NULL));
-	}
-	cpy = tab_cpy_custom(args); //securiser
-	ft_tabdel((void *)args); 
-	if (!(run_dmc(cpy)))
-	{
-		ft_tabdel((void *)cpy); 
-		return(0); 
-	}
-	ft_tabdel((void *)cpy);
-	return(1);
-}
-
 
 int parse_cmds(char *s)
 {
