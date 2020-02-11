@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 18:08:55 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:13:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void	ft_lstprint_export(t_list *lst)
 		value = get_var(export, key);
 		ft_putstr("declare -x ");
 		ft_putstr(key);
-		ft_putstr("\"");
+		if (ft_strchr(lst->content, '='))
+			ft_putstr("\"");
 		ft_putstr(value);
-		ft_putstr("\"");
+		if (ft_strchr(lst->content, '='))
+			ft_putstr("\"");
 		ft_putstr("\n");
 		lst = next;
 		free(key);
