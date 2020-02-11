@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:24:10 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:05:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:01:08 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef	struct		s_list
 {
-	void			*content;
+	char			*content;
 	struct s_list	*next;
 }					t_list;
 

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:06:01 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:08:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,34 @@ t_list *ft_tab_to_list_custom(t_list **lst, char **tab)
 		i++;
 	}
 	return(*lst);
+}
+
+
+void	ft_lstprint_export(t_list *lst)
+{
+	t_list *next;
+	int k = 0;
+	char *key = NULL;
+	char *value = NULL;
+
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		k = 0;
+		next = lst->next;
+		while (lst->content[k] != '=' && lst->content[k])
+			k++;
+		key = ft_substr(lst->content, 0, k + 1);
+		value = get_var(export, key);
+		ft_putstr("declare -x ");
+		ft_putstr(key);
+		ft_putstr("\"");
+		ft_putstr(value);
+		ft_putstr("\"");
+		ft_putstr("\n");
+		lst = next;
+		free(key);
+		free(value);
+	}
 }

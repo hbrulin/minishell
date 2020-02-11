@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:05:44 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 17:53:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
 int		ft_execve(char **args);
-char    *get_var(t_list *lst, char *key);
-t_list    *del_var(t_list *lst, char *key);
+char	*get_var(t_list *lst, char *key);
+t_list	*del_var(t_list *lst, char *key);
 int		ft_cd(char **args);
 int		ft_access(char *path);
 void	signal_handler(int n);
@@ -55,6 +55,7 @@ int		ft_unset(char **args);
 int		set_var(t_list *lst, char *key, char *value);
 int		interpreter(char **args);
 int		envvar_authorized_character(char c, int first_char);
-void	prompt(void);
+int		set_var_full(t_list *lst, char *key, char *value);
+void	ft_lstprint_export(t_list *lst);
 
 #endif

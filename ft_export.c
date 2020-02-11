@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 16:56:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:07:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_export(char **args)
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
-		ft_lstprint(export);
+		ft_lstprint_export(export);
 		return(1);
 	}
 	i = 1;
@@ -51,16 +51,8 @@ int		ft_export(char **args)
 			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
 				key = ft_substr(args[i], 0, k + 1);
-				if (ft_strchr(args[i], '=') && args[i][k + 1] == '\0')
-				{
-					set_var(export, key, "''"); 
-					set_var(env, key, NULL);
-				}
-				else if (ft_strchr(args[i], '='))
-				{
-					set_var(export, key, args[i] + k + 1);
-					set_var(env, key, args[i] + k +1);
-				}
+				set_var_full(export, key, args[i]); 
+				set_var_full(env, key, args[i]);
 				free(key);
 			}
 			else
