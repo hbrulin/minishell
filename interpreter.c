@@ -42,7 +42,7 @@ int		envvar_authorized_character(char c, int first_char)
 		if (c == '_' || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 			return (TRUE);
 	if (first_char == FALSE)
-		if ((c > 64 && c < 91) || (c > 96 && c < 123) || (c > 47 && c < 58))
+		if (c == '_' || (c > 64 && c < 91) || (c > 96 && c < 123) || (c > 47 && c < 58))
 			return (TRUE);
 	return (FALSE);	
 }

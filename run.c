@@ -26,7 +26,7 @@ int	parsexec(char *cmd)
 		ft_tabdel((void *)args); 
 		return(ft_error("minishell: error syntax\n", 1, NULL, NULL));
 	}
-	if (!(run_dmc(args)))
+	if (!(run_dmc(args))) // Return values not OK
 	{
 		ft_tabdel((void *)args); 
 		return(0); 
@@ -52,6 +52,8 @@ int	run_dmc(char **args)
 		return(ft_pwd(args));
 	else if ((ft_strcmp(args[0], "cd") == 0))
 		return(ft_cd(args));
+	else if ((ft_strcmp(args[0], "echo") == 0))
+		return(ft_echo(args));
 	else
 		return (ft_execve(args));
 	return(1);

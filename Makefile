@@ -13,7 +13,7 @@
 NAME = minishell
 
 SRCS = main.c parse_cmds.c parse_args.c run.c builtins.c execve.c var_env.c error_and_access.c \
-	customs.c ft_export.c ft_unset.c interpreter.c
+	customs.c ft_export.c ft_unset.c interpreter.c builtins/ft_echo.c
 
 HEADER = minishell.h 
 

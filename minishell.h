@@ -42,6 +42,7 @@ char	**parse_arg(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
+int		ft_echo(char **args);
 int		ft_execve(char **args);
 char	*get_var(t_list *lst, char *key);
 t_list	*del_var(t_list *lst, char *key);
