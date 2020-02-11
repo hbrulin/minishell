@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:09:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 17:16:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*bin_search(char *cmd)
 		}
 		bins++;
 	}
+	if (location)
+		free(location);
 	if (closedir(path_to_bin) == -1)
 	{
 		ft_error("minishell: fatal_error\n", 0, location, NULL);
