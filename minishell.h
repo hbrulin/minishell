@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:53:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:45:57 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef short int t_boolean;
 typedef int	t_ret;
 t_ret	g_ret;
 
-extern	t_list *env;
-extern	t_list *export;
+t_list *env;
+t_list *export;
 
 int		run_dmc(char **args);
 int		parse_cmds(char *s);

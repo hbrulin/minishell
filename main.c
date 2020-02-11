@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 18:41:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:46:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	prompt(void)
 	{
 		ft_putstr("minishell > ");
 		ret = get_next_line(STDIN_FILENO, &input);
-		if (ret == 0) //EOF, ctrl D. Prevoir si -1?
+		if (ret == 0)
 		{
 			ft_putstr("exit\n");
-			exit(0); //free automatiquement
+			exit(0);
 		}
 		s = ft_strtrim(input, " ");
 		free(input);
@@ -59,8 +59,8 @@ int		main(int ac, char **av, char **envp)
 	env = ft_tab_to_list(&env, envp);
 	export = ft_tab_to_list_custom(&export, envp);
 	prompt();
-	//ft_lstclear(&export, free);
-	//ft_lstclear(&env, free);
+	ft_lstclear(&export, free);
+	ft_lstclear(&env, free);
 	system("leaks minishell");
 	return(g_ret);
 }

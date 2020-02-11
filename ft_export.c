@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 18:40:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 18:47:40 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_export(char **args)
 	int k;
 	char *key = NULL;
 	t_list *temp = NULL;
+	t_list *temp2 = NULL;
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
@@ -69,7 +70,11 @@ int		ft_export(char **args)
 				else 
 				{
 					ft_lstadd_back(&export, temp);
-					ft_lstadd_back(&env, temp);
+					if (!(temp2 = malloc(sizeof(t_list))))
+					return (0); //il faut msg error, ft_error
+					if (!(temp2->content = ft_strdup(args[i])))
+						return (0); //idem
+					ft_lstadd_back(&env, temp2);
 				}	
 			}
 		}
