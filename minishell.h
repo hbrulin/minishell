@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 14:56:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 17:05:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	signal_handler(int n);
 int		is_forking(int val);
 int		ft_error(char *msg, int ret, char *befree, void *param);
 int		ft_export(char **args);
-t_list	*ft_tab_to_list_custom(t_list *lst, char **tab);
+t_list	*ft_tab_to_list_custom(t_list **lst, char **tab);
 int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int));
 int		ft_unset(char **args);
 int		set_var(t_list *lst, char *key, char *value);

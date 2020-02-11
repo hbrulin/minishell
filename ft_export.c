@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 13:12:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 16:56:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,16 @@ int		ft_export(char **args)
 			{
 				if (!(temp = malloc(sizeof(t_list))))
 					return (0); //il faut msg error, ft_error
-				if (!(ft_strchr(args[i], '=')))
-				{
-					if (!(temp->content = ft_strjoin(args[i], "=''")))
+				if (!(temp->content = ft_strdup(args[i])))
 						return (0); //idem
-				}	
-				else if (ft_strchr(args[i], '=') && args[i][k + 1] == '\0')
-				{
-					if (!(temp->content = ft_strjoin(args[i], "''")))
-						return (0); //idem
-				}	
-				else
-				{
-					if (!(temp->content = ft_strdup(args[i])))
-					return (0); //idem
-				}
 				temp->next = 0;
-				ft_lstadd_back(&export, temp);
+				if (!(ft_strchr(args[i], '=')))
+					ft_lstadd_back(&export, temp);
+				else 
+				{
+					ft_lstadd_back(&export, temp);
+					ft_lstadd_back(&env, temp);
+				}	
 			}
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 14:56:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/11 17:07:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
-	env = ft_tab_to_list(env, envp);
-	export = ft_tab_to_list_custom(export, envp);
+	env = ft_tab_to_list(&env, envp);
+	export = ft_tab_to_list_custom(&export, envp);
 	prompt();
-	ft_lstclear(&export, free);
-	ft_lstclear(&env, free);
+	//ft_lstclear(&export, free);
+	//ft_lstclear(&env, free);
+	system("leaks minishell");
 	return(g_ret);
 }

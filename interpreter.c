@@ -86,14 +86,14 @@ int		interpret_arg(char **or)
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
-	ft_printf_fd(1, "8\n");
+	//ft_printf_fd(1, "8\n");
 	while (s)
 	{
 		if (i == -1)
 			break;
 		if (!(s[i]))
 			break;
-		ft_printf_fd(1, "7\n");
+		//ft_printf_fd(1, "7\n");
 		if (!sq && !dq && s[i] == 92)
 			i += escape_char(&s, i, TRUE);
 		else if (!sq && dq && s[i] == 92 && (s[i + 1] == '\\'
