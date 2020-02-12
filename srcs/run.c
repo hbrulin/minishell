@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:05:26 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:31:21 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	parsexec(char *cmd)
 	free(cmd);
 	if (interpreter(args) == 1)
 		return(ft_error_tab(SYNTAX_ERR, 0, args, NULL));
+	//launch redirect
 	if (run_dmc(args))
 		return(ft_error_tab(NULL, 1, args, NULL));
 	ft_tabdel((void *)args); 
