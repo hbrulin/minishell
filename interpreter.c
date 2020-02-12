@@ -86,14 +86,12 @@ int		interpret_arg(char **or)
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
-	//ft_printf_fd(1, "8\n");
 	while (s)
 	{
 		if (i == -1)
 			break;
 		if (!(s[i]))
 			break;
-		//ft_printf_fd(1, "7\n");
 		if (!sq && !dq && s[i] == 92)
 			i += escape_char(&s, i, TRUE);
 		else if (!sq && dq && s[i] == 92 && (s[i + 1] == '\\'
@@ -109,7 +107,6 @@ int		interpret_arg(char **or)
 			i++;
 	}
 	*or = s;
-	//ft_printf_fd(1, "7");
 	i = sq == TRUE || dq == TRUE || i == -1 ? 1 : 0;
 	return (i);
 }
@@ -119,9 +116,8 @@ int		interpreter(char **args)
 	int i;
 	int r;
 	
-	if (!args && !*args)
-		return(1);
-	//ft_printf_fd(1, "6");
+	if (!args || !*args)
+		return(0);
 	r = 0;
 	i = 0;
 	while (args && r != 1 && args[++i])
