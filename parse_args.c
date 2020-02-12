@@ -28,6 +28,8 @@ char **parse_arg(char *s)
 		ret = ft_split(s, ' '); 
 		return(ret);
 	}
+	// if RETURN SIG > NOT NULL but args0 is
+	// if only spaces > NOT NULL but args0 is
 
 	i = 0;
 	j = 0;

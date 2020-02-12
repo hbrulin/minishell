@@ -86,12 +86,8 @@ int		interpret_arg(char **or)
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
-	while (s)
+	while (s && i != -1 && s[i])
 	{
-		if (i == -1)
-			break;
-		if (!(s[i]))
-			break;
 		if (!sq && !dq && s[i] == 92)
 			i += escape_char(&s, i, TRUE);
 		else if (!sq && dq && s[i] == 92 && (s[i + 1] == '\\'
@@ -116,10 +112,8 @@ int		interpreter(char **args)
 	int i;
 	int r;
 	
-	if (!args || !*args)
-		return(0);
 	r = 0;
-	i = 0;
+	i = -1;
 	while (args && r != 1 && args[++i])
 		r = interpret_arg(&(args[i]));
 	return (r);
