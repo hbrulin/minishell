@@ -1,0 +1,53 @@
+* cmd arg also needs to be interpreted
+* RETURN SIG returns 0
+* CTRL-C SIG returns 1
+
+[>   ]
+ args = NULL
+
+[> cmd ]
+ args = args[0]
+
+[> CTRL-C ]
+ args = ?
+
+
+> export $CAT_ALIAS=cat
+> $CAT_ALIAS ft_echo.c
+(nothing happened)
+> exit
+([1]    41673 segmentation fault  ./minishell)
+
+[CHANGE BACK INTERPRETER SYNTAX FOR POINTER]
+
+> export $CAT_ALIAS=cat
+(not a valid identifier: =cat)
+> export CAT_ALIAS=cat
+> $CAT_ALIAS ft_echo.c
+(nothing happened)
+> env
+(env displayed)
+([1]    41673 segmentation fault  ./minishell)
+
+> export $CAT_ALIAS=cat
+(not a valid identifier: =cat)
+> export CAT_ALIAS=cat
+> env
+(env displayed)
+(SEGF)
+
+[CHANGE BACK INTERPRETER SYNTAX FOR COPY]
+minishell > export $CAT_ALIAS=cat
+export: not a valid identifier: =cat
+minishell > exprot CAT_ALIAS=cat
+minishell: exprot: command not found
+minishell > export CAT_ALIAS=cat
+minishell > env
+(displayed)
+(SEGF)
+
+minishell > export TROLL=some'dumb'"content    ... ... "
+minishell > ev
+minishell: ev: command not found
+minishell > env
+(display + segfault)
