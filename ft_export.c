@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 19:06:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:14:17 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		export_error(char *arg)
 	int i = 0;
 
 	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
-		return(ft_error("export: not a valid identifier: %s\n", 1, NULL, arg));
+		return(ft_error(INVALID_ID_X, 1, NULL, arg));
 	while (arg[++i] && arg[i] != '=')
 	{
 		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
-			return(ft_error("export: not a valid identifier: %s\n", 1, NULL, arg));
+			return(ft_error(INVALID_ID_X, 1, NULL, arg));
 	}
 	return(0);
 }
@@ -37,7 +37,7 @@ int		ft_export(char **args)
 	if (ft_tablen(args) == 1)
 	{
 		ft_lstprint_export(export);
-		return(1);
+		return(0);
 	}
 	i = 1;
 	k = 0;
@@ -49,20 +49,23 @@ int		ft_export(char **args)
 		{
 			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
-				key = ft_substr(args[i], 0, k + 1);
+				if(!(key = ft_substr(args[i], 0, k + 1)))
+					ft_error(MALLOC_FAIL, 1, NULL, NULL);
 				if (ft_strchr(args[i], '='))
 				{
-					set_var_full(export, key, args[i]); 
-					set_var_full(env, key, args[i]);
+					if (set_var_full(export, key, args[i]) == -1)
+						ft_error(MALLOC_FAIL, 1, NULL, NULL);
+					if (set_var_full(env, key, args[i]) == -1)
+						ft_error(MALLOC_FAIL, 1, NULL, NULL);
 				}
 				free(key);
 			}
 			else
 			{
 				if (!(temp = malloc(sizeof(t_list))))
-					return (0); //il faut msg error, ft_error
+					ft_error(MALLOC_FAIL, 1, NULL, NULL);
 				if (!(temp->content = ft_strdup(args[i])))
-						return (0); //idem
+						ft_error(MALLOC_FAIL, 1, NULL, NULL);
 				temp->next = 0;
 				if (!(ft_strchr(args[i], '=')))
 					ft_lstadd_back(&export, temp);
@@ -70,14 +73,14 @@ int		ft_export(char **args)
 				{
 					ft_lstadd_back(&export, temp);
 					if (!(temp2 = malloc(sizeof(t_list))))
-					return (0); //il faut msg error, ft_error
+						ft_error(MALLOC_FAIL, 1, NULL, NULL);
 					if (!(temp2->content = ft_strdup(args[i])))
-						return (0); //idem
+						ft_error(MALLOC_FAIL, 1, NULL, NULL);
 					ft_lstadd_back(&env, temp2);
 				}	
 			}
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 14:25:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:01:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ int parse_cmds(char *s)
 	char quote;
 	char *cmd = NULL;
 	if (!s)
-		return(1);
+		return(0);
 	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))
-			return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
-		if(!(parsexec(cmd)))
-			return(0); 
-		return(1);
+			return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+		if(parsexec(cmd))
+			return(1); 
+		return(0);
 	}
 	i = 0;
 	while (s[i])
 	{
 		if (s[i] == ';' && s[i + 1] == ';')
-			return(ft_error("minishell: syntax error near unexpected token `;;'\n", 1, NULL, NULL));
+			return(ft_error("minishell: syntax error near unexpected token `;;'\n", 0, NULL, NULL));
 		i++;
 	}
 	i = 0;
@@ -44,9 +44,9 @@ int parse_cmds(char *s)
 		if (ft_strchr(s + i, ';') == NULL)
 		{
 			if(!(cmd = ft_strdup(s + j)))
-				return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
-			if(!(parsexec(cmd)))
-				return(0);
+				return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+			if(parsexec(cmd))
+				return(1);
 			break;
 		}
 		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
@@ -59,15 +59,15 @@ int parse_cmds(char *s)
 		if (s[i] == ';' && open == 0)
 		{
 			if(!(cmd = ft_substr(s, j, i - j)))
-				return(ft_error("minishell: error fatal: command was not allocated properly\n", 0, NULL, NULL));
+				return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
 			i++;
 			while(ft_is_space(s[i]))
 				i++;
 			j = i;
-			if(!(parsexec(cmd)))
-				return(0);
+			if(parsexec(cmd))
+				return(1);
 		}
 		i++;
 	}
-	return(1);
+	return(0);
 }

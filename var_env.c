@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 14:31:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:14:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		set_var_full(t_list *lst, char *key, char *value)
 	char *tmp = NULL;
 	char *new;
 
-	new = ft_strdup(value);
+	if(!(new = ft_strdup(value)))
+		return(-1);
 	while (lst)
 	{
 		next = lst->next;
@@ -57,7 +58,10 @@ int		set_var(t_list *lst, char *key, char *value)
 	char *new;
 
 	if (!value)
-		new = ft_strdup(key);
+	{
+		if(!(new = ft_strdup(key)))
+			return (-1);
+	}
 	else
 	{
 		if(!(new = ft_strjoin(key, value)))

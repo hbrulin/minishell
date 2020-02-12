@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 19:00:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:12:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,27 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 # define TRUE  1
 # define FALSE 0
+
+# define SIGINT_ERR 130
+# define SIGQUIT_ERR 131
+
+//#define CMD_NOT_FOUND(cmd)	ft_printf_fd(2, "minishell: %s: command not found\n", (cmd));
+# define	CMD_NOT_FOUND	"minishell: %s: command not found\n"
+# define	CMD_FAIL_EXEC	"minishell: %s: command could not be executed\n"
+# define	PERM_DENIED		"minishell: %s: permission denied\n"
+# define	FATAL_ERROR		"minishell: fatal error: %s\n"
+# define	MALLOC_FAIL		"minishell: fatal error: memory was not allocated properly\n"
+# define	MANY_ARGS		"minishell: %s: too many arguments\n"
+# define	NO_ARG			"%s: not enough arguments\n"
+# define	NO_FILE			"minishell: cd: %s: No such file or directory\n"
+# define	EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
+# define	INVALID_ID_X	"export: %s: not a valid identifier\n"
+# define	INVALID_ID_U	"unset: %s: not a valid identifier\n"
+# define	SYNTAX_ERR		"minishell: syntax error\n"
 
 typedef short int t_boolean;
 
@@ -60,5 +78,6 @@ int		interpreter(char **args);
 int		envvar_authorized_character(char c, int first_char);
 int		set_var_full(t_list *lst, char *key, char *value);
 void	ft_lstprint_export(t_list *lst);
+int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:16:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 15:40:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*bin_search(char *cmd)
 	ret = NULL;
 	if(!(path_to_bin = opendir(location)))
 	{
-		ft_error("minishell: dir /bin/ could not be opened", 0, location, NULL);
+		ft_error(FATAL_ERROR, 0, location, "opendir");
 		return (NULL);
 	}
 	while ((bins = readdir(path_to_bin)) != NULL)
@@ -43,7 +43,7 @@ char	*bin_search(char *cmd)
 		{
 			if (closedir(path_to_bin) == -1)
 			{
-				ft_error("minishell: fatal_error\n", 0, location, NULL);
+				ft_error(FATAL_ERROR, 0, location, "closedir");
 				exit(EXIT_FAILURE);
 			}
 			ret = ft_strjoin(location, cmd);
@@ -56,7 +56,7 @@ char	*bin_search(char *cmd)
 		free(location);
 	if (closedir(path_to_bin) == -1)
 	{
-		ft_error("minishell: fatal_error\n", 0, location, NULL);
+		ft_error(FATAL_ERROR, 0, location, "closedir");
 		exit(EXIT_FAILURE);
 	}
 	return (NULL); 
@@ -83,18 +83,18 @@ int		ft_execve(char **args)
 	char **tab_env = NULL;
 	
 	if(!(path = get_path(args)))
-		return(ft_error("minishell : error fatal: path was not allocated properly\n", 0, NULL, NULL));
+		return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
 	if(!(ft_access(path)))
-		return(ft_error(NULL, 1, path, NULL));
+		return(ft_error(NULL, 0, path, NULL));
 	if ((pid = fork()) == -1)
-		return(ft_error("minishell : error fatal: fork was unsuccessful\n", 0, path, NULL));
+		return(ft_error(FATAL_ERROR, 1, path, "fork"));
 	if (pid == 0)
 	{
 		tab_env = ft_lst_to_tab(env);
 		if((execve(path, args, tab_env)) == -1)
 		{
 			ft_tabdel((void *)tab_env);
-			return(ft_error("minishell: %s: command could not be executed\n", 1, path, path));
+			return(ft_error(CMD_FAIL_EXEC, 0, path, path));
 		}
 		ft_tabdel((void *)tab_env);
 	}
@@ -102,16 +102,16 @@ int		ft_execve(char **args)
 	{
 		is_forking(1); 
 		if((wpid = wait(&status)) == -1)
-			return(ft_error("minishell : error fatal: wait for child process\n", 0, path, NULL));
+			return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
 		while (wpid != pid)
 		{
 			if((wpid = wait(&status)) == -1)
-				return(ft_error("minishell : error fatal: wait for child process\n", 0, path, NULL));
+				return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
 		}
 		if (wpid == pid) 
 		{
 			is_forking(0);
-			return(ft_error(NULL, 1, path, NULL));
+			return(ft_error(NULL, 0, path, NULL));
 		}
 	}
 	return (1); 
