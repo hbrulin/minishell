@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 18:40:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 14:26:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 	{
 		next = lst->next;
 		if (!(f(lst->content, tmp, (int)ft_strlen(tmp))))
-			ft_error(NULL, 0, tmp, NULL);
+			return(ft_error(NULL, 0, tmp, NULL));
 		lst = next;
 	}
 	if (tmp)
