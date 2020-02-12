@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:28:44 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 14:31:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_list    *del_var(t_list *lst, char *key)
 	if (!(ft_strncmp(previous->content, key, ft_strlen(key))))
 	{
   		lst = previous->next;
-  		free(previous);
+  		ft_lstdelone(previous, free);
   		return (lst);
 	}
 	tmp = previous->next;
@@ -96,7 +96,7 @@ t_list    *del_var(t_list *lst, char *key)
   		if (ret == 0)
   		{
     		previous->next = tmp->next;
-    		free(tmp);
+    		ft_lstdelone(tmp, free);
     		return (lst);
   		}
   		previous = tmp; 
