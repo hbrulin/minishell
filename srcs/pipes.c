@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 14:59:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 15:07:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int run_pipe(char **a_cmd, char **b_cmd, int *fd)
 	{
 		dup2(fd_in, 0);
 		if (b_cmd)
-			fd[1] = 1;
-		else 
+			fd[1] = open(*b_cmd, O_RDONLY);
+		else
 			fd[1] = -1;
 		if(run_dmc(a_cmd))
 			return(1);
