@@ -29,21 +29,23 @@ int	run_dmc(char **args)
 {
 	int		err;
 	char	*path;
+	char	*tmp; // find a better solution
 
 	if ((err = builtin_fno(args[0])) != -1)
 		return (g_ret = g_builtin_functions[err](args));
 	path = ft_strrchr(args[0], '/');
 	err = 0;
 	if (path)
-		path = try_path(args[0], &err);
+		path = ft_strdup(try_path(args[0], &err));
 	else
-		path = ft_strdup(args[0]);
+	{
+		tmp = get_var(env, "PATH="); // oh waw...
+		path = tryentry_dirs(tmp, args[0]);
+		free(tmp);
+	}
 	if (err)
 		ft_printf_fd(2, "minishell: %s: %s\n", args[0], strerror(err));
 	else
-	{
-		ft_printf_fd(1, "going to see execve\n");
-		ft_execve(ft_strdup(path), args);
-	}
+		ft_execve(path, args);
 	return(g_ret);
 }

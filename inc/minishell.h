@@ -83,4 +83,5 @@ int		set_var_full(t_list *lst, char *key, char *value);
 void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 char    *try_path(char *path, int *error);
+char    *tryent_dirs(const char *dirs, const char *entry);
 #endif
