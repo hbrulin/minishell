@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 19:11:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 19:31:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int run_pipe(char **a_cmd, int *fd)
 	else
 	{
 		wait(&status);
-		fd_in = fd[0];
+		fd_in = fd[1];
 	}
 	return (0);
 }
@@ -59,22 +59,29 @@ int	run_dmc_pipes(char **args)
 		{
 			if (adv == 0)
 				a_cmd = ft_sub_tab(args, adv, i);
-			else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
-				a_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1);
 			else
 				a_cmd = ft_sub_tab(args, adv, adv + (ft_tab_chr_i((char **)&args[i + 1], "|") - 1));
 			//else
 			//	b_cmd = ft_sub_tab(args, i + 1, i + (ft_tab_chr_i((char **)&args[i + 1], "|") - 1));
-			pipe(fd);
+			//pipe(fd);
 			adv = i + 1;
+			pipe(fd);
 			if (run_pipe(a_cmd, fd))
 				return(1);
-			/*printf("%i - a:\n", i);
-			ft_tab_print(a_cmd);
-			printf("%i - b:\n", i);
-			ft_tab_print(b_cmd);*/
-			free(a_cmd);
+			//printf("%i - a:\n", i);
+			//ft_tab_print(a_cmd);		
+			//free(a_cmd);
 			//free(b_cmd);
+		}
+		else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
+		{
+			a_cmd = ft_sub_tab(args, i, ft_tablen(args) - i);
+			pipe(fd);
+			if (run_pipe(a_cmd, fd))
+				return(1);
+			break;
+			//printf("%i - a:\n", i);
+			//ft_tab_print(a_cmd);
 		}
 		i++;
 	}
