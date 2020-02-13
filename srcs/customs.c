@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:33:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 14:29:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,46 @@ void	ft_lstprint_export(t_list *lst)
 		free(key);
 		free(value);
 	}
+}
+
+int	ft_iter_tab_cmp(char **tab, char *arg)
+{
+	int		i;
+	//ft_tab_print(tab);
+	i = 0;
+	while (tab[i])
+	{
+		if (!(ft_strcmp(tab[i], arg)))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+char	**ft_tab_chr(char **tab, char *arg)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (!(ft_strcmp(tab[i], arg)))
+			return ((char **)&tab[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+int		ft_tab_chr_i(char **tab, char *arg)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (!(ft_strcmp(tab[i], arg)))
+			return (i);
+		i++;
+	}
+	return (0);
 }

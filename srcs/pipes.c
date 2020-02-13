@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:32:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 14:36:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int run_pipe(char **a_cmd, char **b_cmd, int *fd)
 	{
 		dup2(fd_in, 0);
 		dup2((!b_cmd) ? fd[1] : -1, 1);
-		run_dmc(a_cmd);
+		if(run_dmc(a_cmd))
+			return(1);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -42,22 +43,25 @@ int	run_dmc_pipes(char **args)
 	int fd[2];
 	char **a_cmd;
 	char **b_cmd;
-	int i = 0;
+	int i;
 
-	static int adv;
+	int adv;
 
-	if (!adv)
-		adv = 0;
-
+	adv = 0;
+	i = 0;
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], "|") == 0)
 		{
 			a_cmd = ft_sub_tab(args, adv, i);
-			b_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1); //fin de la copy a revoir
+			if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
+				b_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1);
+			else
+				b_cmd = ft_sub_tab(args, i + 1, ft_tab_chr_i((char **)&args[i + 1], "|") - 1);
 			pipe(fd);
 			adv = i + 1;
-			return(run_pipe(a_cmd, b_cmd, fd)); //return 1 si fail
+			if (run_pipe(a_cmd, b_cmd, fd))
+				return(1);
 		}
 		i++;
 	}
