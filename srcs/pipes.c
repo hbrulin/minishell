@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 15:07:25 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 15:13:45 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int run_pipe(char **a_cmd, char **b_cmd, int *fd)
 	else
 	{
 		wait(&status);
-		//close(fd[1]);
-		fd_in = fd[0];
+		fd_in = fd[1];
 	}
 	return (0);
 }
