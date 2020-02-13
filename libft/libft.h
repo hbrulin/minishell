@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:24:10 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:37:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 14:41:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ void				ft_tab_print(char **tab);
 int					ft_lstiter_n_cmp(t_list *lst, char *arg);
 int					ft_lstiter_cmp(t_list *lst, char *arg);
 char				**ft_sub_tab(char **tab, int start, int len);
+int					ft_tab_chr_i(char **tab, char *arg);
+char				**ft_tab_chr(char **tab, char *arg);
+int					ft_iter_tab_cmp(char **tab, char *arg);
 
 #endif
