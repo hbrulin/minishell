@@ -6,13 +6,14 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 15:13:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 19:11:21 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
-int run_pipe(char **a_cmd, char **b_cmd, int *fd)
+int run_pipe(char **a_cmd, int *fd)
 {
 	static int	fd_in;
 	pid_t		pid;
@@ -24,18 +25,18 @@ int run_pipe(char **a_cmd, char **b_cmd, int *fd)
 	if (pid == 0)
 	{
 		dup2(fd_in, 0);
-		if (b_cmd)
-			fd[1] = open(*b_cmd, O_RDONLY);
-		else
-			fd[1] = -1;
+		dup2(1, fd[1]);
 		if(run_dmc(a_cmd))
+		{
+			exit(EXIT_FAILURE);
 			return(1);
+		}
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		wait(&status);
-		fd_in = fd[1];
+		fd_in = fd[0];
 	}
 	return (0);
 }
@@ -45,7 +46,7 @@ int	run_dmc_pipes(char **args)
 {
 	int fd[2];
 	char **a_cmd;
-	char **b_cmd;
+	//char **b_cmd;
 	int i;
 
 	int adv;
@@ -56,15 +57,24 @@ int	run_dmc_pipes(char **args)
 	{
 		if (ft_strcmp(args[i], "|") == 0)
 		{
-			a_cmd = ft_sub_tab(args, adv, i);
-			if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
-				b_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1);
+			if (adv == 0)
+				a_cmd = ft_sub_tab(args, adv, i);
+			else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
+				a_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1);
 			else
-				b_cmd = ft_sub_tab(args, i + 1, ft_tab_chr_i((char **)&args[i + 1], "|") - 1);
+				a_cmd = ft_sub_tab(args, adv, adv + (ft_tab_chr_i((char **)&args[i + 1], "|") - 1));
+			//else
+			//	b_cmd = ft_sub_tab(args, i + 1, i + (ft_tab_chr_i((char **)&args[i + 1], "|") - 1));
 			pipe(fd);
 			adv = i + 1;
-			if (run_pipe(a_cmd, b_cmd, fd))
+			if (run_pipe(a_cmd, fd))
 				return(1);
+			/*printf("%i - a:\n", i);
+			ft_tab_print(a_cmd);
+			printf("%i - b:\n", i);
+			ft_tab_print(b_cmd);*/
+			free(a_cmd);
+			//free(b_cmd);
 		}
 		i++;
 	}
