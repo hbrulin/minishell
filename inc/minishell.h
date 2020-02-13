@@ -24,6 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
+#include <string.h>
 
 # define TRUE  1
 # define FALSE 0
@@ -47,6 +48,8 @@
 
 typedef short int t_boolean;
 
+typedef int	(*t_builtin_fc)(char **args);
+
 typedef int	t_ret;
 t_ret	g_ret;
 
@@ -61,7 +64,7 @@ int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
 int		ft_echo(char **args);
-int		ft_execve(char **args);
+int		ft_execve(char *path, char **args);
 char	*get_var(t_list *lst, char *key);
 t_list	*del_var(t_list *lst, char *key);
 int		ft_cd(char **args);
@@ -79,5 +82,5 @@ int		envvar_authorized_character(char c, int first_char);
 int		set_var_full(t_list *lst, char *key, char *value);
 void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
-
+char    *try_path(char *path, int *error);
 #endif

@@ -13,7 +13,7 @@ SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memchr.c ft_memcmp.c \
 		ft_uitoa.c get_next_line.c ft_tab_size.c ft_atoi_base.c ft_is_space.c \
 		ft_tablen.c ft_copy_tab.c ft_lst_to_tab.c ft_strcmp.c ft_tab_to_list.c \
 		ft_sort_list.c ft_lstprint.c ft_lst_search_n_destroy.c ft_strnjoin.c \
-		ft_tab_print.c
+		ft_tab_print.c ft_tabindex.c ft_indexr.c
 
 INC = libft.h
 CFLAGS = -Wall -Werror -Wextra -MMD

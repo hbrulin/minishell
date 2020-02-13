@@ -99,5 +99,7 @@ void				ft_list_sort(t_list *lst);
 void				ft_lstprint(t_list *lst);
 t_list				*ft_lst_search_n_destroy(t_list *lst, char *key);
 void				ft_tab_print(char **tab);
+int					ft_tabindex(const char **tab, const char *s);
+int					ft_indexr(const char *s, int c);
 
 #endif

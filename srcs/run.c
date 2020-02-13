@@ -12,44 +12,38 @@
 
 #include "minishell.h"
 
-int	parsexec(char *cmd)
+t_builtin_fc	g_builtin_functions[] = {
+	&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
+};
+
+int	builtin_fno(const char *name)
 {
-	if (!cmd)
-		return(0);
-	char **args = NULL;
-
-	if(!(args = parse_arg(cmd)))
-		return(ft_error(MALLOC_FAIL, 1, cmd, NULL));
-	free(cmd);
-	if (interpreter(args) == 1)
-		return(ft_error_tab(SYNTAX_ERR, 0, args, NULL));
-	//launch redirect
-	if (run_dmc(args))
-		return(ft_error_tab(NULL, 1, args, NULL));
-	ft_tabdel((void *)args); 
-	return(0);
+	static const char	*builtin_names[] = {
+		"echo", "cd", "pwd", "export", "unset", "env", "exit"
+	};
+	
+	return (ft_tabindex(builtin_names, name));
 }
-
 
 int	run_dmc(char **args)
 {
-	if (!args || !*args || !**args)
-		return (0);
-	if ((ft_strcmp(args[0], "exit") == 0))
-		return(ft_exit(args));
-	else if ((ft_strcmp(args[0], "export") == 0))
-		return(ft_export(args));
-	else if ((ft_strcmp(args[0], "unset") == 0))
-		return(ft_unset(args));
-	else if ((ft_strcmp(args[0], "env") == 0))
-		return(ft_env(args));
-	else if ((ft_strcmp(args[0], "pwd") == 0))
-		return(ft_pwd(args));
-	else if ((ft_strcmp(args[0], "cd") == 0))
-		return(ft_cd(args));
-	else if ((ft_strcmp(args[0], "echo") == 0))
-		return(ft_echo(args));
+	int		err;
+	char	*path;
+
+	if ((err = builtin_fno(args[0])) != -1)
+		return (g_ret = g_builtin_functions[err](args));
+	path = ft_strrchr(args[0], '/');
+	err = 0;
+	if (path)
+		path = try_path(args[0], &err);
 	else
-		return (ft_execve(args));
-	return(0);
+		path = ft_strdup(args[0]);
+	if (err)
+		ft_printf_fd(2, "minishell: %s: %s\n", args[0], strerror(err));
+	else
+	{
+		ft_printf_fd(1, "going to see execve\n");
+		ft_execve(ft_strdup(path), args);
+	}
+	return(g_ret);
 }

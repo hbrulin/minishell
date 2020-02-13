@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-int is_forking(int val)
-{
-	static int is_forking = 0;
-
-	if (val != 2)
-		is_forking = val;
-	return (is_forking);
-}
-/*
 char	*bin_search(char *cmd)
 {
 	struct dirent	*bins;
@@ -62,53 +53,28 @@ char	*bin_search(char *cmd)
 	return (NULL); 
 }
 
-char *get_path(char **args)
+char	*try_path(char *path, int *error)
 {
-	char *path;
-	
-	path = NULL;
-	if ((path = bin_search(args[0])) != NULL)
-		return (path);
-	else
-		path = ft_strdup(args[0]);
-	return(path);
+	int		i;
+	DIR		*dir;
+	struct dirent *bin;
+
+	if ((dir = opendir(path)) && closedir(dir) != -1 && (*error = EISDIR))
+		return (NULL);
+	i = ft_indexr(path, '/');
+	path[i] = 0;
+	if (!(dir = opendir(path)) && (*error = errno) && (path[i] = '/'))
+		return (NULL);
+	path[i] = '/';
+	*error = !path[i + 1] ? EISDIR : ENOENT;
+	while (*error && (bin = readdir(dir)))
+		if (!ft_strcmp(bin->d_name, &path[i + 1]))
+			*error = 0;
+	closedir(dir);
+	if (*error)
+		return (NULL);
+	return (path);
 }
-*/
-int		ft_execve(char *path, char **args)
-{
-	pid_t	pid;
-	pid_t wpid;
-	int status;
-	char **tab_env = NULL;
-	
-	if ((pid = fork()) == -1)
-		return(ft_error(FATAL_ERROR, 1, path, "fork"));
-	if (pid == 0)
-	{
-		tab_env = ft_lst_to_tab(env);
-		if((execve(path, args, tab_env)) == -1)
-		{
-			ft_printf_fd(2, "strerror is %s\n", strerror(errno));
-			ft_tabdel((void *)tab_env);
-			return(ft_error(CMD_FAIL_EXEC, 0, path, path));
-		}
-		ft_tabdel((void *)tab_env);
-	}
-	else if (pid > 0)
-	{
-		is_forking(1); 
-		if((wpid = wait(&status)) == -1)
-			return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
-		while (wpid != pid)
-		{
-			if((wpid = wait(&status)) == -1)
-				return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
-		}
-		if (wpid == pid) 
-		{
-			is_forking(0);
-			return(ft_error(NULL, 0, path, NULL));
-		}
-	}
-	return (1); 
-} 
+
+
+
