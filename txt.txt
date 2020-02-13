@@ -1,3 +1,1 @@
-/Users/hbrulin/Documents/minishell
-/Users/hbrulin/Documents/minishell
-blabla >> txt.txt
+hh > txt.txt

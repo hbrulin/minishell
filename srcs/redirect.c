@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 19:05:55 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 20:04:54 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		redirect_right(char *type, char *path_to)
 
 	fd = -1;
 	if (ft_strcmp(type, ">") == 0)
-		fd = open(path_to, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(path_to, O_WRONLY | O_CREAT | O_TRUNC, 0644); //-rw-r--r--
 	else if (ft_strcmp(type, ">>") == 0)
 		fd = open(path_to, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
