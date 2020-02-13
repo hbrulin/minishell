@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 20:35:00 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 13:33:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,25 +89,4 @@ void	ft_lstprint_export(t_list *lst)
 		free(key);
 		free(value);
 	}
-}
-
-
-char **copy_n_tab(char **tab, int start, int len)
-{
-	char **cpy;
-	char **cpy_ret;
-	int i = 0;
-	if (!(cpy = (char**)malloc(sizeof(char*) * (len + 1))))
-		return (NULL);
-	cpy_ret = cpy;
-	cpy[len] = NULL;
-	while (len)
-	{
-		cpy[i] = ft_strdup(tab[start]);
-		len--;
-		i++;
-		start++;
-	}
-	//ft_tab_print(cpy_ret);
-	return(cpy_ret);
 }

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 20:40:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 13:32:45 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	run_dmc_pipes(char **args)
 	{
 		if (ft_strcmp(args[i], "|") == 0)
 		{
-			a_cmd = copy_n_tab(args, adv, i);
-			b_cmd = copy_n_tab(args, i + 1, ft_tablen(args) - i - 1); //fin de la copy a revoir
+			a_cmd = ft_sub_tab(args, adv, i);
+			b_cmd = ft_sub_tab(args, i + 1, ft_tablen(args) - i - 1); //fin de la copy a revoir
 			pipe(fd);
 			adv = i + 1;
 			return(run_pipe(a_cmd, b_cmd, fd)); //return 1 si fail

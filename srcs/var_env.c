@@ -6,13 +6,11 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:14:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 13:26:15 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//(char *)&tmp[ft_strlen(key)]
 
 char    *get_var(t_list *lst, char *key)
 {

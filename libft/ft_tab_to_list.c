@@ -6,19 +6,20 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 17:17:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/11 17:05:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 13:41:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list *ft_tab_to_list(t_list **lst, char **tab)
+t_list	*ft_tab_to_list(t_list **lst, char **tab)
 {
-	t_list *temp = NULL;
-	int i;
+	t_list	*temp;
+	int		i;
 
 	i = 0;
-	while(tab[i])
+	temp = NULL;
+	while (tab[i])
 	{
 		if (!(temp = malloc(sizeof(t_list))))
 			return (NULL);
@@ -28,5 +29,5 @@ t_list *ft_tab_to_list(t_list **lst, char **tab)
 		ft_lstadd_back(lst, temp);
 		i++;
 	}
-	return(*lst);
+	return (*lst);
 }

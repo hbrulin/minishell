@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 20:07:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 13:32:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 int		redirect(char **args);
 int		run_dmc_pipes(char **args);
-char	**copy_n_tab(char **tab, int start, int len);
 
 #endif
