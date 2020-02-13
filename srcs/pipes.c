@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 19:47:17 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 20:01:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int run_pipe(char **a_cmd, int *fd, int next)
 	{
 		dup2(fd_in, 0);
 		dup2((next) ? fd[1] : -1, 1);
-		close(fd[1]);
+		close(fd[1]); //je ferme l'ecriture
 		if(run_dmc(a_cmd))
 		{
 			exit(EXIT_FAILURE);
@@ -38,10 +38,11 @@ int run_pipe(char **a_cmd, int *fd, int next)
 	{
 		wait(&status);
 		close(fd[1]);
-		fd_in = fd[0];
+		fd_in = fd[0]; //ca prend ce qui est pipe avec fd[1].
 	}
 	return (0);
 }
+//faut il fermer fd[0]??
 
 int	run_dmc_pipes(char **args)
 {
@@ -66,7 +67,8 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 1;
 			if (run_pipe(a_cmd, fd, next))
-				return(1);
+				return(ft_error_tab(NULL, 1, a_cmd, NULL));
+			ft_tabdel((void *)a_cmd);
 		}
 		else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
 		{
@@ -74,10 +76,9 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 0;
 			if (run_pipe(a_cmd, fd, next))
-				return(1);
+				return(ft_error_tab(NULL, 1, a_cmd, NULL));
+			ft_tabdel((void *)a_cmd);
 			break;
-			//printf("%i - a:\n", i);
-			//ft_tab_print(a_cmd);
 		}
 		i++;
 	}
