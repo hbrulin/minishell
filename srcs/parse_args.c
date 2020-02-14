@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 18:04:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 19:34:15 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	check_error_syntax(char **args)
 		else if (ft_strcmp(args[i], ">>") == 0 && args[i + 1][0] == '>')
 			return(1);
 		else if (ft_strcmp(args[i], ">") == 0 && args[i + 1][0] == '>')
+			return(1);
+		else if (args[i][0] == '|' || args[i][0] == '<' || args[i][0] == '>')
 			return(1);
 		i++;
 	}
@@ -73,9 +75,10 @@ char **parse_arg(char *s)
 		{
 			if(!(tmp = ft_substr(s, j, i - j)))
 				return (NULL);
-			i++;
+			//i++;
 			while(ft_is_space(s[i]))
 				i++;
+			i--;
 			j = i;
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
@@ -87,21 +90,27 @@ char **parse_arg(char *s)
 		}
 		else if ((s[i] == '|' || s[i] == '>' || s[i] == '<') && open == 0)
 		{
-			if(!(tmp = ft_substr(s, j, i - j)))
-				return (NULL);
-			while(ft_is_space(s[i]))
-				i++;
-			j = i;
-			if (!(temp = malloc(sizeof(t_list))))
-				return (NULL);
-			if (!(temp->content = ft_strdup(tmp)))
-				return (NULL);
-			temp->next = 0;
-			ft_lstadd_back(&list, temp);
-			free(tmp);
+			//ft_printf_fd(1, "%c\n", s[i - 1]);
+			if (s[i - 1] != ' ')
+			{
+				//ft_printf_fd(1, "OUT");
+				if(!(tmp = ft_substr(s, j, i - j)))
+					return (NULL);
+				//while(ft_is_space(s[i]))
+				//	i++;
+				j = i;
+				if (!(temp = malloc(sizeof(t_list))))
+					return (NULL);
+				if (!(temp->content = ft_strdup(tmp)))
+					return (NULL);
+				temp->next = 0;
+				ft_lstadd_back(&list, temp);
+				free(tmp);
+			}
 		
 			if(s[i] == '>' && s[i + 1] == '>')
 			{
+				//ft_printf_fd(1, "IN");
 				if(!(tmp = ft_substr(s, i, 2)))
 					return (NULL);
 				i++;
