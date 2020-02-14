@@ -6,16 +6,16 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 21:03:17 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 22:05:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_operand(char *s)
+int		ft_is_operand(char c)
 {
-	if ((!ft_strcmp(s, "|")) || (!ft_strcmp(s, "<")) || (!ft_strcmp(s, ">")) || (!ft_strcmp(s, ">>")))
-		return (1);
+	if (c == '|' || c == '>' || c == '<' || c == '|')
+		return(1);
 	return(0);
 }
 
@@ -25,15 +25,14 @@ int	check_error_syntax(char **args)
 
 	while (args[i])
 	{
-		if ((args[i][0] == '|' || args[i][0] == '<') && ft_strlen(args[i]) != 1)
+		if (args[i][0] == '|' && ft_strlen(args[i]) > 1)
 			return(1);
-		else if (args[i][0] == '>' && (ft_isalnum(args[i][1]) || ft_isalnum(args[i][2])))
+		else if ((args[i][0] == '<' || args[i][0] == '>') && (ft_strlen(args[i]) % 2 != 0))
 			return(1);
-		if (args[i + 1])
-		{
-			if (check_operand(args[i]) && check_operand(args[i + 1]))
-				return(1);
-		}
+		else if ((args[i][0] == '<' || args[i][0] == '>') && ft_strlen(args[i]) > 1 && args[i][1] == '|')
+			return(1);
+		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1 && args[i][1] == '<')
+			return(1);
 		i++;
 	}
 	return (0);
@@ -106,20 +105,12 @@ char **parse_arg(char *s)
 				temp->next = 0;
 				ft_lstadd_back(&list, temp);
 				free(tmp);
-			}
-		
-			if(s[i] == '>' && s[i + 1] == '>')
-			{
-				if(!(tmp = ft_substr(s, i, 2)))
-					return (NULL);
 				i++;
 			}
-			else
-			{
-				if(!(tmp = ft_substr(s, i, 1)))
+			while (ft_is_operand(s[i]))
+				i++;
+			if(!(tmp = ft_substr(s, j, i - j)))
 					return (NULL);
-			}
-			i++;
 			while(ft_is_space(s[i]))
 				i++;
 			j = i;
