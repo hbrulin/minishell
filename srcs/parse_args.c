@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 16:25:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 16:30:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char **parse_arg(char *s)
 		{
 			if(!(tmp = ft_substr(s, j, i - j)))
 				return (NULL);
-			//i++;
 			while(ft_is_space(s[i]))
 				i++;
 			j = i;
@@ -89,8 +88,17 @@ char **parse_arg(char *s)
 			ft_lstadd_back(&list, temp);
 			free(tmp);
 
-			if(!(tmp = ft_substr(s, i, 1)))
-				return (NULL);
+			if(s[i] == '>' && s[i + 1] == '>')
+			{
+				if(!(tmp = ft_substr(s, i, 2)))
+					return (NULL);
+				i++;
+			}
+			else
+			{
+				if(!(tmp = ft_substr(s, i, 1)))
+					return (NULL);
+			}
 			i++;
 			while(ft_is_space(s[i]))
 				i++;
