@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 12:48:16 by pmouhali         ###   ########.fr       */
+/*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/14 15:44:17 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 char    *try_path(char *path, int *error);
 char    *tryent_dirs(const char *dirs, const char *entry);
+int		redirect(char **args);
+int		run_dmc_pipes(char **args);
 
 #endif

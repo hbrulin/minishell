@@ -5,26 +5,25 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/03 14:10:15 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/14 12:00:19 by pmouhali         ###   ########.fr        #
+#    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
+#    Updated: 2020/02/14 15:45:04 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
 SRCS = main.c parse_cmds.c parse_args.c run.c builtins/builtins.c execve.c var_env.c error_and_access.c \
-	customs.c ft_export.c ft_unset.c interpreter.c builtins/ft_echo.c parsexec.c try_path.c tryent_dirs.c
+	customs.c ft_export.c ft_unset.c interpreter.c builtins/ft_echo.c parsexec.c try_path.c tryent_dirs.c redirect.c pipes.c
 
 SRC_DIR = srcs
 INC_DIR = inc
 BUILD_DIR = obj
 CFLAGS = -Wall -Werror -Wextra -MMD -I $(INC_DIR) -g
 
-#SRC = $(addprefix $(SRC_DIR)/,$(SRCS))
-
 OBJS = $(SRCS:.c=.o)
 OBJ = $(addprefix $(BUILD_DIR)/,$(OBJS))
-DPD = $(SRCS:.c=.d) #ici
+DPD = $(SRCS:.c=.d)
 
 FTDIR	= libft
 FT_LIB	= $(addprefix $(FTDIR)/,libft.a)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 15:24:10 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 13:58:27 by pmouhali         ###   ########.fr       */
+/*   Created: 2020/02/14 15:43:04 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/14 15:43:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int					ft_atoi_base(char *str, char *base);
 int					ft_is_space(char c);
 size_t				ft_tablen(char **tab);
 char				**copy_tab(char **tab);
-char 				**ft_lst_to_tab(t_list *list);
+char				**ft_lst_to_tab(t_list *list);
 int					ft_strcmp(const char *s1, const char *s2);
 t_list				*ft_tab_to_list(t_list **lst, char **tab);
 void				ft_list_sort(t_list *lst);
@@ -101,5 +101,11 @@ t_list				*ft_lst_search_n_destroy(t_list *lst, char *key);
 void				ft_tab_print(char **tab);
 int					ft_tabindex(const char **tab, const char *s);
 int					ft_indexr(const char *s, int c);
+int					ft_lstiter_n_cmp(t_list *lst, char *arg);
+int					ft_lstiter_cmp(t_list *lst, char *arg);
+char				**ft_sub_tab(char **tab, int start, int len);
+int					ft_tab_chr_i(char **tab, char *arg);
+char				**ft_tab_chr(char **tab, char *arg);
+int					ft_iter_tab_cmp(char **tab, char *arg);
 
 #endif

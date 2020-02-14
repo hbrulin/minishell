@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 17:08:58 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/12 19:37:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		ft_cd(char **args)
 int		ft_pwd(char **args)
 {
 	char *dir;
-
 	dir = NULL;
 	if (ft_tablen(args) > 1)
 		return(ft_error(MANY_ARGS, 0, NULL, args[0]));

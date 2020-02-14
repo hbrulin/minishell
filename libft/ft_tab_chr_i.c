@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_copy_tab.c                                      :+:      :+:    :+:   */
+/*   ft_tab_chr_i.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 11:16:11 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:40:14 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/13 14:40:37 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/13 17:37:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**copy_tab(char **tab)
+int		ft_tab_chr_i(char **tab, char *arg)
 {
-	char	**cpy;
-	char	**cpy_ret;
-	size_t	len;
+	int		i;
 
-	if (!(len = ft_tablen(tab)))
-		return (NULL);
-	if (!(cpy = (char**)malloc(sizeof(char*) * (len + 1))))
-		return (NULL);
-	cpy_ret = cpy;
-	cpy[len] = NULL;
-	while (len--)
-		*cpy++ = ft_strdup(*tab++);
-	return (cpy_ret);
+	i = 0;
+	while (tab[i])
+	{
+		if (!(ft_strcmp(tab[i], arg)))
+			return (i);
+		i++;
+	}
+	return (0);
 }

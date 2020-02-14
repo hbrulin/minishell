@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 15:06:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/13 20:15:04 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int		main(int ac, char **av, char **envp)
 	prompt();
 	ft_lstclear(&export, free);
 	ft_lstclear(&env, free);
-	system("leaks minishell");
+	//system("leaks minishell");
 	return(g_ret);
 }

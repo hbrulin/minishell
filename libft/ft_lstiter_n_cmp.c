@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_copy_tab.c                                      :+:      :+:    :+:   */
+/*   ft_lstiter_n_cmp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 11:16:11 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:40:14 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/13 13:25:57 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/13 14:10:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**copy_tab(char **tab)
+int	ft_lstiter_n_cmp(t_list *lst, char *arg)
 {
-	char	**cpy;
-	char	**cpy_ret;
-	size_t	len;
+	t_list	*next;
 
-	if (!(len = ft_tablen(tab)))
-		return (NULL);
-	if (!(cpy = (char**)malloc(sizeof(char*) * (len + 1))))
-		return (NULL);
-	cpy_ret = cpy;
-	cpy[len] = NULL;
-	while (len--)
-		*cpy++ = ft_strdup(*tab++);
-	return (cpy_ret);
+	while (lst)
+	{
+		next = lst->next;
+		if (!(ft_strncmp(lst->content, arg, (int)ft_strlen(arg))))
+			return (0);
+		lst = next;
+	}
+	return (1);
 }
