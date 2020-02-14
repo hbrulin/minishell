@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 19:34:15 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 19:57:57 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int	check_error_syntax(char **args)
 			return(1);
 		else if (ft_strcmp(args[i], ">") == 0 && args[i + 1][0] == '>')
 			return(1);
-		else if (args[i][0] == '|' || args[i][0] == '<' || args[i][0] == '>')
+		else if ((args[i][0] == '|' || args[i][0] == '<') && ft_strlen(args[i]) != 1)
+			return(1);
+		else if (args[i][0] == '>' && (ft_isalnum(args[i][1]) || ft_isalnum(args[i][2])))
 			return(1);
 		i++;
 	}
 	return (0);
 }
-
 
 char **parse_arg(char *s)
 {
@@ -57,7 +58,7 @@ char **parse_arg(char *s)
 				return (NULL);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strdup(tmp)))
+			if (!(temp->content = ft_strtrim(tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
@@ -75,14 +76,13 @@ char **parse_arg(char *s)
 		{
 			if(!(tmp = ft_substr(s, j, i - j)))
 				return (NULL);
-			//i++;
 			while(ft_is_space(s[i]))
 				i++;
 			i--;
 			j = i;
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strdup(tmp)))
+			if (!(temp->content = ft_strtrim(tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
@@ -90,18 +90,14 @@ char **parse_arg(char *s)
 		}
 		else if ((s[i] == '|' || s[i] == '>' || s[i] == '<') && open == 0)
 		{
-			//ft_printf_fd(1, "%c\n", s[i - 1]);
 			if (s[i - 1] != ' ')
 			{
-				//ft_printf_fd(1, "OUT");
 				if(!(tmp = ft_substr(s, j, i - j)))
 					return (NULL);
-				//while(ft_is_space(s[i]))
-				//	i++;
 				j = i;
 				if (!(temp = malloc(sizeof(t_list))))
 					return (NULL);
-				if (!(temp->content = ft_strdup(tmp)))
+				if (!(temp->content = ft_strtrim(tmp, " ")))
 					return (NULL);
 				temp->next = 0;
 				ft_lstadd_back(&list, temp);
@@ -110,7 +106,6 @@ char **parse_arg(char *s)
 		
 			if(s[i] == '>' && s[i + 1] == '>')
 			{
-				//ft_printf_fd(1, "IN");
 				if(!(tmp = ft_substr(s, i, 2)))
 					return (NULL);
 				i++;
@@ -126,14 +121,14 @@ char **parse_arg(char *s)
 			j = i;
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strdup(tmp)))
+			if (!(temp->content = ft_strtrim(tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
+			free(tmp);
 		}
 		i++;
 	}
-	ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	if (check_error_syntax(ret))
