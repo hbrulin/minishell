@@ -6,11 +6,31 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 16:30:22 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 18:04:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_error_syntax(char **args)
+{
+	int i = 0;
+
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "|") == 0 && ft_strcmp(args[i + 1], "|") == 0)
+			return(1);
+		else if (ft_strcmp(args[i], "<") == 0 && ft_strcmp(args[i + 1], "<") == 0)
+			return(1);
+		else if (ft_strcmp(args[i], ">>") == 0 && args[i + 1][0] == '>')
+			return(1);
+		else if (ft_strcmp(args[i], ">") == 0 && args[i + 1][0] == '>')
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
 
 char **parse_arg(char *s)
 {
@@ -22,14 +42,6 @@ char **parse_arg(char *s)
 	int open;
 	char quote;
 	char *tmp;
-	
-	/*if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
-	{
-		ret = ft_split(s, ' '); 
-		return(ret);
-	}*/
-	// if RETURN SIG > NOT NULL but args0 is
-	// if only spaces > NOT NULL but args0 is
 
 	i = 0;
 	j = 0;
@@ -87,7 +99,7 @@ char **parse_arg(char *s)
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
 			free(tmp);
-
+		
 			if(s[i] == '>' && s[i + 1] == '>')
 			{
 				if(!(tmp = ft_substr(s, i, 2)))
@@ -115,5 +127,7 @@ char **parse_arg(char *s)
 	ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
+	if (check_error_syntax(ret))
+		return (NULL);
 	return (ret);
 }
