@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/10 16:06:03 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 16:25:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char **parse_arg(char *s)
 	char quote;
 	char *tmp;
 	
-	if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
+	/*if (ft_strchr(s, '\'') == NULL && ft_strchr(s, '\"') == NULL)
 	{
 		ret = ft_split(s, ' '); 
 		return(ret);
-	}
+	}*/
 	// if RETURN SIG > NOT NULL but args0 is
 	// if only spaces > NOT NULL but args0 is
 
@@ -37,7 +37,7 @@ char **parse_arg(char *s)
 
 	while (s[i])
 	{
-		if (ft_strchr(s + i, ' ') == NULL) //ou alors is_space
+		if ((ft_strchr(s + i, ' ') == NULL) && (ft_strchr(s + i, '|') == NULL) && (ft_strchr(s + i, '>') == NULL) && (ft_strchr(s + i, '<') == NULL))
 		{
 			if(!(tmp = ft_strdup(s + j)))
 				return (NULL);
@@ -73,8 +73,38 @@ char **parse_arg(char *s)
 			ft_lstadd_back(&list, temp);
 			free(tmp);
 		}
+		else if ((s[i] == '|' || s[i] == '>' || s[i] == '<') && open == 0)
+		{
+			if(!(tmp = ft_substr(s, j, i - j)))
+				return (NULL);
+			//i++;
+			while(ft_is_space(s[i]))
+				i++;
+			j = i;
+			if (!(temp = malloc(sizeof(t_list))))
+				return (NULL);
+			if (!(temp->content = ft_strdup(tmp)))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
+			free(tmp);
+
+			if(!(tmp = ft_substr(s, i, 1)))
+				return (NULL);
+			i++;
+			while(ft_is_space(s[i]))
+				i++;
+			j = i;
+			if (!(temp = malloc(sizeof(t_list))))
+				return (NULL);
+			if (!(temp->content = ft_strdup(tmp)))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
+		}
 		i++;
 	}
+	ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	return (ret);
