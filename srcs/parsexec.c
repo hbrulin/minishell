@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 16:14:26 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 16:32:05 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parsexec(char *cmd)
 	if(!(args = parse_arg(cmd)))
 		return(ft_error(MALLOC_FAIL, 1, cmd, NULL));
 	free(cmd);
-	/*if (interpreter(args) == 1)
+	if (interpreter(args) == 1)
 		return(ft_error_tab(SYNTAX_ERR, 0, args, NULL));
 	//ft_tab_print(args);
 	redirect(args);
@@ -54,6 +54,6 @@ int	parsexec(char *cmd)
 	}
 	ft_tabdel((void *)args); 
 	dup2(std_out, 1); //reset les sorties
-	dup2(std_in, 0);*/
+	dup2(std_in, 0);
 	return(0);
 }
