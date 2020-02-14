@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/02/14 14:00:43 by pmouhali         ###   ########.fr       */
-=======
-/*   Updated: 2020/02/14 15:39:57 by hbrulin          ###   ########.fr       */
->>>>>>> hbrulin
+/*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/14 15:47:08 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +24,6 @@ int	builtin_fno(const char *name)
 	
 	return (ft_tabindex(builtin_names, name));
 }
-int	ft_is_pipe(char **args)
-{
-	int i = 0;
-
-	while (args[i])
-	{
-		if (ft_strcmp(args[i], "|") == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 
 int	run_dmc(char **args)
 {

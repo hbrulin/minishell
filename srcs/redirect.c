@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 15:42:42 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 15:46:09 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,3 @@ int		redirect(char **args) //mieux parser pour que pas de prise en compte des ar
 	}
 	return(1);
 }
->>>>>>> hbrulin

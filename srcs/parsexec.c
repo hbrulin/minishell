@@ -6,11 +6,24 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 15:41:56 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 15:46:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_is_pipe(char **args)
+{
+	int i = 0;
+
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "|") == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	parsexec(char *cmd)
 {
@@ -43,3 +56,4 @@ int	parsexec(char *cmd)
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
 	return(0);
+}
