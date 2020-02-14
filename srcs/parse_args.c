@@ -6,11 +6,18 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 19:57:57 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 20:21:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		check_operand(char *s)
+{
+	if ((!ft_strcmp(s, "|")) || (!ft_strcmp(s, "<")) || (!ft_strcmp(s, ">")) || (!ft_strcmp(s, ">>")))
+		return (1);
+	return(0);
+}
 
 int	check_error_syntax(char **args)
 {
@@ -18,18 +25,15 @@ int	check_error_syntax(char **args)
 
 	while (args[i])
 	{
-		if (ft_strcmp(args[i], "|") == 0 && ft_strcmp(args[i + 1], "|") == 0)
-			return(1);
-		else if (ft_strcmp(args[i], "<") == 0 && ft_strcmp(args[i + 1], "<") == 0)
-			return(1);
-		else if (ft_strcmp(args[i], ">>") == 0 && args[i + 1][0] == '>')
-			return(1);
-		else if (ft_strcmp(args[i], ">") == 0 && args[i + 1][0] == '>')
-			return(1);
-		else if ((args[i][0] == '|' || args[i][0] == '<') && ft_strlen(args[i]) != 1)
+		if ((args[i][0] == '|' || args[i][0] == '<') && ft_strlen(args[i]) != 1)
 			return(1);
 		else if (args[i][0] == '>' && (ft_isalnum(args[i][1]) || ft_isalnum(args[i][2])))
 			return(1);
+		if (args[i + 1])
+		{
+			if (check_operand(args[i]) && check_operand(args[i + 1]))
+				return(1);
+		}
 		i++;
 	}
 	return (0);
@@ -129,6 +133,7 @@ char **parse_arg(char *s)
 		}
 		i++;
 	}
+	//ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	if (check_error_syntax(ret))
