@@ -1,31 +1,25 @@
-//HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   try_path.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pmouhali <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/14 13:20:13 by pmouhali          #+#    #+#             */
+/*   Updated: 2020/02/14 13:20:37 by pmouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-**	!! MAN STAT !! st_mode bit field masks
-**	maybe more performant and no need to open dirs
-*/
-
 char	*try_path(char *path, int *error)
 {
-	int		i;
-	DIR		*dir;
-	struct dirent *bin;
+	struct stat	file;
 
-	if ((dir = opendir(path)) && closedir(dir) != -1 && (*error = EISDIR))
+	*error = stat(path, &file);
+	if (*error && (*error = errno))
 		return (NULL);
-	i = ft_indexr(path, '/');
-	path[i] = 0;
-	if (!(dir = opendir(path)) && (*error = errno) && (path[i] = '/'))
-		return (NULL);
-	path[i] = '/';
-	*error = !path[i + 1] ? EISDIR : ENOENT;
-	while (*error && (bin = readdir(dir)))
-		if (!ft_strcmp(bin->d_name, &path[i + 1]))
-			*error = 0;
-	closedir(dir);
-	if (*error)
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (*error = EISDIR))
 		return (NULL);
 	return (path);
 }

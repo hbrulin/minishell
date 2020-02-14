@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:27:50 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:12:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 12:48:16 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
-#include <string.h>
+# include <string.h>
 
 # define TRUE  1
 # define FALSE 0
@@ -84,4 +84,5 @@ void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 char    *try_path(char *path, int *error);
 char    *tryent_dirs(const char *dirs, const char *entry);
+
 #endif

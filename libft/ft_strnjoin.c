@@ -6,13 +6,13 @@
 /*   By: pmouhali <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 15:34:00 by pmouhali          #+#    #+#             */
-/*   Updated: 2020/02/08 18:14:26 by pmouhali         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:57:48 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnjoin(char *s1, char *s2, int n)
+char	*ft_strnjoin(const char *s1, const char *s2, int n)
 {
 	char	*s;
 	int		i;
@@ -44,5 +44,4 @@ char	*ft_strnjoin(char *s1, char *s2, int n)
 	}
 	s[i] = 0;
 	return (s);
-
 }

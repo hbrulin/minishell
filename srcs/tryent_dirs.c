@@ -11,18 +11,26 @@
 
 char	*tryent_dirs(const char *dirs, const char *entry)
 {
-	int i;
-	int error;
-	char *dir_path;
+	int		i;
+	int		error;
+	char	*dir_path;
+	char	c_entry[270];
 
 	if (!dirs || !entry)
 		return (NULL);
-	i = ft_strlen(dirs);
-	while (dirs && dirs[--i]) // this was for progrssively puts \0 but bad solution
+	c_entry[0] = '/';
+	ft_strcpy(&c_entry[1], entry);
+	i = -1;
+	while (dirs[++i])
 	{
 		if (dirs[i] == ':')
 		{
-			// construct path en try it
+			dir_path = ft_strnjoin(dirs, c_entry, i);
+			dirs += i + 1;							// move pointer to last ':' found
+			i = 0;								// reset interator
+			if (try_path(dir_path, &error))
+				return (dir_path);
+			free(dir_path);
 		}
 	}
 	return (NULL);

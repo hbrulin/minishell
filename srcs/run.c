@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:31:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 14:00:43 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	run_dmc(char **args)
 	char	*path;
 	char	*tmp; // find a better solution
 
+	if (!args || !*args)
+		return (0);
 	if ((err = builtin_fno(args[0])) != -1)
 		return (g_ret = g_builtin_functions[err](args));
 	path = ft_strrchr(args[0], '/');
@@ -40,7 +42,8 @@ int	run_dmc(char **args)
 	else
 	{
 		tmp = get_var(env, "PATH="); // oh waw...
-		path = tryentry_dirs(tmp, args[0]);
+		if (!(path = tryent_dirs(tmp, args[0])))
+			err = ENOSYS; // for test only, this error is not the right one
 		free(tmp);
 	}
 	if (err)

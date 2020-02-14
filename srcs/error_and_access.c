@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:04:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/14 12:54:35 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int ft_access(char *path)
 	
  }
 
-int		ft_error(char *msg, int ret, char *befree, void *param)
+int		ft_error(char *msg, int ret, char *befree, void *param) // find a better solution
 {
 	if (msg && !param)
 		ft_printf_fd(2, msg);
