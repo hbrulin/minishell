@@ -20,9 +20,9 @@ int	update_pwd(void)
 	dir = NULL;
 	old_dir = NULL;
 	if(!(old_dir = get_var(env, "PWD=")))
-		return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+		return(ft_strerror(1, NULL, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
-		return(ft_error(MALLOC_FAIL, 1, old_dir, NULL));
+		return(ft_strerror(1, old_dir, NULL, NULL));
 	set_var(env, "PWD=", dir);
 	set_var(export, "PWD=", dir);
 	set_var(env, "OLDPWD=", old_dir);
@@ -52,15 +52,15 @@ int		ft_cd(char **args)
 	if (len == 1 || !(ft_strcmp(args[1], "")))
 	{
 		if(!(home = get_home()))
-			return(ft_error("cd: HOME not set\n", 0, NULL, NULL));
+			return(ft_error("cd: HOME not set\n", 1, NULL, NULL));
 		if ((chdir(home)) == -1)
-			ft_printf_fd(2, NO_FILE, home);
+			ft_strerror(0, NULL, NULL, home);
 		free(home);
 	}
 	else if (len == 2)
 	{
 		if ((chdir(args[1])) == -1)
-			ft_printf_fd(2, NO_FILE, args[1]);
+			ft_strerror(0, NULL, NULL, args[1]);
 	}
 	return(update_pwd());
 }
@@ -71,9 +71,9 @@ int		ft_pwd(char **args)
 	dir = NULL;
 	(void)args;
 	if (ft_tablen(args) > 1)
-		return(ft_error(MANY_ARGS, 0, NULL, args[0]));
+		return(ft_error(MANY_ARGS, 1, NULL, args[0]));
 	if (!(dir = getcwd(dir, 0)))
-		return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+		return(ft_strerror(1, NULL, NULL, NULL));
 	ft_printf_fd(1, "%s\n", dir);
 	free(dir);
 	return (0);
@@ -82,7 +82,7 @@ int		ft_pwd(char **args)
 int		ft_env(char **args)
 {
 	if (ft_tablen(args) > 1)
-		return(ft_error(MANY_ARGS, 0, NULL, args[0]));
+		return(ft_error(MANY_ARGS, 1, NULL, args[0]));
 	ft_lstprint(env);
 	return (0);
 }
@@ -92,15 +92,15 @@ int		ft_exit(char **args)
 	int i;
 	i = 0;
 	if (ft_tablen(args) > 2)
-		return(ft_error(MANY_ARGS, 0, NULL, args[0]));
+		return(ft_error(MANY_ARGS, -1, NULL, args[0]));
 	if (ft_tablen(args) == 1)
-		return(1);
+		return(-1);
 	while (args[1][i])
 	{
 		if (!(ft_isdigit(args[1][i])))
-			return(ft_error(EXIT_NUM, 1, NULL, args[1]));
+			return(ft_error(EXIT_NUM, -1, NULL, args[1]));
 		i++;
 	}
-	g_ret = ft_atoi(args[1]);
-	return (1);
+	exit_ret = ft_atoi(args[1]);
+	return (-1);
 }

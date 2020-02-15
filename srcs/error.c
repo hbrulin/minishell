@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_and_access.c                                 :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int ft_access(char *path)
+/*int ft_access(char *path)
  {
     struct stat buf;
 
@@ -23,10 +23,22 @@ int ft_access(char *path)
 	else
 		ft_printf_fd(2, PERM_DENIED, path); 
 	return (0);
-	
- }
+ }*/
 
-int		ft_error(char *msg, int ret, char *befree, void *param) // find a better solution
+int		ft_strerror(int ret, char *befree, char **tabfree, void *param)
+{
+	if (!param)
+		ft_printf_fd(2, "minishell: %s\n", strerror(errno));
+	else
+		ft_printf_fd(2, "minishell: %s: %s\n", param, strerror(errno));
+	if (befree)
+		free(befree);
+	if (tabfree)
+		ft_tabdel((void *)befree);
+	return(ret);
+}
+
+int		ft_error(char *msg, int ret, char *befree, void *param)
 {
 	if (msg && !param)
 		ft_printf_fd(2, msg);

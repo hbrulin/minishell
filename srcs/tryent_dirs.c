@@ -9,10 +9,10 @@
 **	also returns NULL if dirs or entry is NULL
 */
 
-char	*tryent_dirs(const char *dirs, const char *entry)
+char	*tryent_dirs(const char *dirs, const char *entry, int *err)
 {
 	int		i;
-	int		error;
+	//int		error;
 	char	*dir_path;
 	char	c_entry[270];
 
@@ -28,7 +28,7 @@ char	*tryent_dirs(const char *dirs, const char *entry)
 			dir_path = ft_strnjoin(dirs, c_entry, i);
 			dirs += i + 1;							// move pointer to last ':' found
 			i = 0;								// reset interator
-			if (try_path(dir_path, &error))
+			if (try_path(dir_path, err))
 				return (dir_path);
 			free(dir_path);
 		}

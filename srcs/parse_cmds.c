@@ -24,7 +24,7 @@ int parse_cmds(char *s)
 	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))
-			return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+			return(ft_strerror(0, NULL, NULL, NULL));
 		if(parsexec(cmd))
 			return(1); 
 		return(0);
@@ -44,7 +44,7 @@ int parse_cmds(char *s)
 		if (ft_strchr(s + i, ';') == NULL)
 		{
 			if(!(cmd = ft_strdup(s + j)))
-				return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+				return(ft_strerror(0, NULL, NULL, NULL));
 			if(parsexec(cmd))
 				return(1);
 			break;
@@ -59,7 +59,7 @@ int parse_cmds(char *s)
 		if (s[i] == ';' && open == 0)
 		{
 			if(!(cmd = ft_substr(s, j, i - j)))
-				return(ft_error(MALLOC_FAIL, 1, NULL, NULL));
+				return(ft_strerror(0, NULL, NULL, NULL));
 			i++;
 			while(ft_is_space(s[i]))
 				i++;

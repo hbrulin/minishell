@@ -82,15 +82,15 @@ int		ft_execve(char *path, char **args)
 	char **tab_env = NULL;
 	
 	if ((pid = fork()) == -1)
-		return(ft_error(FATAL_ERROR, 1, path, "fork"));
+		return(ft_strerror(1, path, NULL, NULL));
 	if (pid == 0)
 	{
 		tab_env = ft_lst_to_tab(env);
 		if((execve(path, args, tab_env)) == -1)
 		{
-			ft_printf_fd(2, "strerror is %s\n", strerror(errno));
-			ft_tabdel((void *)tab_env);
-			return(ft_error(CMD_FAIL_EXEC, 0, path, path));
+			ft_strerror(1, NULL, NULL, path);
+			exit(EXIT_FAILURE);
+			return(1);
 		}
 		ft_tabdel((void *)tab_env);
 	}
@@ -98,17 +98,17 @@ int		ft_execve(char *path, char **args)
 	{
 		is_forking(1); 
 		if((wpid = wait(&status)) == -1)
-			return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
+			return(ft_strerror(1, path, NULL, "wait"));
 		while (wpid != pid)
 		{
 			if((wpid = wait(&status)) == -1)
-				return(ft_error(FATAL_ERROR, 1, path, "wait for child process"));
+				return(ft_strerror(1, path, NULL, "wait"));
 		}
 		if (wpid == pid) 
 		{
 			is_forking(0);
-			return(ft_error(NULL, 0, path, NULL));
+			return(ft_error(NULL, 1, path, NULL));
 		}
 	}
-	return (1); 
+	return (0); 
 } 

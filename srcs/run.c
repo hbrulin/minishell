@@ -42,13 +42,12 @@ int	run_dmc(char **args)
 	else
 	{
 		tmp = get_var(env, "PATH="); // oh waw...
-		if (!(path = tryent_dirs(tmp, args[0])))
-			err = ENOSYS; // for test only, this error is not the right one
+		path = tryent_dirs(tmp, args[0], &err);
 		free(tmp);
 	}
 	if (err)
-		return(ft_printf_fd(2, "minishell: %s: %s\n", args[0], strerror(err)));
+		return(ft_strerror(0, path, NULL, args[0]));
 	else
-		return(ft_execve(path, args));
+		return(g_ret = ft_execve(path, args));
 	return(g_ret);
 }

@@ -44,13 +44,15 @@ int	parsexec(char *cmd)
 	redirect(args);
 	if (ft_is_pipe(args))
 	{
-		if (run_dmc_pipes(args))
+		if (run_dmc_pipes(args) == -1)
 			return(ft_error_tab(NULL, 1, args, NULL));
 	}
 	else
 	{
-		if (run_dmc(args))
+		if (run_dmc(args) == -1)
+		{
 			return(ft_error_tab(NULL, 1, args, NULL));
+		}
 	}
 	ft_tabdel((void *)args); 
 	dup2(std_out, 1); //reset les sorties

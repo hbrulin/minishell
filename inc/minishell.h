@@ -34,10 +34,10 @@
 
 //#define CMD_NOT_FOUND(cmd)	ft_printf_fd(2, "minishell: %s: command not found\n", (cmd));
 # define	CMD_NOT_FOUND	"minishell: %s: command not found\n"
-# define	CMD_FAIL_EXEC	"minishell: %s: command could not be executed\n"
-# define	PERM_DENIED		"minishell: %s: permission denied\n"
-# define	FATAL_ERROR		"minishell: fatal error: %s\n"
-# define	MALLOC_FAIL		"minishell: fatal error: memory was not allocated properly\n"
+//# define	CMD_FAIL_EXEC	"minishell: %s: command could not be executed\n"
+//# define	PERM_DENIED		"minishell: %s: permission denied\n"
+//# define	FATAL_ERROR		"minishell: fatal error: %s\n"
+//# define	MALLOC_FAIL		"minishell: fatal error: memory was not allocated properly\n"
 # define	MANY_ARGS		"minishell: %s: too many arguments\n"
 # define	NO_ARG			"%s: not enough arguments\n"
 # define	NO_FILE			"minishell: cd: %s: No such file or directory\n"
@@ -52,6 +52,7 @@ typedef int	(*t_builtin_fc)(char **args);
 
 typedef int	t_ret;
 t_ret	g_ret;
+t_ret	exit_ret;
 
 t_list *env;
 t_list *export;
@@ -83,8 +84,9 @@ int		set_var_full(t_list *lst, char *key, char *value);
 void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 char    *try_path(char *path, int *error);
-char    *tryent_dirs(const char *dirs, const char *entry);
+char	*tryent_dirs(const char *dirs, const char *entry, int *err);
 int		redirect(char **args);
 int		run_dmc_pipes(char **args);
+int		ft_strerror(int ret, char *befree, char **tabfree, void *param);
 
 #endif
