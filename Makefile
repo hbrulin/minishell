@@ -47,7 +47,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c Makefile

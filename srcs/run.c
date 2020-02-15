@@ -47,8 +47,8 @@ int	run_dmc(char **args)
 		free(tmp);
 	}
 	if (err)
-		ft_printf_fd(2, "minishell: %s: %s\n", args[0], strerror(err));
+		return(ft_printf_fd(2, "minishell: %s: %s\n", args[0], strerror(err)));
 	else
-		ft_execve(path, args);
+		return(ft_execve(path, args));
 	return(g_ret);
 }

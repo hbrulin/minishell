@@ -71,6 +71,6 @@ int		main(int ac, char **av, char **envp)
 	prompt();
 	ft_lstclear(&export, free);
 	ft_lstclear(&env, free);
-	//system("leaks minishell");
+	system("leaks minishell");
 	return(g_ret);
 }
