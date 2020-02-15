@@ -1,2 +1,0 @@
-cho kk
-ll

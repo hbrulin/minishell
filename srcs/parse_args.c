@@ -45,6 +45,8 @@ int	check_error_syntax(char **args)
 			if (check_operand(args[i]) && check_operand(args[i + 1]))
 				return(1);
 		}
+		else if (check_operand(args[i]) && !args[i + 1])
+			return (1);
 		i++;
 	}
 	return (0);
@@ -136,7 +138,7 @@ char **parse_arg(char *s)
 		}
 		i++;
 	}
-	ft_lstprint(list);
+	//ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	if (check_error_syntax(ret))
