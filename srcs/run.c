@@ -41,7 +41,7 @@ int	run_dmc(char **args)
 		path = ft_strdup(try_path(args[0], &err));
 	else
 	{
-		tmp = get_var(env, "PATH="); // oh waw...
+		tmp = get_var(env, "PATH=");
 		path = tryent_dirs(tmp, args[0], &err);
 		free(tmp);
 	}
@@ -49,5 +49,5 @@ int	run_dmc(char **args)
 		return(ft_strerror(0, path, NULL, args[0]));
 	else
 		return(g_ret = ft_execve(path, args));
-	return(g_ret);
+	return(0);
 }

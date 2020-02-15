@@ -54,13 +54,13 @@ int		ft_cd(char **args)
 		if(!(home = get_home()))
 			return(ft_error("cd: HOME not set\n", 1, NULL, NULL));
 		if ((chdir(home)) == -1)
-			ft_strerror(0, NULL, NULL, home);
+			return(ft_strerror(1, home, NULL, home));
 		free(home);
 	}
 	else if (len == 2)
 	{
 		if ((chdir(args[1])) == -1)
-			ft_strerror(0, NULL, NULL, args[1]);
+			return(ft_strerror(1, NULL, NULL, args[1]));
 	}
 	return(update_pwd());
 }
