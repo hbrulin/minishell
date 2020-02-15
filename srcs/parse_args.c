@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+int		check_operand(char *s)
+{
+	if ((!ft_strcmp(s, "|")) || (!ft_strcmp(s, "<")) || (!ft_strcmp(s, ">")) || (!ft_strcmp(s, ">>")))
+		return (1);
+	return(0);
+}
+
 int		ft_is_operand(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == '|')
@@ -33,6 +40,11 @@ int	check_error_syntax(char **args)
 			return(1);
 		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1 && args[i][1] == '<')
 			return(1);
+		if (args[i + 1])
+		{
+			if (check_operand(args[i]) && check_operand(args[i + 1]))
+				return(1);
+		}
 		i++;
 	}
 	return (0);
