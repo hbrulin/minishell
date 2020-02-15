@@ -39,12 +39,12 @@
 //# define	FATAL_ERROR		"minishell: fatal error: %s\n"
 //# define	MALLOC_FAIL		"minishell: fatal error: memory was not allocated properly\n"
 # define	MANY_ARGS		"minishell: %s: too many arguments\n"
-# define	NO_ARG			"%s: not enough arguments\n"
+# define	NO_ARG			"minishell: %s: not enough arguments\n"
 # define	NO_FILE			"minishell: cd: %s: No such file or directory\n"
 # define	EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
-# define	INVALID_ID_X	"export: %s: not a valid identifier\n"
-# define	INVALID_ID_U	"unset: %s: not a valid identifier\n"
-# define	SYNTAX_ERR		"minishell: syntax error\n"
+# define	INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
+# define	INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
+# define	SYNTAX_ERR		"minishell: syntax error near unexpected token\n"
 
 typedef short int t_boolean;
 
