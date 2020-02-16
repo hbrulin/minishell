@@ -36,10 +36,10 @@ int	parsexec(char *cmd)
 	if (!cmd)
 		return(0);
 	if(!(args = parse_arg(cmd)))
-		return(ft_error(SYNTAX_ERR, 1, cmd, NULL));
+		return(ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	free(cmd);
 	if (interpreter(args) == 1)
-		return(ft_error_tab(SYNTAX_ERR, 1, args, NULL));
+		return(ft_error(SYNTAX_ERR, NULL, args, NULL));
 	redirect(args);
 	if (ft_is_pipe(args))
 		run_dmc_pipes(args);

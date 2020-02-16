@@ -71,7 +71,6 @@ int		ft_cd(char **args);
 int		ft_access(char *path);
 void	signal_handler(int n);
 int		is_forking(int val);
-int		ft_error(char *msg, int ret, char *befree, void *param);
 int		ft_export(char **args);
 t_list	*ft_tab_to_list_custom(t_list **lst, char **tab);
 int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int));
@@ -86,6 +85,7 @@ char    *try_path(char *path, int *error);
 char	*tryent_dirs(const char *dirs, const char *entry, int *err);
 int		redirect(char **args);
 int		run_dmc_pipes(char **args);
-int		ft_strerror(int ret, char *befree, char **tabfree, void *param);
+int		ft_error(char *msg, char *befree, char **tab_free, void *param);
+int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
 
 #endif

@@ -29,7 +29,10 @@ int	ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 	{
 		next = lst->next;
 		if (!(f(lst->content, tmp, (int)ft_strlen(tmp))))
-			return(ft_error(NULL, 0, tmp, NULL));
+		{
+			free(tmp);
+			return(0);
+		}
 		lst = next;
 	}
 	if (tmp)

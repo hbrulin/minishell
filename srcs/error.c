@@ -25,20 +25,22 @@
 	return (0);
  }*/
 
-int		ft_strerror(int ret, char *befree, char **tabfree, void *param)
+int		ft_strerror(char *befree, char **tabfree, void *param, void *param2)
 {
-	if (!param)
+	if (!param && !param2)
 		ft_printf_fd(2, "minishell: %s\n", strerror(errno));
-	else
+	else if(param && !param2)
 		ft_printf_fd(2, "minishell: %s: %s\n", param, strerror(errno));
+	else
+		ft_printf_fd(2, "minishell: %s: %s: %s\n", param, param2, strerror(errno));
 	if (befree)
 		free(befree);
 	if (tabfree)
 		ft_tabdel((void *)befree);
-	return(ret);
+	return(1);
 }
 
-int		ft_error(char *msg, int ret, char *befree, void *param)
+int		ft_error(char *msg, char *befree, char **tab_free, void *param)
 {
 	if (msg && !param)
 		ft_printf_fd(2, msg);
@@ -46,16 +48,7 @@ int		ft_error(char *msg, int ret, char *befree, void *param)
 		ft_printf_fd(2, msg, param);
 	if (befree)
 		free(befree);
-	return(ret);
-}
-
-int		ft_error_tab(char *msg, int ret, char **befree, void *param)
-{
-	if (msg && !param)
-		ft_printf_fd(2, msg);
-	else if (msg && param)
-		ft_printf_fd(2, msg, param);
-	if (befree)
-		ft_tabdel((void *)befree);
-	return(ret);
+	if (tab_free)
+		ft_tabdel((void *)tab_free);
+	return(1);
 }

@@ -46,7 +46,7 @@ int	run_dmc(char **args)
 		free(tmp);
 	}
 	if (err)
-		return(ft_strerror(0, path, NULL, args[0]));
+		return(ft_strerror(path, NULL, args[0], NULL));
 	else
 		return(g_ret = ft_execve(path, args));
 	return(0);

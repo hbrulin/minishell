@@ -17,11 +17,11 @@ int		export_error(char *arg)
 	int i = 0;
 
 	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
-		return(ft_error(INVALID_ID_X, 1, NULL, arg));
+		return(ft_error(INVALID_ID_X, NULL, NULL, arg));
 	while (arg[++i] && arg[i] != '=')
 	{
 		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
-			return(ft_error(INVALID_ID_X, 1, NULL, arg));
+			return(ft_error(INVALID_ID_X, NULL, NULL, arg));
 	}
 	return(0);
 }
@@ -51,22 +51,22 @@ int		ft_export(char **args)
 			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
 				if(!(key = ft_substr(args[i], 0, k + 1)))
-					return(ft_strerror( 1, NULL, NULL, NULL));
+					return(ft_strerror(NULL, NULL, NULL, NULL));
 				if (ft_strchr(args[i], '='))
 				{
 					if (set_var_full(export, key, args[i]) == -1)
-						return(ft_strerror( 1, key, NULL, NULL));
+						return(ft_strerror(key, NULL, NULL, NULL));
 					if (set_var_full(env, key, args[i]) == -1)
-						return(ft_strerror( 1, key, NULL, NULL));
+						return(ft_strerror(key, NULL, NULL, NULL));
 				}
 				free(key);
 			}
 			else
 			{
 				if (!(temp = malloc(sizeof(t_list))))
-					return(ft_strerror( 1, NULL, NULL, NULL));
+					return(ft_strerror(NULL, NULL, NULL, NULL));
 				if (!(temp->content = ft_strdup(args[i])))
-						return(ft_strerror( 1, NULL, NULL, NULL));
+						return(ft_strerror(NULL, NULL, NULL, NULL));
 				temp->next = 0;
 				if (!(ft_strchr(args[i], '=')))
 					ft_lstadd_back(&export, temp);
@@ -74,9 +74,9 @@ int		ft_export(char **args)
 				{
 					ft_lstadd_back(&export, temp);
 					if (!(temp2 = malloc(sizeof(t_list))))
-						return(ft_strerror( 1, NULL, NULL, NULL));
+						return(ft_strerror(NULL, NULL, NULL, NULL));
 					if (!(temp2->content = ft_strdup(args[i])))
-						return(ft_strerror( 1, NULL, NULL, NULL));
+						return(ft_strerror(NULL, NULL, NULL, NULL));
 					ft_lstadd_back(&env, temp2);
 				}	
 			}

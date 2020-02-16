@@ -67,7 +67,7 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 1;
 			if (run_pipe(a_cmd, fd, next))
-				return(ft_error_tab(NULL, 1, a_cmd, NULL));
+				return(ft_error(NULL, NULL, a_cmd, NULL));
 			ft_tabdel((void *)a_cmd);
 		}
 		else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
@@ -76,7 +76,7 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 0;
 			if (run_pipe(a_cmd, fd, next))
-				return(ft_error_tab(NULL, 1, a_cmd, NULL));
+				return(ft_error(NULL, NULL, a_cmd, NULL));
 			ft_tabdel((void *)a_cmd);
 			break;
 		}
