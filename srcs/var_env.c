@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:26:15 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:05:58 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ char    *get_var(t_list *lst, char *key)
 int		set_var_full(t_list *lst, char *key, char *value)
 {
 	t_list *next;
-	char *tmp = NULL;
+	char *tmp;
 	char *new;
 
 	if(!(new = ft_strdup(value)))
-		return(-1);
+		return (-1);
 	while (lst)
 	{
 		next = lst->next;
@@ -45,14 +45,14 @@ int		set_var_full(t_list *lst, char *key, char *value)
 		}
 		lst = next;
 	}
-	return(1);
+	return (1);
 }
 
 
 int		set_var(t_list *lst, char *key, char *value)
 {
 	t_list *next;
-	char *tmp = NULL;
+	char *tmp;
 	char *new;
 
 	if (!value)
@@ -76,14 +76,15 @@ int		set_var(t_list *lst, char *key, char *value)
 		}
 		lst = next;
 	}
-	return(1);
+	return (1);
 }
 
 t_list    *del_var(t_list *lst, char *key)
 {
-	t_list *tmp;
-	t_list *previous;
-	int ret;
+	t_list	*tmp;
+	t_list	*previous;
+	int		ret;
+
 	previous = lst;
 	if (!(ft_strncmp(previous->content, key, ft_strlen(key))))
 	{

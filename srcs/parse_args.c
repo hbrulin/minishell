@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:51:12 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/16 16:07:04 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_error_syntax(char **args)
 
 char **parse_arg(char *s)
 {
-	char **ret = NULL;
+	char **ret;
 	t_parse_tools t;
 	t_list *list = NULL;
 	t_list *temp = NULL;

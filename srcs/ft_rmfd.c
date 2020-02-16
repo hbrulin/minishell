@@ -4,16 +4,20 @@
 
 char **ft_rmfd(char **args)
 {
-    int i = 0;
-    int count = 0;
+    int i;
+    int len;
+    int count;
     char **sub;
+
+    i = 0;
+    count = 0;
     while (args[i])
     {
          if (args[i][0] == '<' || args[i][0] == '>' )
             count++;
         i++;
     }
-    int len = ft_tablen(args) - (count * 2);
+    len = ft_tablen(args) - (count * 2);
     if (count == 0)
         sub = copy_tab(args);
     else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 15:47:08 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:05:02 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ t_builtin_fc	g_builtin_functions[] = {
 	&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
 };
 
-int	builtin_fno(const char *name)
+int		builtin_fno(const char *name)
 {
 	static const char	*builtin_names[] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit"
 	};
-	
+
 	return (ft_tabindex(builtin_names, name));
 }
 
-int	run_dmc(char **args)
+int		run_dmc(char **args)
 {
 	int		err;
 	char	*path;
@@ -34,7 +34,6 @@ int	run_dmc(char **args)
 
 	if (!args || !*args)
 		return (0);
-
 	sub = ft_rmfd(args);
 	ft_tabdel((void *)args);
 	if ((err = builtin_fno(sub[0])) != -1)
@@ -50,8 +49,8 @@ int	run_dmc(char **args)
 		free(tmp);
 	}
 	if (err)
-		return(ft_strerror(path, sub, sub[0], NULL));
+		return (ft_strerror(path, sub, sub[0], NULL));
 	else
-		return(g_ret = ft_execve(path, sub));
-	return(0);
+		return (g_ret = ft_execve(path, sub));
+	return (0);
 }

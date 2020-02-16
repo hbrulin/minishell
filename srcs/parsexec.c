@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsexec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 22:05:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:03:41 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	ft_is_pipe(char **args)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], "|") == 0)
@@ -29,24 +30,23 @@ int	parsexec(char *cmd)
 {
 	int		std_out;
 	int		std_in;
-	char 	**args = NULL;
+	char 	**args;
 
 	std_in = dup(0);
 	std_out = dup(1);
 	if (!cmd)
-		return(0);
+		return (0);
 	if(!(args = parse_arg(cmd)))
-		return(ft_error(SYNTAX_ERR, cmd, NULL, NULL));
+		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	free(cmd);
 	if (interpreter(args) == 1)
-		return(ft_error(SYNTAX_ERR, NULL, args, NULL));
+		return (ft_error(SYNTAX_ERR, NULL, args, NULL));
 	redirect(args);
 	if (ft_is_pipe(args))
 		run_dmc_pipes(args);
 	else
-		run_dmc(args);
-	//ft_tabdel((void *)args); 
+		run_dmc(args); 
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
-	return(0);
+	return (0);
 }
