@@ -15,7 +15,7 @@ NAME = minishell
 
 SRCS = main.c parse_cmds.c parse_args.c run.c builtins/builtins.c execve.c var_env.c error.c \
 	customs.c builtins/ft_export.c builtins/ft_unset.c interpreter.c builtins/ft_echo.c parsexec.c \
-	try_path.c tryent_dirs.c redirect.c pipes.c
+	try_path.c tryent_dirs.c redirect.c pipes.c ft_rmfd.c
 
 SRC_DIR = srcs
 INC_DIR = inc
@@ -48,7 +48,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c Makefile

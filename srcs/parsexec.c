@@ -29,7 +29,7 @@ int	parsexec(char *cmd)
 {
 	int		std_out;
 	int		std_in;
-	char **args = NULL;
+	char 	**args = NULL;
 
 	std_in = dup(0);
 	std_out = dup(1);

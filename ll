@@ -1,0 +1,14 @@
+Makefile
+README.md
+hh
+inc
+libft
+libftprintf
+ll
+minishell
+obj
+segfault_history
+specs
+srcs
+test
+txt

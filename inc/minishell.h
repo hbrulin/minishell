@@ -87,5 +87,7 @@ int		redirect(char **args);
 int		run_dmc_pipes(char **args);
 int		ft_error(char *msg, char *befree, char **tab_free, void *param);
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
+char    **ft_rmfd(char **args);
+int		ft_is_operand(char c);
 
 #endif
