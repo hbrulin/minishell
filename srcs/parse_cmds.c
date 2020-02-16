@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 21:04:36 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:43:54 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int parse_cmds(char *s)
 {
-	int i;
-	int j;
-	int open;
-	char quote;
-	char *cmd = NULL;
+	t_parse_tools t;
+	char *cmd;
+	
+	cmd = NULL;
+	ft_bzero(&t, sizeof(t_parse_tools));
 	if (!s)
 		return(0);
 	if (ft_strchr(s, ';') == NULL) 
@@ -29,45 +29,42 @@ int parse_cmds(char *s)
 			return(1); 
 		return(0);
 	}
-	i = 0;
-	while (s[i])
+	while (s[t.i])
 	{
-		if (s[i] == ';' && s[i + 1] == ';')
+		if (s[t.i] == ';' && s[t.i + 1] == ';')
 			return(ft_error(SYNTAX_ERR, NULL, NULL, NULL));
-		i++;
+		t.i++;
 	}
-	i = 0;
-	j = 0;
-	open = 0;
-	while (s[i])
+	t.i = 0;
+	while (s[t.i])
 	{
-		if (ft_strchr(s + i, ';') == NULL)
+		if (ft_strchr(s + t.i, ';') == NULL)
 		{
-			if(!(cmd = ft_strdup(s + j)))
+			if(!(cmd = ft_strdup(s + t.j)))
 				return(ft_strerror(NULL, NULL, NULL, NULL));
 			if(parsexec(cmd))
 				return(1);
 			break;
 		}
-		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
+		if ((s[t.i] == '\'' || s[t.i] == '\"') && t.open == 0)
 		{
-			open = !open;
-			quote = s[i];
+			t.open = !t.open;
+			t.quote = s[t.i];
 		}
-		else if (open == 1 && s[i] == quote)
-			open = !open;
-		if (s[i] == ';' && open == 0)
+		else if (t.open == 1 && s[t.i] == t.quote)
+			t.open = !t.open;
+		if (s[t.i] == ';' && t.open == 0)
 		{
-			if(!(cmd = ft_substr(s, j, i - j)))
+			if(!(cmd = ft_substr(s, t.j, t.i - t.j)))
 				return(ft_strerror(NULL, NULL, NULL, NULL));
-			i++;
-			while(ft_is_space(s[i]))
-				i++;
-			j = i;
+			t.i++;
+			while(ft_is_space(s[t.i]))
+				t.i++;
+			t.j = t.i;
 			if(parsexec(cmd))
 				return(1);
 		}
-		i++;
+		t.i++;
 	}
 	return(0);
 }

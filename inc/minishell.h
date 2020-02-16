@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 15:44:17 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:32:14 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,15 @@
 # define	INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
 # define	SYNTAX_ERR		"minishell: syntax error near unexpected token\n"
 
-typedef short int t_boolean;
+typedef struct s_parse_tools
+{
+    int i;
+	int j;
+	int open;
+	char quote;
+}              t_parse_tools;
 
+typedef short int t_boolean;
 typedef int	(*t_builtin_fc)(char **args);
 
 typedef int	t_ret;
@@ -88,6 +95,5 @@ int		run_dmc_pipes(char **args);
 int		ft_error(char *msg, char *befree, char **tab_free, void *param);
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
 char    **ft_rmfd(char **args);
-int		ft_is_operand(char c);
 
 #endif
