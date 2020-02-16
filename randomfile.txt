@@ -1,0 +1,19 @@
+total 176
+drwxr-xr-x@ 18 helenebrulin  staff    576 16 fév 14:40 .
+drwx------@ 11 helenebrulin  staff    352 16 fév 02:26 ..
+drwxr-xr-x  14 helenebrulin  staff    448 16 fév 14:38 .git
+-rw-r--r--   1 helenebrulin  staff     39 15 fév 01:22 .gitignore
+drwxr-xr-x   3 helenebrulin  staff     96 16 fév 14:23 .vscode
+-rwxr-xr-x   1 helenebrulin  staff   2340 16 fév 14:29 Makefile
+-rw-r--r--   1 helenebrulin  staff   5744 15 fév 01:22 README.md
+drwxr-xr-x   3 helenebrulin  staff     96 15 fév 01:22 inc
+-rw-r--r--   1 helenebrulin  staff      6 16 fév 14:40 kkk
+drwxr-xr-x  79 helenebrulin  staff   2528 16 fév 02:25 libft
+drwxr-xr-x  20 helenebrulin  staff    640 15 fév 09:58 libftprintf
+-rwxr-xr-x   1 helenebrulin  staff  64324 16 fév 14:38 minishell
+drwxr-xr-x  39 helenebrulin  staff   1248 16 fév 14:35 obj
+-rw-r--r--   1 helenebrulin  staff      0 16 fév 14:40 randomfile.txt
+-rw-r--r--   1 helenebrulin  staff   1016 15 fév 01:22 segfault_history
+drwxr-xr-x   4 helenebrulin  staff    128 15 fév 01:22 specs
+drwxr-xr-x  18 helenebrulin  staff    576 16 fév 13:01 srcs
+drwxr-xr-x   6 helenebrulin  staff    192 15 fév 10:40 test
