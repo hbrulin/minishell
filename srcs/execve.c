@@ -82,13 +82,13 @@ int		ft_execve(char *path, char **args)
 	char **tab_env = NULL;
 	
 	if ((pid = fork()) == -1)
-		return(ft_strerror(path, NULL, "fork", NULL));
+		return(ft_strerror(path, args, "fork", NULL));
 	if (pid == 0)
 	{
 		tab_env = ft_lst_to_tab(env);
 		if((execve(path, args, tab_env)) == -1)
 		{
-			ft_strerror(NULL, NULL, path, NULL);
+			ft_strerror(path, args, path, NULL);
 			exit(EXIT_FAILURE);
 			return(1);
 		}
@@ -98,16 +98,16 @@ int		ft_execve(char *path, char **args)
 	{
 		is_forking(1); 
 		if((wpid = wait(&status)) == -1)
-			return(ft_strerror(path, NULL, "wait", NULL));
+			return(ft_strerror(path, args, "wait", NULL));
 		while (wpid != pid)
 		{
 			if((wpid = wait(&status)) == -1)
-				return(ft_strerror(path, NULL, "wait", NULL));
+				return(ft_strerror(path, args, "wait", NULL));
 		}
 		if (wpid == pid) 
 		{
 			is_forking(0);
-			return(ft_error(NULL, path, NULL, NULL));
+			return(ft_error(NULL, path, args, NULL));
 		}
 	}
 	return (0); 

@@ -45,7 +45,7 @@ int	parsexec(char *cmd)
 		run_dmc_pipes(args);
 	else
 		run_dmc(args);
-	ft_tabdel((void *)args); 
+	//ft_tabdel((void *)args); 
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
 	return(0);
