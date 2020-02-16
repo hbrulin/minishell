@@ -29,11 +29,11 @@ char **ft_rmfd(char **args)
                 count++;
                 i++;
             }
-            else if (args[i][0] == '<' || args[i][0] == '>' )
+            if (args[i][0] == '<' || args[i][0] == '>' )
                 i++;
             i++;
         }
     }
-    //ft_tab_print(sub);
+    ft_tab_print(sub);
     return(sub);
 }
