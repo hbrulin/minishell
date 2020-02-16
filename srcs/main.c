@@ -15,7 +15,6 @@
 t_list *env = NULL;
 t_list *export = NULL;
 t_ret	g_ret = 0;
-t_ret	exit_ret = 0;
 
 void signal_handler(int n) 
 {
@@ -56,7 +55,7 @@ void	prompt(void)
 		}
 		s = ft_strtrim(input, " ");
 		free(input);
-		status = parse_cmds(s);
+		parse_cmds(s);
 		free(s);
 	}
 }
@@ -73,5 +72,5 @@ int		main(int ac, char **av, char **envp)
 	ft_lstclear(&export, free);
 	ft_lstclear(&env, free);
 	system("leaks minishell");
-	return(exit_ret);
+	return(0);
 }

@@ -36,24 +36,15 @@ int	parsexec(char *cmd)
 	if (!cmd)
 		return(0);
 	if(!(args = parse_arg(cmd)))
-		return(ft_error(SYNTAX_ERR, 0, cmd, NULL));
+		return(ft_error(SYNTAX_ERR, 1, cmd, NULL));
 	free(cmd);
 	if (interpreter(args) == 1)
-		return(ft_error_tab(SYNTAX_ERR, 0, args, NULL));
-	//ft_tab_print(args);
+		return(ft_error_tab(SYNTAX_ERR, 1, args, NULL));
 	redirect(args);
 	if (ft_is_pipe(args))
-	{
-		if (run_dmc_pipes(args) == -1)
-			return(ft_error_tab(NULL, 1, args, NULL));
-	}
+		run_dmc_pipes(args);
 	else
-	{
-		if (run_dmc(args) == -1)
-		{
-			return(ft_error_tab(NULL, 1, args, NULL));
-		}
-	}
+		run_dmc(args);
 	ft_tabdel((void *)args); 
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);

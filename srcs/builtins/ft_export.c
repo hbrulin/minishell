@@ -33,6 +33,7 @@ int		ft_export(char **args)
 	char *key = NULL;
 	t_list *temp = NULL;
 	t_list *temp2 = NULL;
+	//ft_printf_fd(1, "IN");
 	ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
@@ -63,7 +64,7 @@ int		ft_export(char **args)
 			else
 			{
 				if (!(temp = malloc(sizeof(t_list))))
-					return(ft_strerror( 1, NULL, NULL, NULL)); //leqk ici?
+					return(ft_strerror( 1, NULL, NULL, NULL));
 				if (!(temp->content = ft_strdup(args[i])))
 						return(ft_strerror( 1, NULL, NULL, NULL));
 				temp->next = 0;

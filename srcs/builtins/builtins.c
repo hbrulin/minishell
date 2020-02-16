@@ -92,15 +92,18 @@ int		ft_exit(char **args)
 	int i;
 	i = 0;
 	if (ft_tablen(args) > 2)
-		return(ft_error(MANY_ARGS, -1, NULL, args[0]));
+		return(ft_error(MANY_ARGS, 1, NULL, args[0]));
 	if (ft_tablen(args) == 1)
-		return(-1);
+		exit(0);
 	while (args[1][i])
 	{
 		if (!(ft_isdigit(args[1][i])))
-			return(ft_error(EXIT_NUM, -1, NULL, args[1]));
+		{
+			ft_error(EXIT_NUM, 0, NULL, args[1]);
+			exit(0);
+		}
 		i++;
 	}
-	exit_ret = ft_atoi(args[1]);
-	return (-1);
+	i = ft_atoi(args[1]);
+	exit(i);
 }

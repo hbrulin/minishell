@@ -52,7 +52,6 @@ typedef int	(*t_builtin_fc)(char **args);
 
 typedef int	t_ret;
 t_ret	g_ret;
-t_ret	exit_ret;
 
 t_list *env;
 t_list *export;
