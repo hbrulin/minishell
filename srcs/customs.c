@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   customs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 14:40:52 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:57:59 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
+int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 {
-	t_list *next;
-	char *tmp;
-	int i = 0;
+	t_list	*next;
+	char	*tmp;
+	int		i;
 
 	tmp = NULL;
+	i = 0;
 	while (arg[i] != '=' && arg[i])
 		i++;
 	if (i > 0)
@@ -37,15 +38,16 @@ int	ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 	}
 	if (tmp)
 		free(tmp);
-	return(1);
+	return (1);
 }
 
-t_list *ft_tab_to_list_custom(t_list **lst, char **tab)
+t_list	*ft_tab_to_list_custom(t_list **lst, char **tab)
 {
-	t_list *temp = NULL;
-	int i;
+	t_list	*temp;
+	int		i;
 
 	i = 0;
+	temp = NULL;
 	while(tab[i])
 	{
 		if(!(tab[i][0] == '_' && (tab[i][1] == '=')))
@@ -59,17 +61,18 @@ t_list *ft_tab_to_list_custom(t_list **lst, char **tab)
 		}
 		i++;
 	}
-	return(*lst);
+	return (*lst);
 }
 
 
 void	ft_lstprint_export(t_list *lst)
 {
-	t_list *next;
-	int k = 0;
-	char *key = NULL;
-	char *value = NULL;
+	t_list	*next;
+	int		k;
+	char	*key;
+	char	*value;
 
+	k = 0;
 	if (!lst)
 		return ;
 	while (lst)
@@ -85,9 +88,7 @@ void	ft_lstprint_export(t_list *lst)
 		if (ft_strchr(lst->content, '='))
 			ft_putstr("\"");
 		ft_putstr(value);
-		if (ft_strchr(lst->content, '='))
-			ft_putstr("\"");
-		ft_putstr("\n");
+		ft_putstr("\"\n");
 		lst = next;
 		free(key);
 		free(value);

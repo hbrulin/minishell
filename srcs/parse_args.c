@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:31:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 22:05:37 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:51:12 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,90 +55,84 @@ int	check_error_syntax(char **args)
 char **parse_arg(char *s)
 {
 	char **ret = NULL;
+	t_parse_tools t;
 	t_list *list = NULL;
 	t_list *temp = NULL;
-	int i;
-	int j;
-	int open;
-	char quote;
-	char *tmp;
 
-	i = 0;
-	j = 0;
-	open = 0;
+	ft_bzero(&t, sizeof(t_parse_tools));
 
-	while (s[i])
+	while (s[t.i])
 	{
-		if ((ft_strchr(s + i, ' ') == NULL) && (ft_strchr(s + i, '|') == NULL) && (ft_strchr(s + i, '>') == NULL) && (ft_strchr(s + i, '<') == NULL))
+		if ((ft_strchr(s + t.i, ' ') == NULL) && (ft_strchr(s + t.i, '|') == NULL)
+			&& (ft_strchr(s + t.i, '>') == NULL) && (ft_strchr(s + t.i, '<') == NULL))
 		{
-			if(!(tmp = ft_strdup(s + j)))
+			if(!(t.tmp = ft_strdup(s + t.j)))
 				return (NULL);
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strtrim(tmp, " ")))
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
-			free(tmp);
+			free(t.tmp);
 			break;
 		}
-		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
+		if ((s[t.i] == '\'' || s[t.i] == '\"') && t.open == 0)
 		{
-			open = !open;
-			quote = s[i];
+			t.open = !t.open;
+			t.quote = s[t.i];
 		}
-		else if (open == 1 && s[i] == quote && s[i - 1] != '\\')
-			open = !open;
-		if (s[i] == ' ' && open == 0)
+		else if (t.open == 1 && s[t.i] == t.quote && s[t.i - 1] != '\\')
+			t.open = !t.open;
+		if (s[t.i] == ' ' && t.open == 0)
 		{
-			if(!(tmp = ft_substr(s, j, i - j)))
+			if(!(t.tmp = ft_substr(s, t.j, t.i - t.j)))
 				return (NULL);
-			while(ft_is_space(s[i]))
-				i++;
-			i--;
-			j = i;
+			while(ft_is_space(s[t.i]))
+				t.i++;
+			t.i--;
+			t.j = t.i;
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strtrim(tmp, " ")))
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
-			free(tmp);
+			free(t.tmp);
 		}
-		else if ((s[i] == '|' || s[i] == '>' || s[i] == '<') && open == 0)
+		else if ((s[t.i] == '|' || s[t.i] == '>' || s[t.i] == '<') && t.open == 0)
 		{
-			if (s[i - 1] != ' ')
+			if (s[t.i - 1] != ' ')
 			{
-				if(!(tmp = ft_substr(s, j, i - j)))
+				if(!(t.tmp = ft_substr(s, t.j, t.i - t.j)))
 					return (NULL);
-				j = i;
+				t.j = t.i;
 				if (!(temp = malloc(sizeof(t_list))))
 					return (NULL);
-				if (!(temp->content = ft_strtrim(tmp, " ")))
+				if (!(temp->content = ft_strtrim(t.tmp, " ")))
 					return (NULL);
 				temp->next = 0;
 				ft_lstadd_back(&list, temp);
-				free(tmp);
-				i++;
+				free(t.tmp);
+				t.i++;
 			}
-			while (ft_is_operand(s[i]))
-				i++;
-			if(!(tmp = ft_substr(s, j, i - j)))
+			while (ft_is_operand(s[t.i]))
+				t.i++;
+			if(!(t.tmp = ft_substr(s, t.j, t.i - t.j)))
 					return (NULL);
-			while(ft_is_space(s[i]))
-				i++;
-			j = i;
+			while(ft_is_space(s[t.i]))
+				t.i++;
+			t.j = t.i;
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
-			if (!(temp->content = ft_strtrim(tmp, " ")))
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
 				return (NULL);
 			temp->next = 0;
 			ft_lstadd_back(&list, temp);
-			free(tmp);
+			free(t.tmp);
 		}
-		i++;
+		t.i++;
 	}
-	//ft_lstprint(list);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
 	if (check_error_syntax(ret))

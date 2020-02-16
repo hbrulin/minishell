@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:32:14 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/16 15:47:49 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@
 
 typedef struct s_parse_tools
 {
-    int i;
-	int j;
-	int open;
-	char quote;
+    int		i;
+	int		j;
+	int		open;
+	char	quote;
+	char	*tmp;
 }              t_parse_tools;
 
 typedef short int t_boolean;

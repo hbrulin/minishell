@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/12 16:14:17 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:57:09 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_export(char **args)
 	t_list *temp = NULL;
 	t_list *temp2 = NULL;
 	//ft_printf_fd(1, "IN");
-	ft_list_sort(export);
+	//ft_list_sort(export);
 	if (ft_tablen(args) == 1)
 	{
 		ft_lstprint_export(export);
