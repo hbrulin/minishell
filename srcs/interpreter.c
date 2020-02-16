@@ -1,3 +1,5 @@
+//HEADER
+
 #include "minishell.h"
 
 void	expand_envvar(char **arg, int dr, int *i)

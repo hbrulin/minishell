@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 20:15:04 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:28:48 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list *env = NULL;
-t_list *export = NULL;
+t_list	*env = NULL;
+t_list	*export = NULL;
 t_ret	g_ret = 0;
 
-void signal_handler(int n) 
+void	signal_handler(int n) 
 {
 	if (is_forking(2) && n == SIGINT)
 	{
@@ -39,12 +39,12 @@ void	prompt(void)
 	int		status;
 	char	*input;
 	char	*s;
-	int ret;
+	int		ret;
 
 	status = 0;
 	input = NULL;
 	s = NULL;
-	while(!status)
+	while (!status)
 	{
 		ft_putstr("minishell > ");
 		ret = get_next_line(STDIN_FILENO, &input);
@@ -71,6 +71,5 @@ int		main(int ac, char **av, char **envp)
 	prompt();
 	ft_lstclear(&export, free);
 	ft_lstclear(&env, free);
-	system("leaks minishell");
-	return(0);
+	return (0);
 }

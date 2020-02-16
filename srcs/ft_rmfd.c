@@ -1,4 +1,4 @@
-//header
+//HEADER
 
 #include "minishell.h"
 
