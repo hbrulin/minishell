@@ -48,5 +48,5 @@ int	parsexec(char *cmd)
 		run_dmc(args); 
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
-	return (g_ret = 0);
+	return (0);
 }

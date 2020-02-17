@@ -32,6 +32,8 @@
 # define SIGINT_ERR 130
 # define SIGQUIT_ERR 131
 
+# define ESYNTAX 2
+
 //#define CMD_NOT_FOUND(cmd)	ft_printf_fd(2, "minishell: %s: command not found\n", (cmd));
 # define	CMD_NOT_FOUND	"minishell: %s: command not found\n"
 //# define	CMD_FAIL_EXEC	"minishell: %s: command could not be executed\n"

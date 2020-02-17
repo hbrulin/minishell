@@ -33,29 +33,23 @@ int		ft_execve(char *path, char **args)
 	if (pid == 0)
 	{
 		tab_env = ft_lst_to_tab(env);
-		if((execve(path, args, tab_env)) == -1)
+		if((execve(path, args, tab_env)) == -1) // munmap_chunk(): invalid pointer ERROR if fail, why ?
 		{
 			ft_strerror(path, args, path, NULL);
 			exit(EXIT_FAILURE);
-			return(1);
+			return(1); // if exit() exits, this line will never be executed
 		}
-		ft_tabdel((void *)tab_env);
+		ft_tabdel((void *)tab_env); // if execve never returns, how can this one be exec ?
 	}
 	else if (pid > 0)
 	{
 		is_forking(1); 
-		if((wpid = wait(&status)) == -1)
+		if((wpid = wait(&status)) == -1)		// NO NEED TO LOOP, the syscall stops our process till child's end
 			return(ft_strerror(path, args, "wait", NULL));
-		while (wpid != pid)
-		{
-			if((wpid = wait(&status)) == -1)
-				return(ft_strerror(path, args, "wait", NULL));
-		}
-		if (wpid == pid) 
-		{
-			is_forking(0);
-			return(ft_error(NULL, path, args, NULL));
-		}
+
+		g_ret = WEXITSTATUS(status);
+		is_forking(0);
+		return(ft_error(NULL, path, args, NULL));
 	}
 	return (0); 
 } 

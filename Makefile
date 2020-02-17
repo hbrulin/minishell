@@ -72,4 +72,4 @@ re :
 -include $(DPD)
 
 for_linux:
-	gcc -Wall -Wextra -Werror -I./inc/ srcs/*.c srcs/builtins/*.c -L./libftprintf/ -lftprintf -I./libftprintf/ -I./libft/ libft/libft.a
+	gcc -g -Wall -Wextra -Werror -I./inc/ srcs/*.c srcs/builtins/*.c -L./libftprintf/ -lftprintf -I./libftprintf/ -I./libft/ libft/libft.a

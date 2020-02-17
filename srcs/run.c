@@ -48,9 +48,9 @@ int		run_dmc(char **args)
 		path = build_path(tmp, sub[0]);
 		free(tmp);
 	}
-	if (!path) // command name could not be find in given directories
+	if (!path) // command name could not be found in given directories
 		return (ft_error(CMD_NOT_FOUND, NULL, NULL, sub[0]));
 	else
-		return (g_ret = ft_execve(path, sub));
+		return (ft_execve(path, sub));
 	return (0);
 }

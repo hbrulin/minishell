@@ -24,7 +24,8 @@ int parse_cmds(char *s)
 	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))
-			return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+		//	return(g_ret = ft_strerror(NULL, NULL, NULL, NULL)); return of parse_cmds is never used / malloc fail errtype
+			return (1);
 		if(parsexec(cmd))
 			return(1); 
 		return(0);
@@ -32,7 +33,10 @@ int parse_cmds(char *s)
 	while (s[t.i])
 	{
 		if (s[t.i] == ';' && s[t.i + 1] == ';')
-			return(g_ret = ft_error(SYNTAX_ERR, NULL, NULL, NULL));
+		{
+			g_ret = ESYNTAX; // syntax error return code is 2 on most bash versions
+			return(ft_error(SYNTAX_ERR, NULL, NULL, NULL)); // ft_error constantly returns 1
+		}
 		t.i++;
 	}
 	t.i = 0;
@@ -41,7 +45,8 @@ int parse_cmds(char *s)
 		if (ft_strchr(s + t.i, ';') == NULL)
 		{
 			if(!(cmd = ft_strdup(s + t.j)))
-				return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			//	return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+				return (1);
 			parsexec(cmd);
 			break;
 		}
@@ -55,7 +60,8 @@ int parse_cmds(char *s)
 		if (s[t.i] == ';' && t.open == 0)
 		{
 			if(!(cmd = ft_substr(s, t.j, t.i - t.j)))
-				return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+				// return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+				return (1);
 			t.i++;
 			while(ft_is_space(s[t.i]))
 				t.i++;
