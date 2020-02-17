@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:38:26 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:43:54 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/17 11:31:59 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int parse_cmds(char *s)
 	if (ft_strchr(s, ';') == NULL) 
 	{
 		if(!(cmd = ft_strdup(s)))
-			return(ft_strerror(NULL, NULL, NULL, NULL));
+			return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 		if(parsexec(cmd))
 			return(1); 
 		return(0);
@@ -32,7 +32,7 @@ int parse_cmds(char *s)
 	while (s[t.i])
 	{
 		if (s[t.i] == ';' && s[t.i + 1] == ';')
-			return(ft_error(SYNTAX_ERR, NULL, NULL, NULL));
+			return(g_ret = ft_error(SYNTAX_ERR, NULL, NULL, NULL));
 		t.i++;
 	}
 	t.i = 0;
@@ -41,9 +41,8 @@ int parse_cmds(char *s)
 		if (ft_strchr(s + t.i, ';') == NULL)
 		{
 			if(!(cmd = ft_strdup(s + t.j)))
-				return(ft_strerror(NULL, NULL, NULL, NULL));
-			if(parsexec(cmd))
-				return(1);
+				return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			parsexec(cmd);
 			break;
 		}
 		if ((s[t.i] == '\'' || s[t.i] == '\"') && t.open == 0)
@@ -56,13 +55,12 @@ int parse_cmds(char *s)
 		if (s[t.i] == ';' && t.open == 0)
 		{
 			if(!(cmd = ft_substr(s, t.j, t.i - t.j)))
-				return(ft_strerror(NULL, NULL, NULL, NULL));
+				return(g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 			t.i++;
 			while(ft_is_space(s[t.i]))
 				t.i++;
 			t.j = t.i;
-			if(parsexec(cmd))
-				return(1);
+			parsexec(cmd);
 		}
 		t.i++;
 	}

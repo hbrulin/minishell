@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 16:03:41 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/17 11:30:49 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	parsexec(char *cmd)
 	if (!cmd)
 		return (0);
 	if(!(args = parse_arg(cmd)))
-		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
+		return (g_ret = ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	free(cmd);
 	if (interpreter(args) == 1)
-		return (ft_error(SYNTAX_ERR, NULL, args, NULL));
+		return (g_ret = ft_error(SYNTAX_ERR, NULL, args, NULL));
 	redirect(args);
 	if (ft_is_pipe(args))
 		run_dmc_pipes(args);
@@ -48,5 +48,5 @@ int	parsexec(char *cmd)
 		run_dmc(args); 
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
-	return (0);
+	return (g_ret = 0);
 }
