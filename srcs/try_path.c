@@ -12,14 +12,15 @@
 
 #include "minishell.h"
 
-char	*try_path(char *path, int *error)
+char	*try_path(char *path)
 {
 	struct stat	file;
-
-	*error = stat(path, &file);
-	if (*error && (*error = errno))
+	
+	errno = 0;
+	stat(path, &file);
+	if (errno)
 		return (NULL);
-	if ((file.st_mode & S_IFMT) == S_IFDIR && (*error = EISDIR))
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
 		return (NULL);
 	return (path);
 }

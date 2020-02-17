@@ -3,21 +3,22 @@
 #include "minishell.h"
 
 /*
-**	Search entry in all the directories specified in 'dirs'
+**	Try to find the given entry in the directories listed in dirs by
+**	building an absolute path for each directory.
 **	dirs must be formatted as follow -> dir1/:/dir2/:/dir3:/dir1/dir2
 **	returns the complete path where the entry was found or NULL
 **	also returns NULL if dirs or entry is NULL
 */
 
-char	*tryent_dirs(const char *dirs, const char *entry, int *err)
+char	*build_path(const char *dirs, const char *entry)
 {
 	int		i;
-	//int		error;
 	char	*dir_path;
 	char	c_entry[270];
 
 	if (!dirs || !entry)
 		return (NULL);
+	errno = 0;
 	c_entry[0] = '/';
 	ft_strcpy(&c_entry[1], entry);
 	i = -1;
@@ -26,10 +27,10 @@ char	*tryent_dirs(const char *dirs, const char *entry, int *err)
 		if (dirs[i] == ':')
 		{
 			dir_path = ft_strnjoin(dirs, c_entry, i);
-			dirs += i + 1;							// move pointer to last ':' found
-			i = 0;								// reset interator
-			if (try_path(dir_path, err))
+			dirs += i + 1;								// move pointer to last ':' found
+			if (try_path(dir_path))
 				return (dir_path);
+			i = 0;										// reset iterator
 			free(dir_path);
 		}
 	}

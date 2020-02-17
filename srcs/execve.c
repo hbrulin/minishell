@@ -20,60 +20,7 @@ int is_forking(int val)
 		is_forking = val;
 	return (is_forking);
 }
-/*
-char	*bin_search(char *cmd)
-{
-	struct dirent	*bins;
-	DIR				*path_to_bin;
-	char *location;
-	char *ret;
-	
-	bins = NULL;
-	path_to_bin = NULL;
-	location = ft_strdup("/bin/");
-	ret = NULL;
-	if(!(path_to_bin = opendir(location)))
-	{
-		ft_error(FATAL_ERROR, 0, location, "opendir");
-		return (NULL);
-	}
-	while ((bins = readdir(path_to_bin)) != NULL)
-	{
-		if (ft_strcmp(bins->d_name, cmd) == 0)
-		{
-			if (closedir(path_to_bin) == -1)
-			{
-				ft_error(FATAL_ERROR, 0, location, "closedir");
-				exit(EXIT_FAILURE);
-			}
-			ret = ft_strjoin(location, cmd);
-			free(location);
-			return (ret);
-		}
-		bins++;
-	}
-	if (location)
-		free(location);
-	if (closedir(path_to_bin) == -1)
-	{
-		ft_error(FATAL_ERROR, 0, location, "closedir");
-		exit(EXIT_FAILURE);
-	}
-	return (NULL); 
-}
 
-char *get_path(char **args)
-{
-	char *path;
-	
-	path = NULL;
-	if ((path = bin_search(args[0])) != NULL)
-		return (path);
-	else
-		path = ft_strdup(args[0]);
-	return(path);
-}
-*/
 int		ft_execve(char *path, char **args)
 {
 	pid_t	pid;
