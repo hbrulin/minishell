@@ -6,16 +6,18 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/14 19:58:56 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/18 14:12:09 by pmouhali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-SRCS = main.c parse_cmds.c parse_args.c run.c builtins/builtins.c execve.c var_env.c error.c \
-	customs.c builtins/ft_export.c builtins/ft_unset.c interpreter.c builtins/ft_echo.c parsexec.c \
-	try_path.c tryent_dirs.c redirect.c pipes.c ft_rmfd.c
+SRCS = main.c parse_cmds.c parse_args.c run.c execve.c var_env.c error.c \
+	customs.c interpreter.c parsexec.c \
+	builtins/ft_echo.c builtins/ft_cd.c builtins/ft_pwd.c builtins/ft_env.c \
+	builtins/ft_export.c builtins/ft_unset.c builtins/ft_exit.c \
+	try_path.c build_path.c redirect.c pipes.c ft_rmfd.c
 
 SRC_DIR = srcs
 INC_DIR = inc

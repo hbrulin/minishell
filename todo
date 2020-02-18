@@ -1,0 +1,40 @@
+Test builtins return codes :
+echo : always 0						: OK
+pwd : always 0 unless syscall fails ?			: OK
+cd : 0 if succes 1 if dir doesnt exists // HOME not set : OK
+env : always 0 whithout options ?			: OK
+export							: FAILING
+unset : 0 if success or no varex 1 if invalid id	: doit retourner 1 en cas d'erreur
+exit : defaults 0 | given arg				: doit fonctionner avec negatifs
+
+!! Test syntax errors return code :
+';' : 258 [bash: syntax error near unexpected token `;;'] >>>> va return 2
+'|' : 258 [bash: syntax error near unexpected token `|']  >>>> va return 2		:
+'>' '>>' '<' : 258 [bash: syntax error near unexpected token `newline']			: PARSING PAS FINI ON VERRA QUAND CE SERA FAIT
+unfinished quotes : 258 [> bash: unexpected EOF while looking for matching `"'		:
+bash: syntax error: unexpected end of file]
+
+Test execution errors return code :
+command not found : 127			: KO 0
+no such file or directory : 127		: KO 0
+not a directory : 126			: KO 0
+is a directory : 126			: KO 0
+permission denied : 126			: KO 1
+other files like sockets and symlinks ? 126 if lnked file fails to exec
+
+Test child process return codes : ALL GOOD (WEXITSTATUS)
+
+Test signals return codes : DOESN WORK EVEN IF G_RET IS ST 
+child process CTRL-C : 130		: KO 0
+chil process CTRL-D : 0			: KO 0
+child process CTL-\ : 131		: KO 0
+
+Code refacto :
+Exec.c : do not free path and args anymore
+FREE HAPPENS IN PARSEXEC FOR ARGS (where it is allocd)
+	     IN RUN FOR PATH (where it is allocd)
+is_forking doesnt exists anymore replaced by global counting pocesses
+the prompt is green
+
+PIPES TESTS :
+cat | ls | grep

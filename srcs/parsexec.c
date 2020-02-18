@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/17 11:30:49 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/18 17:51:17 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	parsexec(char *cmd)
 	int		std_out;
 	int		std_in;
 	char 	**args;
+	char **sub;
 
 	std_in = dup(0);
 	std_out = dup(1);
@@ -42,11 +43,14 @@ int	parsexec(char *cmd)
 	if (interpreter(args) == 1)
 		return (g_ret = ft_error(SYNTAX_ERR, NULL, args, NULL));
 	redirect(args);
-	if (ft_is_pipe(args))
-		run_dmc_pipes(args);
+	sub = ft_rmfd(args); // can happen here but isnt correct
+	ft_tabdel((void**)args);
+	if (ft_is_pipe(sub))
+		run_dmc_pipes(sub);
 	else
-		run_dmc(args); 
+		run_dmc(sub);
 	dup2(std_out, 1); //reset les sorties
 	dup2(std_in, 0);
+	ft_tabdel((void**)sub);
 	return (0);
 }

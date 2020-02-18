@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:47:49 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/18 15:57:37 by pmouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ typedef short int t_boolean;
 typedef int	(*t_builtin_fc)(char **args);
 
 typedef int	t_ret;
-t_ret	g_ret;
+extern t_ret	g_ret;
 
-t_list *env;
-t_list *export;
+extern int	g_process_count;
+
+extern t_list *env;
+extern t_list *export;
+
 
 int		run_dmc(char **args);
 int		parse_cmds(char *s);
@@ -80,7 +83,6 @@ t_list	*del_var(t_list *lst, char *key);
 int		ft_cd(char **args);
 int		ft_access(char *path);
 void	signal_handler(int n);
-int		is_forking(int val);
 int		ft_export(char **args);
 t_list	*ft_tab_to_list_custom(t_list **lst, char **tab);
 int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int));
