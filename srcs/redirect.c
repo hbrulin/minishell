@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 14:13:55 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 14:29:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,6 @@ int		redirect_left(char *path_from) //NE PAS EXECUTER LA CMD 1 -> revoir ca -> m
 	return (0);
 }
 
-int ft_count(char **args)
-{
-	int i;
-    int count;
-
-    i = 0;
-    count = 0;
-    while (args[i])
-    {
-         if (args[i][0] == '<' || args[i][0] == '>' )
-            count++;
-        i++;
-    }
-    return(count);
-}
-
 char **redirect(char **args) //mieux parser pour que pas de prise en compte des arguments > et file
 {
 	int i = 0;
@@ -67,12 +51,6 @@ char **redirect(char **args) //mieux parser pour que pas de prise en compte des 
 	char *path;
 	char **sub;
 
-	int count = ft_count(args);
-	if (count == 0)
-	{
-		sub = copy_tab(args);
-		return (sub);
-	}
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], ">") == 0 || ft_strcmp(args[i], ">>") == 0)
@@ -94,6 +72,6 @@ char **redirect(char **args) //mieux parser pour que pas de prise en compte des 
 		}
 		i++;
 	}
-	sub = ft_rmfd(args, count);
+	sub = ft_rmfd(args);
 	return(sub);
 }
