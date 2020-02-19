@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 20:13:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 17:34:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,15 @@ int		ft_execve(char *path, char **args)
 	int status;
 	char **tab_env = NULL;
 	
+	// verif NULL + free if fork fail
+	tab_env = ft_lst_to_tab(env); // must be allocated here for free. !! idk yet where to free. !!
 	if ((pid = fork()) == -1)
-		return(ft_strerror(path, args, "fork", NULL));
+		return(ft_strerror(NULL, NULL, "fork", NULL));
 	if (pid == 0)
 	{
-		tab_env = ft_lst_to_tab(env);
 		if((execve(path, args, tab_env)) == -1) // munmap_chunk(): invalid pointer ERROR if fail, why ?
-		{
-			ft_strerror(path, args, path, NULL);
-			exit(EXIT_FAILURE);
-			return(1); // if exit() exits, this line will never be executed
-		}
-		ft_tabdel((void *)tab_env); // if execve never returns, how can this one be exec ?
+			exit(ft_strerror(NULL, NULL, path, NULL));
+		// if fail, valgrind s'affiche puisque execve n'as pas transformer le child minishell en un autre process (a voir)
 	}
 	else if (pid > 0)
 	{
@@ -49,7 +46,8 @@ int		ft_execve(char *path, char **args)
 
 		g_ret = WEXITSTATUS(status);
 		is_forking(0);
-		return(ft_error(NULL, path, args, NULL));
+		ft_tabdel((void**)tab_env);
+		return (1);
 	}
 	return (0); 
 } 
