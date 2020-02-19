@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:30:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:59:46 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/19 14:16:15 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int		ft_unset(char **args)
 			del_var(export, args[i]);
 			del_var(env, args[i]);
 		}
+		else
+			return (1);		
 		i++;
 	}
 	return (0);
