@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 17:07:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 17:20:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 int		check_error(char *s)
 {
-	int i;
+	int		i;
+	int		open;
+	char	quote;
 
-	if (!s)
-		return (1);
 	i = 0;
+	open = 0;
 	while (s[i])
 	{
-		if (s[i] == ';' && s[i + 1] == ';')
+		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
+		{
+			open = !open;
+			quote = s[i];
+		}
+		else if (open == 1 && s[i] == quote)
+			open = !open;
+		if (s[i] == ';' && s[i + 1] == ';' && open == 0)
 		{
 			g_ret = ESYNTAX;
 			return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
@@ -69,36 +77,45 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 	return (1);
 }
 
+int		loop(char *s, char *cmd, t_parse_tools *t)
+{
+	while (s[t->i])
+	{
+		if (ft_strchr(s + t->i, ';') == NULL)
+		{
+			if (malloc_and_exec(cmd, s, t, 2))
+				return (1);
+			break ;
+		}
+		set_quote(s[t->i], t);
+		if (s[t->i] == ';' && t->open == 0)
+		{
+			if (malloc_and_exec(cmd, s, t, 3))
+				return (1);
+			t->i++;
+			while (ft_is_space(s[t->i]))
+				t->i++;
+			t->j = t->i;
+		}
+		t->i++;
+	}
+	return (0);
+}
+
 int		parse_cmds(char *s)
 {
 	t_parse_tools	t;
 	char			*cmd;
 
+	if (!s)
+		return (1);
 	cmd = NULL;
 	ft_bzero(&t, sizeof(t_parse_tools));
 	if (check_error(s))
 		return (1);
 	if (ft_strchr(s, ';') == NULL)
 		return (malloc_and_exec(cmd, s, &t, 1));
-	while (s[t.i])
-	{
-		if (ft_strchr(s + t.i, ';') == NULL)
-		{
-			if (malloc_and_exec(cmd, s, &t, 2))
-				return (1);
-			break ;
-		}
-		set_quote(s[t.i], &t);
-		if (s[t.i] == ';' && t.open == 0)
-		{
-			if (malloc_and_exec(cmd, s, &t, 3))
-				return (1);
-			t.i++;
-			while (ft_is_space(s[t.i]))
-				t.i++;
-			t.j = t.i;
-		}
-		t.i++;
-	}
+	if (loop(s, cmd, &t))
+		return (1);
 	return (0);
 }
