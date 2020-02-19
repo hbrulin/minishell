@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 13:11:48 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 15:38:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		run_dmc(char **args)
 
 	if (!args || !*args)
 		return (0);
+	if (interpreter(args) == 1)
+		return (g_ret = ft_error(SYNTAX_ERR, NULL, args, NULL));
 	if ((i = builtin_fno(args[0])) != -1)
 		return (g_ret = g_builtin_functions[i](args));
 	path = ft_strrchr(args[0], '/');
