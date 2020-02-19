@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 16:41:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 16:44:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ int		check_error(char *s)
 		i++;
 	}
 	return (0);
+}
+
+void	set_quote(char c, t_parse_tools *t)
+{
+	if ((c == '\'' || c == '\"') && t->open == 0)
+	{
+		t->open = !t->open;
+		t->quote = c;
+	}
+	else if (t->open == 1 && c == t->quote)
+		t->open = !t->open;
 }
 
 int		parse_cmds(char *s)
@@ -57,13 +68,7 @@ int		parse_cmds(char *s)
 			parsexec(cmd);
 			break ;
 		}
-		if ((s[t.i] == '\'' || s[t.i] == '\"') && t.open == 0)
-		{
-			t.open = !t.open;
-			t.quote = s[t.i];
-		}
-		else if (t.open == 1 && s[t.i] == t.quote)
-			t.open = !t.open;
+		set_quote(s[t.i], &t);
 		if (s[t.i] == ';' && t.open == 0)
 		{
 			if (!(cmd = ft_substr(s, t.j, t.i - t.j)))
