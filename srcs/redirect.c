@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 14:29:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 15:05:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char **redirect(char **args) //mieux parser pour que pas de prise en compte des 
 		else if (ft_strcmp(args[i], "<") == 0)
 		{
 			path = ft_strdup(args[i + 1]);
-			ft_printf_fd(1, "%s", path);
 			if(redirect_left(path))
 				return(NULL);
 			free(path);
