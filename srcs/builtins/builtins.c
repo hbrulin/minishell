@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:42:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 16:02:01 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/19 15:26:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ int		ft_env(char **args)
 int		ft_exit(char **args)
 {
 	int i;
+	unsigned int j;
 
 	i = 0;
 	if (ft_tablen(args) > 2)
 		return (ft_error(MANY_ARGS, NULL, NULL, args[0]));
 	if (ft_tablen(args) == 1)
 		exit(0);
+	if (args[1][i] == '+' || args[1][i] == '-')
+		i++;
 	while (args[1][i])
 	{
 		if (!(ft_isdigit(args[1][i])))
@@ -95,6 +98,9 @@ int		ft_exit(char **args)
 		}
 		i++;
 	}
-	i = ft_atoi(args[1]);
-	exit(i);
+	if((i = ft_atoi(args[1])) < 0)
+		j = (unsigned char)i;
+	else
+		j = i;
+	exit(j);
 }
