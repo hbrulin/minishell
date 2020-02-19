@@ -6,44 +6,36 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:41:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:25:40 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 18:10:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		add_node(t_parse_tools *t, t_list **list)
-{
-	t_list	*temp;
-
-	temp = NULL;
-	if (!(temp = malloc(sizeof(t_list))))
-		return (1);
-	if (!(temp->content = ft_strtrim(t->tmp, " ")))
-		return (1);
-	temp->next = 0;
-	ft_lstadd_back(list, temp);
-	return (0);
-}
 
 char	**parse_args(char *s)
 {
 	char			**ret;
 	t_parse_tools	t;
 	t_list			*list;
+	t_list			*temp;
 
 	ft_bzero(&t, sizeof(t_parse_tools));
 	list = NULL;
+	temp = NULL;
 	ret = NULL;
 	while (s[t.i])
 	{
-		if (!ft_strchr(s + t.i, ' ') && !ft_strchr(s + t.i, '|') &&
-			!ft_strchr(s + t.i, '>') && !ft_strchr(s + t.i, '<'))
+		if ((ft_strchr(s + t.i, ' ') == NULL) && (ft_strchr(s + t.i, '|') == NULL)
+			&& (ft_strchr(s + t.i, '>') == NULL) && (ft_strchr(s + t.i, '<') == NULL))
 		{
 			if (!(t.tmp = ft_strdup(s + t.j)))
 				return (NULL);
-			if (add_node(&t, &list))
+			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
 			free(t.tmp);
 			break ;
 		}
@@ -52,13 +44,17 @@ char	**parse_args(char *s)
 		{
 			if (!(t.tmp = ft_substr(s, t.j, t.i - t.j)))
 				return (NULL);
-			if (add_node(&t, &list))
-				return (NULL);
-			free(t.tmp);
 			while (ft_is_space(s[t.i]))
 				t.i++;
 			t.i--;
 			t.j = t.i;
+			if (!(temp = malloc(sizeof(t_list))))
+				return (NULL);
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
+			free(t.tmp);
 		}
 		else if (ft_is_operand(s[t.i]) && t.open == 0)
 		{
@@ -66,10 +62,14 @@ char	**parse_args(char *s)
 			{
 				if (!(t.tmp = ft_substr(s, t.j, t.i - t.j)))
 					return (NULL);
-				if (add_node(&t, &list))
-					return (NULL);
-				free(t.tmp);
 				t.j = t.i;
+				if (!(temp = malloc(sizeof(t_list))))
+					return (NULL);
+				if (!(temp->content = ft_strtrim(t.tmp, " ")))
+					return (NULL);
+				temp->next = 0;
+				ft_lstadd_back(&list, temp);
+				free(t.tmp);
 				t.i++;
 			}
 			while (ft_is_operand(s[t.i]))
@@ -79,8 +79,12 @@ char	**parse_args(char *s)
 			while (ft_is_space(s[t.i]))
 				t.i++;
 			t.j = t.i;
-			if (add_node(&t, &list))
+			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
+			if (!(temp->content = ft_strtrim(t.tmp, " ")))
+				return (NULL);
+			temp->next = 0;
+			ft_lstadd_back(&list, temp);
 			free(t.tmp);
 		}
 		t.i++;

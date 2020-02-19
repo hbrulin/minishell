@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 14:29:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 17:52:52 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_list *export;
 int		run_dmc(char **args);
 int		parse_cmds(char *s);
 int		parsexec(char *cmd);
-char	**parse_arg(char *args);
+char	**parse_args(char *args);
 int		ft_exit(char **args);
 int		ft_env(char **args);
 int		ft_pwd(char **args);
@@ -98,5 +98,9 @@ int		run_dmc_pipes(char **args);
 int		ft_error(char *msg, char *befree, char **tab_free, void *param);
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
 char    **ft_rmfd(char **args);
+void	set_quote(char c, t_parse_tools *t);
+int		check_error_syntax(char **args);
+int		ft_is_operand(char c);
+int		check_operand(char *s);
 
 #endif
