@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:34:22 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:34:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/19 18:58:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	expand_resvar(char **arg, int *i)
 	char *value;
 
 	value = ft_itoa(g_ret);
-	tmp = ft_strnjoin(*arg, value, *i - 1); 
+	tmp = ft_strnjoin(*arg, value, *i - 1);
 	free(value);
 	value = ft_strjoin(tmp, &((*arg)[*i + 1]));
 	*i = !tmp ? -1 : (int)ft_strlen(tmp);
@@ -54,9 +54,10 @@ int		envvar_authorized_character(char c, int first_char)
 		if (c == '_' || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 			return (TRUE);
 	if (first_char == FALSE)
-		if (c == '_' || (c > 64 && c < 91) || (c > 96 && c < 123) || (c > 47 && c < 58))
+		if (c == '_' || (c > 64 && c < 91) || (c > 96 && c < 123) ||
+			(c > 47 && c < 58))
 			return (TRUE);
-	return (FALSE);	
+	return (FALSE);
 }
 
 int		expand(char **arg, int i, int dquote)
@@ -90,11 +91,12 @@ int		escape_char(char **s, int i, int boolean_value)
 
 int		interpret_arg(char **or)
 {
-	t_boolean sq;
-	t_boolean dq;
-	int i;
-	char *s = *or;
+	t_boolean	sq;
+	t_boolean	dq;
+	int			i;
+	char		*s;
 
+	s = *or;
 	i = 0;
 	sq = FALSE;
 	dq = FALSE;
@@ -107,7 +109,7 @@ int		interpret_arg(char **or)
 			i += escape_char(&s, i, TRUE);
 		else if (!sq && (s)[i] == '$')
 			i = expand(&s, i, dq);
-		else if (!dq && (s)[i] == 39) 
+		else if (!dq && (s)[i] == 39)
 			sq = escape_char(&s, i, !sq);
 		else if (!sq && (s)[i] == 34)
 			dq = escape_char(&s, i, !dq);
@@ -123,7 +125,7 @@ int		interpreter(char **args)
 {
 	int i;
 	int r;
-	
+
 	r = 0;
 	i = -1;
 	while (args && r != 1 && args[++i])
