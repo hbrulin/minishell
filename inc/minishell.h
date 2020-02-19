@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:47:49 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/19 14:11:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
 char    *try_path(char *path);
 char	*build_path(const char *dirs, const char *entry);
-int		redirect(char **args);
+char 	**redirect(char **args);
 int		run_dmc_pipes(char **args);
 int		ft_error(char *msg, char *befree, char **tab_free, void *param);
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
-char    **ft_rmfd(char **args);
+char	**ft_rmfd(char **args, int count);
 
 #endif
