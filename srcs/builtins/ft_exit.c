@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/19 18:35:57 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:37:18 by hbrulin          ###   ########.fr       */
+/*   Created: 2020/02/19 18:41:52 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/02/19 18:43:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(char **args)
+int		ft_exit(char **args)
 {
-	int i;
-	int opt;
+	int				i;
+	unsigned int	j;
 
-	if (!args || !args[0])
-		return (1);
-	opt = args[1] && ft_strcmp(args[1], "-n") == 0 ? TRUE : FALSE;
-	i = opt;
-	while (args[++i])
+	i = 0;
+	if (ft_tablen(args) > 2)
+		return (ft_error(MANY_ARGS, NULL, NULL, args[0]));
+	if (ft_tablen(args) == 1)
+		exit(0);
+	if (args[1][i] == '+' || args[1][i] == '-')
+		i++;
+	while (args[1][i])
 	{
-		if (write(1, args[i], ft_strlen(args[i])) == -1)
-			return (1);
-		if (args[i + 1])
-			if (write(1, " ", 1) == -1)
-				return (1);
+		if (!(ft_isdigit(args[1][i])))
+		{
+			ft_error(EXIT_NUM, NULL, NULL, args[1]);
+			exit(0);
+		}
+		i++;
 	}
-	if (!opt)
-		if (write(1, "\n", 1) == -1)
-			return (1);
-	return (0);
+	if ((i = ft_atoi(args[1])) < 0)
+		j = (unsigned char)i;
+	else
+		j = i;
+	exit(j);
 }
