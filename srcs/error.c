@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 12:00:59 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:14:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,5 @@ int		ft_error(char *msg, char *befree, char **tab_free, void *param)
 		free(befree);
 	if (tab_free)
 		ft_tabdel((void *)tab_free);
-	if (!ft_strcmp(msg, SYNTAX_ERR))
-		return (ESYNTAX);
 	return (1);
 }

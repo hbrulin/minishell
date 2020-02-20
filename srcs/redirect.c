@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 12:29:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:13:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		redirect_right(char *type, char *path_to)
 	else if (ft_strcmp(type, ">>") == 0)
 		fd = open(path_to, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, NULL));
+		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, path_to));
 	dup2(fd, 1);
 	close(fd);
 	return (0);
@@ -38,7 +38,7 @@ int		redirect_left(char *path_from) //NE PAS EXECUTER LA CMD 1 -> revoir ca -> m
 	int		fd; 
 
 	if ((fd = open(path_from, O_RDONLY)) < 0)
-		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, NULL));
+		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, path_from));
 	dup2(fd, 0);
 	close(fd);
 	return (0);

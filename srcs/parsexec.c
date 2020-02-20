@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 17:42:36 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:16:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,23 @@ int	parsexec(char *cmd)
 	if (!cmd)
 		return (0);
 	if(!(args = parse_args(cmd)))
-		return (g_ret = ft_error(SYNTAX_ERR, cmd, NULL, NULL));
+	{	
+		g_ret = ESYNTAX;
+		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
+	}
 	free(cmd);
 	if(!(sub = redirect(args)))
+	{
+		dup2(std_out, 1);
+		dup2(std_in, 0);
 		return (g_ret = ft_error(NULL, NULL, args, NULL));
+	}
 	ft_tabdel((void *)args);
 	if (ft_is_pipe(sub))
 		run_dmc_pipes(sub);
 	else
 		run_dmc(sub); 
-	dup2(std_out, 1); //reset les sorties
+	dup2(std_out, 1);
 	dup2(std_in, 0);
 	return (0);
 }
