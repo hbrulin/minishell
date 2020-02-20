@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 15:51:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:07:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 int		export_error(char *arg)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
-		return(ft_error(INVALID_ID_X, NULL, NULL, arg));
+		return (ft_error(INVALID_ID_X, NULL, NULL, arg));
 	while (arg[++i] && arg[i] != '=')
 	{
 		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
-			return(ft_error(INVALID_ID_X, NULL, NULL, arg));
+			return (ft_error(INVALID_ID_X, NULL, NULL, arg));
 	}
-	return(0);
+	return (0);
 }
 
 int		add_var(char *s, t_list **list)
@@ -43,6 +44,7 @@ int		add_var(char *s, t_list **list)
 int		ft_export(char **args)
 {
 	int i;
+	int err;
 	int k;
 	char *key;
 	
@@ -53,35 +55,43 @@ int		ft_export(char **args)
 	}
 	i = 1;
 	k = 0;
+	err = 0;
 	key = NULL;
-	while (args[i] && !(export_error(args[i])))
+	while (args[i])
 	{
-		while (args[i][k] != '=' && args[i][k])
-			k++;
-		if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
+		if(!(export_error(args[i])))
 		{
-			if(!(key = ft_substr(args[i], 0, k + 1)))
-				return(ft_strerror(NULL, NULL, NULL, NULL));
-			if (ft_strchr(args[i], '='))
+			while (args[i][k] != '=' && args[i][k])
+				k++;
+			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 			{
-				if (set_var_full(export, key, args[i]) == -1)
-					return(ft_strerror(key, NULL, NULL, NULL));
-				if (set_var_full(env, key, args[i]) == -1)
-					return(ft_strerror(key, NULL, NULL, NULL));
+				if(!(key = ft_substr(args[i], 0, k + 1)))
+					return(ft_strerror(NULL, NULL, NULL, NULL));
+				if (ft_strchr(args[i], '='))
+				{
+					if (set_var_full(export, key, args[i]) == -1)
+						return(ft_strerror(key, NULL, NULL, NULL));
+					if (set_var_full(env, key, args[i]) == -1)
+						return(ft_strerror(key, NULL, NULL, NULL));
+				}
+				free(key);
 			}
-			free(key);
+			else
+			{
+				if (add_var(args[i], &export))
+					return(ft_strerror(NULL, NULL, NULL, NULL));
+				if (ft_strchr(args[i], '='))
+				{
+					if (add_var(args[i], &env))
+						return(ft_strerror(NULL, NULL, NULL, NULL));
+				}
+			}
 		}
 		else
-		{
-			if (add_var(args[i], &export))
-				return(ft_strerror(NULL, NULL, NULL, NULL));
-			if (ft_strchr(args[i], '='))
-			{
-				if (add_var(args[i], &env))
-					return(ft_strerror(NULL, NULL, NULL, NULL));
-			}
-		}
+			err++;	
 		i++;
 	}
+	if (err > 0)
+		return (1);
 	return (0);
 }
