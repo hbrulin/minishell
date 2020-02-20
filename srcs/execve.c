@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 17:34:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 11:32:36 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int		ft_execve(char *path, char **args)
 	int status;
 	char **tab_env = NULL;
 	
-	// verif NULL + free if fork fail
+	// verif NULL
+	//when to free path??
 	tab_env = ft_lst_to_tab(env); // must be allocated here for free. !! idk yet where to free. !!
 	if ((pid = fork()) == -1)
-		return(ft_strerror(NULL, NULL, "fork", NULL));
+		return(ft_strerror(NULL, tab_env, "fork", NULL));
 	if (pid == 0)
 	{
 		if((execve(path, args, tab_env)) == -1) // munmap_chunk(): invalid pointer ERROR if fail, why ?
