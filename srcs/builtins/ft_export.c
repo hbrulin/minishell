@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 16:31:50 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 17:00:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ int		ft_replace(char *s, int k)
 	return (0);
 }
 
+int		add_to_list(char *s)
+{
+	if (add_var(s, &export))
+		return (ft_strerror(NULL, NULL, NULL, NULL));
+	if (ft_strchr(s, '='))
+	{
+		if (add_var(s, &env))
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+	}
+	return (0);
+}
+
 int		ft_export(char **args)
 {
 	int		i;
@@ -73,16 +85,8 @@ int		ft_export(char **args)
 			if (ft_replace(args[i], k))
 				return (1);
 		}
-		else
-		{
-			if (add_var(args[i], &export))
-				return (ft_strerror(NULL, NULL, NULL, NULL));
-			if (ft_strchr(args[i], '='))
-			{
-				if (add_var(args[i], &env))
-					return (ft_strerror(NULL, NULL, NULL, NULL));
-			}
-		}
+		else if (add_to_list(args[i]))
+			return (1);
 		i++;
 	}
 	return (err);
