@@ -6,13 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 16:13:23 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:30:56 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
+int		ft_lstiter_custom(t_list *lst, char *arg)
 {
 	t_list	*next;
 	char	*tmp;
@@ -29,7 +29,7 @@ int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 	while (lst)
 	{
 		next = lst->next;
-		if (!(f(lst->content, tmp, (int)ft_strlen(tmp))))
+		if (!(ft_strncmp(lst->content, tmp, (int)ft_strlen(tmp))))
 		{
 			free(tmp);
 			return (0);

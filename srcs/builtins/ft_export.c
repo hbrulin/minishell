@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 16:24:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:31:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ int		add_var(char *s, t_list **list)
 	return (0);
 }
 
+int		ft_replace(char *s, int k)
+{
+	if (ft_strchr(s, '='))
+	{
+		if (set_var_full(export, ft_substr(s, 0, k + 1), s) == -1)
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+		if (set_var_full(env, ft_substr(s, 0, k + 1), s) == -1)
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+	}
+	return (0);
+}
+
 int		ft_export(char **args)
 {
 	int		i;
@@ -56,16 +68,10 @@ int		ft_export(char **args)
 		k = 0;
 		while (args[i][k] != '=' && args[i][k])
 			k++;
-		if (!(ft_lstiter_custom(export, args[i], (int (*)(void *,
-			void *, int))&ft_strncmp)))
+		if (!(ft_lstiter_custom(export, args[i])))
 		{
-			if (ft_strchr(args[i], '='))
-			{
-				if (set_var_full(export, ft_substr(args[i], 0, k + 1), args[i]) == -1)
-					return (ft_strerror(NULL, NULL, NULL, NULL));
-				if (set_var_full(env, ft_substr(args[i], 0, k + 1), args[i]) == -1)
-					return (ft_strerror(NULL, NULL, NULL, NULL));
-			}
+			if (ft_replace(args[i], k))
+				return (1);
 		}
 		else
 		{
