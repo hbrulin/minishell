@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 12:00:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:24:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define	INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
 # define	INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
 # define	SYNTAX_ERR		"minishell: syntax error near unexpected token\n"
+# define	RNO_FILE		"minishell: %s: No such file or is a directory\n"
+# define	RNO_CREA		"minishell: %s: File could not be created\n"
 
 typedef struct s_parse_tools
 {
