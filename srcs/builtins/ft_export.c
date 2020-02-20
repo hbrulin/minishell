@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:37:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 15:51:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,26 @@ int		export_error(char *arg)
 	return(0);
 }
 
+int		add_var(char *s, t_list **list)
+{
+	t_list	*temp;
+
+	temp = NULL;
+	if (!(temp = malloc(sizeof(t_list))))
+		return (1);
+	if (!(temp->content = ft_strdup(s)))
+		return (1);
+	temp->next = 0;
+	ft_lstadd_back(list, temp);
+	return (0);
+}
+
 int		ft_export(char **args)
 {
 	int i;
 	int k;
-	char *key = NULL;
-	t_list *temp = NULL;
-	t_list *temp2 = NULL;
-	ft_list_sort(export);
+	char *key;
+	
 	if (ft_tablen(args) == 1)
 	{
 		ft_lstprint_export(export);
@@ -41,43 +53,32 @@ int		ft_export(char **args)
 	}
 	i = 1;
 	k = 0;
-	while (args[i])
+	key = NULL;
+	while (args[i] && !(export_error(args[i])))
 	{
 		while (args[i][k] != '=' && args[i][k])
 			k++;
-		if(!(export_error(args[i])))
+		if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
 		{
-			if (!(ft_lstiter_custom(export, args[i], (int (*)(void *, void *, int))&ft_strncmp)))
+			if(!(key = ft_substr(args[i], 0, k + 1)))
+				return(ft_strerror(NULL, NULL, NULL, NULL));
+			if (ft_strchr(args[i], '='))
 			{
-				if(!(key = ft_substr(args[i], 0, k + 1)))
-					return(ft_strerror(NULL, NULL, NULL, NULL));
-				if (ft_strchr(args[i], '='))
-				{
-					if (set_var_full(export, key, args[i]) == -1)
-						return(ft_strerror(key, NULL, NULL, NULL));
-					if (set_var_full(env, key, args[i]) == -1)
-						return(ft_strerror(key, NULL, NULL, NULL));
-				}
-				free(key);
+				if (set_var_full(export, key, args[i]) == -1)
+					return(ft_strerror(key, NULL, NULL, NULL));
+				if (set_var_full(env, key, args[i]) == -1)
+					return(ft_strerror(key, NULL, NULL, NULL));
 			}
-			else
+			free(key);
+		}
+		else
+		{
+			if (add_var(args[i], &export))
+				return(ft_strerror(NULL, NULL, NULL, NULL));
+			if (ft_strchr(args[i], '='))
 			{
-				if (!(temp = malloc(sizeof(t_list))))
+				if (add_var(args[i], &env))
 					return(ft_strerror(NULL, NULL, NULL, NULL));
-				if (!(temp->content = ft_strdup(args[i])))
-						return(ft_strerror(NULL, NULL, NULL, NULL));
-				temp->next = 0;
-				if (!(ft_strchr(args[i], '=')))
-					ft_lstadd_back(&export, temp);
-				else 
-				{
-					ft_lstadd_back(&export, temp);
-					if (!(temp2 = malloc(sizeof(t_list))))
-						return(ft_strerror(NULL, NULL, NULL, NULL));
-					if (!(temp2->content = ft_strdup(args[i])))
-						return(ft_strerror(NULL, NULL, NULL, NULL));
-					ft_lstadd_back(&env, temp2);
-				}	
 			}
 		}
 		i++;

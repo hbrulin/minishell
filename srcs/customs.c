@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 15:59:11 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/20 15:53:14 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ft_lstprint_export(t_list *lst)
 	k = 0;
 	if (!lst)
 		return ;
+	ft_list_sort(export);
 	while (lst)
 	{
 		k = 0;
@@ -83,12 +84,13 @@ void	ft_lstprint_export(t_list *lst)
 			k++;
 		key = ft_substr(lst->content, 0, k + 1);
 		value = get_var(export, key);
-		ft_putstr("declare -x ");
-		ft_putstr(key);
+		ft_printf_fd(1, "declare -x %s", key);
 		if (ft_strchr(lst->content, '='))
 			ft_putstr("\"");
 		ft_putstr(value);
-		ft_putstr("\"\n");
+		if (ft_strchr(lst->content, '='))
+			ft_putstr("\"");
+		ft_putstr("\n");
 		lst = next;
 		free(key);
 		free(value);
