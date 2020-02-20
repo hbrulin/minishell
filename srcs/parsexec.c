@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:16:03 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:31:56 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int	parsexec(char *cmd)
 		run_dmc(sub); 
 	dup2(std_out, 1);
 	dup2(std_in, 0);
+	ft_tabdel((void *)sub);
 	return (0);
 }

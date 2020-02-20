@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:18:38 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:31:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		ft_execve(char *path, char **args)
 	{
 		is_forking(1); 
 		if((wpid = wait(&status)) == -1)		// NO NEED TO LOOP, the syscall stops our process till child's end
-			return(ft_strerror(path, args, "wait", NULL));
+			return(ft_strerror(path, NULL, "wait", NULL));
 
 		g_ret = WEXITSTATUS(status);
 		is_forking(0);
