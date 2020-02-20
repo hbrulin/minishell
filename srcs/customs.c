@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 15:53:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 15:59:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int		ft_lstiter_custom(t_list *lst, char *arg, int (*f)(void *, void *, int))
 	if (i > 0)
 		tmp = ft_substr(arg, 0, i);
 	else
-		return(1);
+		return (1);
 	while (lst)
 	{
 		next = lst->next;
 		if (!(f(lst->content, tmp, (int)ft_strlen(tmp))))
 		{
 			free(tmp);
-			return(0);
+			return (0);
 		}
 		lst = next;
 	}
@@ -48,9 +48,9 @@ t_list	*ft_tab_to_list_custom(t_list **lst, char **tab)
 
 	i = 0;
 	temp = NULL;
-	while(tab[i])
+	while (tab[i])
 	{
-		if(!(tab[i][0] == '_' && (tab[i][1] == '=')))
+		if (!(tab[i][0] == '_' && (tab[i][1] == '=')))
 		{
 			if (!(temp = malloc(sizeof(t_list))))
 				return (NULL);
@@ -64,6 +64,16 @@ t_list	*ft_tab_to_list_custom(t_list **lst, char **tab)
 	return (*lst);
 }
 
+void	print(char *key, char *value, int equal)
+{
+	ft_printf_fd(1, "declare -x %s", key);
+	if (equal == 1)
+		ft_putstr("\"");
+	ft_putstr(value);
+	if (equal == 1)
+		ft_putstr("\"");
+	ft_putstr("\n");
+}
 
 void	ft_lstprint_export(t_list *lst)
 {
@@ -84,13 +94,10 @@ void	ft_lstprint_export(t_list *lst)
 			k++;
 		key = ft_substr(lst->content, 0, k + 1);
 		value = get_var(export, key);
-		ft_printf_fd(1, "declare -x %s", key);
 		if (ft_strchr(lst->content, '='))
-			ft_putstr("\"");
-		ft_putstr(value);
-		if (ft_strchr(lst->content, '='))
-			ft_putstr("\"");
-		ft_putstr("\n");
+			print(key, value, 1);
+		else
+			print(key, value, 0);
 		lst = next;
 		free(key);
 		free(value);
