@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 16:22:01 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:24:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int		ft_export(char **args)
 	if (ft_tablen(args) == 1)
 		return (ft_lstprint_export(export));
 	i = 1;
-	k = 0;
 	err = 0;
 	while (args[i] && !(export_error(args[i], &err)))
 	{
+		k = 0;
 		while (args[i][k] != '=' && args[i][k])
 			k++;
 		if (!(ft_lstiter_custom(export, args[i], (int (*)(void *,
@@ -79,7 +79,5 @@ int		ft_export(char **args)
 		}
 		i++;
 	}
-	if (err )
-		return (1);
-	return (0);
+	return (err);
 }
