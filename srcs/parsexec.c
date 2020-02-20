@@ -6,13 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:31:56 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 17:42:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_is_pipe(char **args)
+int		ft_is_pipe(char **args)
 {
 	int i;
 
@@ -28,36 +28,48 @@ int	ft_is_pipe(char **args)
 	return (0);
 }
 
-int	parsexec(char *cmd)
+void	set_io(int i)
 {
-	int		std_out;
-	int		std_in;
-	char 	**args;
+	static int		std_out;
+	static int		std_in;
+
+	if (i == 0)
+	{
+		std_in = dup(0);
+		std_out = dup(1);
+	}
+	if (i == 1)
+	{
+		dup2(std_out, 1);
+		dup2(std_in, 0);
+	}
+}
+
+int		parsexec(char *cmd)
+{
+	char	**args;
 	char	**sub;
 
-	std_in = dup(0);
-	std_out = dup(1);
+	set_io(0);
 	if (!cmd)
 		return (0);
-	if(!(args = parse_args(cmd)))
-	{	
+	if (!(args = parse_args(cmd)))
+	{
 		g_ret = ESYNTAX;
 		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	}
 	free(cmd);
-	if(!(sub = redirect(args)))
+	if (!(sub = redirect(args)))
 	{
-		dup2(std_out, 1);
-		dup2(std_in, 0);
+		set_io(1);
 		return (g_ret = ft_error(NULL, NULL, args, NULL));
 	}
 	ft_tabdel((void *)args);
 	if (ft_is_pipe(sub))
 		run_dmc_pipes(sub);
 	else
-		run_dmc(sub); 
-	dup2(std_out, 1);
-	dup2(std_in, 0);
+		run_dmc(sub);
+	set_io(1);
 	ft_tabdel((void *)sub);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 11:16:11 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 13:40:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 17:46:46 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ char	**copy_tab(char **tab)
 	cpy_ret = cpy;
 	cpy[len] = NULL;
 	while (len--)
-		*cpy++ = ft_strdup(*tab++);
+	{
+		if(!(*cpy++ = ft_strdup(*tab++)))
+			return(NULL);
+	}
 	return (cpy_ret);
 }
