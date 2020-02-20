@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 17:52:52 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 12:00:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@
 
 # define ESYNTAX 2
 
-//#define CMD_NOT_FOUND(cmd)	ft_printf_fd(2, "minishell: %s: command not found\n", (cmd));
 # define	CMD_NOT_FOUND	"minishell: %s: command not found\n"
-//# define	CMD_FAIL_EXEC	"minishell: %s: command could not be executed\n"
-//# define	PERM_DENIED		"minishell: %s: permission denied\n"
-//# define	FATAL_ERROR		"minishell: fatal error: %s\n"
-//# define	MALLOC_FAIL		"minishell: fatal error: memory was not allocated properly\n"
 # define	MANY_ARGS		"minishell: %s: too many arguments\n"
 # define	NO_ARG			"minishell: %s: not enough arguments\n"
 # define	NO_FILE			"minishell: cd: %s: No such file or directory\n"

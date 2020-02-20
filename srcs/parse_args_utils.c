@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 11:40:22 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 12:05:52 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int		check_error_syntax(char **args)
 	{
 		if (args[i][0] == '|' && ft_strlen(args[i]) > 1)
 			return (1);
-		else if ((args[i][0] == '<' || args[i][0] == '>') &&
-			(ft_strlen(args[i]) % 2 != 0) && ft_strlen(args[i]) != 1)
+		else if (args[i][0] == '>' && ft_strlen(args[i]) > 2)
 			return (1);
 		else if ((args[i][0] == '<' || args[i][0] == '>') &&
 			ft_strlen(args[i]) > 1 && args[i][1] == '|')
 			return (1);
-		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1 &&
-			args[i][1] == '<')
+		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1 && args[i][1] != '>')
+			return (1);
+		else if (args[i][0] == '>' && args[i][1] == '<')
 			return (1);
 		if (args[i + 1])
 		{
