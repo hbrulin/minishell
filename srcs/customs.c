@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 15:59:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:13:23 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,13 @@ void	print(char *key, char *value, int equal)
 	ft_putstr("\n");
 }
 
-void	ft_lstprint_export(t_list *lst)
+int		ft_lstprint_export(t_list *lst)
 {
 	t_list	*next;
 	int		k;
 	char	*key;
 	char	*value;
 
-	k = 0;
-	if (!lst)
-		return ;
 	ft_list_sort(export);
 	while (lst)
 	{
@@ -92,8 +89,10 @@ void	ft_lstprint_export(t_list *lst)
 		next = lst->next;
 		while (lst->content[k] != '=' && lst->content[k])
 			k++;
-		key = ft_substr(lst->content, 0, k + 1);
-		value = get_var(export, key);
+		if (!(key = ft_substr(lst->content, 0, k + 1)))
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+		if (!(value = get_var(export, key)))
+			return (ft_strerror(key, NULL, NULL, NULL));
 		if (ft_strchr(lst->content, '='))
 			print(key, value, 1);
 		else
@@ -102,4 +101,5 @@ void	ft_lstprint_export(t_list *lst)
 		free(key);
 		free(value);
 	}
+	return (0);
 }

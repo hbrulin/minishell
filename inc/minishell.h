@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:24:42 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 16:12:13 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,15 @@ int		set_var(t_list *lst, char *key, char *value);
 int		interpreter(char **args);
 int		envvar_authorized_character(char c, int first_char);
 int		set_var_full(t_list *lst, char *key, char *value);
-void	ft_lstprint_export(t_list *lst);
+int		ft_lstprint_export(t_list *lst);
 int		ft_error_tab(char *msg, int ret, char **befree, void *param);
-char    *try_path(char *path);
+char	*try_path(char *path);
 char	*build_path(const char *dirs, const char *entry);
-char 	**redirect(char **args);
+char	**redirect(char **args);
 int		run_dmc_pipes(char **args);
 int		ft_error(char *msg, char *befree, char **tab_free, void *param);
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
-char    **ft_rmfd(char **args);
+char	**ft_rmfd(char **args);
 void	set_quote(char c, t_parse_tools *t);
 int		check_error_syntax(char **args);
 int		ft_is_operand(char c);

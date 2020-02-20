@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/16 16:05:58 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/20 16:16:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		set_var_full(t_list *lst, char *key, char *value)
 	t_list *next;
 	char *tmp;
 	char *new;
-
-	if(!(new = ft_strdup(value)))
+	
+	if(!key || !(new = ft_strdup(value)))
 		return (-1);
 	while (lst)
 	{
@@ -45,6 +45,7 @@ int		set_var_full(t_list *lst, char *key, char *value)
 		}
 		lst = next;
 	}
+	free(key);
 	return (1);
 }
 
