@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 15:05:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/20 12:29:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		redirect_right(char *type, char *path_to)
 	else if (ft_strcmp(type, ">>") == 0)
 		fd = open(path_to, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, path_to));
+		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, NULL));
 	dup2(fd, 1);
 	close(fd);
 	return (0);
@@ -38,36 +38,43 @@ int		redirect_left(char *path_from) //NE PAS EXECUTER LA CMD 1 -> revoir ca -> m
 	int		fd; 
 
 	if ((fd = open(path_from, O_RDONLY)) < 0)
-		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, path_from));
+		return(ft_error("minishell: %s: No such file or directory\n", NULL, NULL, NULL));
 	dup2(fd, 0);
 	close(fd);
+	return (0);
+}
+
+int		ft_create(char *path)
+{
+	int fd;
+
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		return(ft_error("minishell: %s: Error\n", NULL, NULL, path));
 	return (0);
 }
 
 char **redirect(char **args) //mieux parser pour que pas de prise en compte des arguments > et file
 {
 	int i = 0;
-	char *type;
-	char *path;
 	char **sub;
 
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], ">") == 0 || ft_strcmp(args[i], ">>") == 0)
 		{
-			path = ft_strdup(args[i + 1]);
-			type = ft_strdup(args[i]);
-			if(redirect_right(type, path))
+			if(redirect_right(args[i], args[i + 1]))
 				return (NULL);
-			free(type);
-			free(path);
 		}
 		else if (ft_strcmp(args[i], "<") == 0)
 		{
-			path = ft_strdup(args[i + 1]);
-			if(redirect_left(path))
+			if(redirect_left(args[i + 1]))
 				return(NULL);
-			free(path);
+		}
+		else if (ft_strcmp(args[i], "<>") == 0)
+		{
+			if(ft_create(args[i + 1]))
+				return(NULL);
 		}
 		i++;
 	}
