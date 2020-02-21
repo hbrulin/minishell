@@ -113,7 +113,9 @@ Data written to fildes[1] appears on (i.e., can be read from) fildes[0].
  int dup2(int fildes, int fildes2);
  ```
 
-#Redirections
-'>' : rediriger le résultat dans un nouveau fichier. creation si non existant. ecrase si existant.
-'>>' : rediriger a la fin d'un fichier. creation si non existant.
-'<' : lire depuis un fichier
+#Detecter les fuites de fd :
+- ps aux | grep minishell -> recuperer le pid du processus
+- lsof -a -p PID -> si la liste ne grandit pas, pas de leak
+- ls -l | wc -l -> count open files
+- https://www.cyberciti.biz/tips/linux-procfs-file-descriptors.html 
+- https://stackoverflow.com/questions/6842113/how-to-detect-file-leak-and-the-corresponding-code-in-solaris 
