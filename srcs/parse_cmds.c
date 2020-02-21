@@ -6,38 +6,11 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 17:20:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 12:52:52 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		check_error(char *s)
-{
-	int		i;
-	int		open;
-	char	quote;
-
-	i = 0;
-	open = 0;
-	while (s[i])
-	{
-		if ((s[i] == '\'' || s[i] == '\"') && open == 0)
-		{
-			open = !open;
-			quote = s[i];
-		}
-		else if (open == 1 && s[i] == quote)
-			open = !open;
-		if (s[i] == ';' && s[i + 1] == ';' && open == 0)
-		{
-			g_ret = ESYNTAX;
-			return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
-		}
-		i++;
-	}
-	return (0);
-}
 
 void	set_quote(char c, t_parse_tools *t)
 {
@@ -48,6 +21,29 @@ void	set_quote(char c, t_parse_tools *t)
 	}
 	else if (t->open == 1 && c == t->quote)
 		t->open = !t->open;
+}
+
+int		check_error(char *s)
+{
+	t_parse_tools	t;
+
+	ft_bzero(&t, sizeof(t_parse_tools));
+	while (s[t.i])
+	{
+		set_quote(s[t.i], &t);
+		if (s[t.i] == ';' && t.open == 0)
+		{
+			while (ft_is_space(s[t.i]))
+				t.i++;
+			if (s[t.i] == ';')
+			{
+				g_ret = ESYNTAX;
+				return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
+			}
+		}
+		t.i++;
+	}
+	return (0);
 }
 
 int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
