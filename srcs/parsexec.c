@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 17:42:58 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 15:54:54 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	set_io(int i)
 int		parsexec(char *cmd)
 {
 	char	**args;
-	char	**sub;
 
 	set_io(0);
 	if (!cmd)
@@ -59,17 +58,10 @@ int		parsexec(char *cmd)
 		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	}
 	free(cmd);
-	if (!(sub = redirect(args)))
-	{
-		set_io(1);
-		return (g_ret = ft_error(NULL, NULL, args, NULL));
-	}
-	ft_tabdel((void *)args);
-	if (ft_is_pipe(sub))
-		run_dmc_pipes(sub);
+	if (ft_is_pipe(args))
+		run_dmc_pipes(args);
 	else
-		run_dmc(sub);
-	set_io(1);
-	ft_tabdel((void *)sub);
+		run_dmc(args);
+	ft_tabdel((void *)args);
 	return (0);
 }

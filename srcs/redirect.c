@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 18:11:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 14:35:40 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,31 @@ int		ft_create(char *path)
 	return (0);
 }
 
-char **redirect(char **args)
+int		redirect(char **args)
 {
 	int i = 0;
-	char **sub;
+	//char **sub;
 
-	sub = NULL;
+	//sub = NULL;
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], ">") == 0 || ft_strcmp(args[i], ">>") == 0)
 		{
 			if(redirect_right(args[i], args[i + 1]))
-				return (NULL);
+				return (1);
 		}
 		else if (ft_strcmp(args[i], "<") == 0)
 		{
 			if(redirect_left(args[i + 1]))
-				return(NULL);
+				return(1);
 		}
 		else if (ft_strcmp(args[i], "<>") == 0)
 		{
 			if(ft_create(args[i + 1]))
-				return(NULL);
+				return(1);
 		}
 		i++;
 	}
-	sub = ft_rmfd(args, sub);
-	return(sub);
+	//sub = ft_rmfd(args, sub);
+	return(0);
 }

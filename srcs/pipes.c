@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/13 20:01:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 15:52:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int run_pipe(char **a_cmd, int *fd, int next)
 
 	if (!fd_in)
 		fd_in = 0;
+
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd_in, 0);
 		dup2((next) ? fd[1] : -1, 1);
-		close(fd[1]); //je ferme l'ecriture
+		close(fd[1]);
 		if(run_dmc(a_cmd))
 		{
 			exit(EXIT_FAILURE);
@@ -38,19 +39,17 @@ int run_pipe(char **a_cmd, int *fd, int next)
 	{
 		wait(&status);
 		close(fd[1]);
-		fd_in = fd[0]; //ca prend ce qui est pipe avec fd[1].
+		fd_in = fd[0];
 	}
 	return (0);
 }
-//faut il fermer fd[0]??
 
 int	run_dmc_pipes(char **args)
 {
 	int fd[2];
-	char **a_cmd;
+	char **a_cmd = NULL;
 	int i;
 	int next = 0;
-
 	int adv;
 
 	adv = 0;
@@ -62,7 +61,7 @@ int	run_dmc_pipes(char **args)
 			if (adv == 0)
 				a_cmd = ft_sub_tab(args, adv, i);
 			else
-				a_cmd = ft_sub_tab(args, adv, adv + (ft_tab_chr_i((char **)&args[i + 1], "|") - 1));
+				a_cmd = ft_sub_tab(args, adv, (ft_tab_chr_i((char **)&args[adv], "|")));
 			adv = i + 1;
 			pipe(fd);
 			next = 1;
