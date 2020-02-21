@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:45:11 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:45:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:32:38 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*try_path(char *path)
 {
 	struct stat	file;
-	
+
 	errno = 0;
 	stat(path, &file);
 	if (errno)
