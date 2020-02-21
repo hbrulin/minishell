@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:31:42 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:10:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_execve(char *path, char **args)
 	
 	// verif NULL
 	//when to free path??
-	tab_env = ft_lst_to_tab(env); // must be allocated here for free. !! idk yet where to free. !!
+	tab_env = ft_lst_to_tab(g_env); // must be allocated here for free. !! idk yet where to free. !!
 	if ((pid = fork()) == -1)
 		return(ft_strerror(NULL, tab_env, "fork", NULL));
 	if (pid == 0)

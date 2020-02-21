@@ -6,14 +6,9 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 15:58:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:11:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*'>' : rediriger le résultat dans un nouveau fichier. creation si non existant. ecrase si existant.
-'>>' : rediriger a la fin d'un fichier. creation si non existant.
-'<' : lire depuis un fichier
-*/
 
 #include "minishell.h"
 
@@ -23,7 +18,7 @@ int		redirect_right(char *type, char *path_to)
 
 	fd = -1;
 	if (ft_strcmp(type, ">") == 0)
-		fd = open(path_to, O_WRONLY | O_CREAT | O_TRUNC, 0644); //-rw-r--r--
+		fd = open(path_to, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (ft_strcmp(type, ">>") == 0)
 		fd = open(path_to, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)

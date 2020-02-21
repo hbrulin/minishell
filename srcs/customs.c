@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 15:03:00 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:08:38 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		ft_lstprint_export(t_list *lst)
 	char	*key;
 	char	*value;
 
-	ft_list_sort(export);
+	ft_list_sort(g_export);
 	while (lst)
 	{
 		k = 0;
@@ -91,7 +91,7 @@ int		ft_lstprint_export(t_list *lst)
 			k++;
 		if (!(key = ft_substr(lst->content, 0, k + 1)))
 			return (ft_strerror(NULL, NULL, NULL, NULL));
-		if (!(value = get_var(export, key)))
+		if (!(value = get_var(g_export, key)))
 			return (ft_strerror(key, NULL, NULL, NULL));
 		if (ft_strchr(lst->content, '='))
 			print(key, value, 1);
@@ -100,24 +100,6 @@ int		ft_lstprint_export(t_list *lst)
 		lst = next;
 		free(key);
 		free(value);
-	}
-	return (0);
-}
-
-int		ft_tab_chr_i_custom(char **tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i])
-	{
-		if (!(ft_strcmp(tab[i], ">")))
-			return (1);
-		else if (!(ft_strcmp(tab[i], ">>")))
-			return (1);
-		else if (!(ft_strcmp(tab[i], "<")))
-			return (1);
-		i++;
 	}
 	return (0);
 }

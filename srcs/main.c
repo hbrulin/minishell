@@ -6,17 +6,17 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 11:17:13 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:06:54 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*env = NULL;
-t_list	*export = NULL;
+t_list	*g_env = NULL;
+t_list	*g_export = NULL;
 t_ret	g_ret = 0;
 
-void	signal_handler(int n) 
+void	signal_handler(int n)
 {
 	if (is_forking(2) && n == SIGINT)
 	{
@@ -62,14 +62,14 @@ void	prompt(void)
 
 int		main(int ac, char **av, char **envp)
 {
-	(void)ac; 
+	(void)ac;
 	(void)av;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
-	env = ft_tab_to_list(&env, envp);
-	export = ft_tab_to_list_custom(&export, envp);
+	g_env = ft_tab_to_list(&g_env, envp);
+	g_export = ft_tab_to_list_custom(&g_export, envp);
 	prompt();
-	ft_lstclear(&export, free);
-	ft_lstclear(&env, free);
+	ft_lstclear(&g_export, free);
+	ft_lstclear(&g_env, free);
 	return (0);
 }

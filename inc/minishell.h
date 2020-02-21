@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 15:57:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:06:40 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef int	(*t_builtin_fc)(char **args);
 typedef int	t_ret;
 t_ret	g_ret;
 
-t_list *env;
-t_list *export;
+t_list *g_env;
+t_list *g_export;
 
 int		run_dmc(char **args);
 int		parse_cmds(char *s);

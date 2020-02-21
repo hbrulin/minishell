@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:01:31 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:07:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		run_dmc(char **args)
 	// a command name was given, we'll try to build paths from $PATH var, error will be custom : 'command not found'
 	else if (!path)
 	{
-		tmp = get_var(env, "PATH=");
+		tmp = get_var(g_env, "PATH=");
 		path = build_path(tmp, sub[0]);
 		free(tmp);
 	}

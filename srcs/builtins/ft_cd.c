@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:38:15 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:43:05 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:09:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int		update_pwd(void)
 
 	dir = NULL;
 	old_dir = NULL;
-	if (!(old_dir = get_var(env, "PWD=")))
+	if (!(old_dir = get_var(g_env, "PWD=")))
 		return (ft_strerror(NULL, NULL, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
 		return (ft_strerror(old_dir, NULL, NULL, NULL));
-	set_var(env, "PWD=", dir);
-	set_var(export, "PWD=", dir);
-	set_var(env, "OLDPWD=", old_dir);
-	set_var(export, "OLDPWD=", old_dir);
+	set_var(g_env, "PWD=", dir);
+	set_var(g_export, "PWD=", dir);
+	set_var(g_env, "OLDPWD=", old_dir);
+	set_var(g_export, "OLDPWD=", old_dir);
 	free(dir);
 	free(old_dir);
 	return (0);
@@ -40,7 +40,7 @@ int		ft_cd(char **args)
 	len = ft_tablen(args);
 	if (len == 1 || !(ft_strcmp(args[1], "")))
 	{
-		if (!(home = get_var(env, "HOME=")))
+		if (!(home = get_var(g_env, "HOME=")))
 			return (ft_error("cd: HOME not set\n", NULL, NULL, NULL));
 		if ((chdir(home)) == -1)
 			return (ft_strerror(home, NULL, home, NULL));

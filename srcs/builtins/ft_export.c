@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:54:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 17:00:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:09:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int		ft_replace(char *s, int k)
 {
 	if (ft_strchr(s, '='))
 	{
-		if (set_var_full(export, ft_substr(s, 0, k + 1), s) == -1)
+		if (set_var_full(g_export, ft_substr(s, 0, k + 1), s) == -1)
 			return (ft_strerror(NULL, NULL, NULL, NULL));
-		if (set_var_full(env, ft_substr(s, 0, k + 1), s) == -1)
+		if (set_var_full(g_env, ft_substr(s, 0, k + 1), s) == -1)
 			return (ft_strerror(NULL, NULL, NULL, NULL));
 	}
 	return (0);
@@ -55,11 +55,11 @@ int		ft_replace(char *s, int k)
 
 int		add_to_list(char *s)
 {
-	if (add_var(s, &export))
+	if (add_var(s, &g_export))
 		return (ft_strerror(NULL, NULL, NULL, NULL));
 	if (ft_strchr(s, '='))
 	{
-		if (add_var(s, &env))
+		if (add_var(s, &g_env))
 			return (ft_strerror(NULL, NULL, NULL, NULL));
 	}
 	return (0);
@@ -72,7 +72,7 @@ int		ft_export(char **args)
 	int		k;
 
 	if (ft_tablen(args) == 1)
-		return (ft_lstprint_export(export));
+		return (ft_lstprint_export(g_export));
 	i = 1;
 	err = 0;
 	while (args[i] && !(export_error(args[i], &err)))
@@ -80,7 +80,7 @@ int		ft_export(char **args)
 		k = 0;
 		while (args[i][k] != '=' && args[i][k])
 			k++;
-		if (!(ft_lstiter_custom(export, args[i])))
+		if (!(ft_lstiter_custom(g_export, args[i])))
 		{
 			if (ft_replace(args[i], k))
 				return (1);
