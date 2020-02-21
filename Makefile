@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/19 18:42:08 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/21 16:43:14 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 SRCS = main.c parse_cmds.c parse_args.c run.c execve.c var_env.c error.c customs.c \
 	builtins/ft_cd.c builtins/ft_pwd.c builtins/ft_export.c builtins/ft_unset.c \
-	interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c parsexec.c try_path.c build_path.c \
+	interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c parsexec.c build_path.c \
 	redirect.c pipes.c ft_rmfd.c parse_args_utils.c
 
 SRC_DIR = srcs

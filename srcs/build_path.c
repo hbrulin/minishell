@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:45:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:26:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:42:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@
 **	returns the complete path where the entry was found or NULL
 **	also returns NULL if dirs or entry is NULL
 */
+
+char	*try_path(char *path)
+{
+	struct stat	file;
+
+	errno = 0;
+	stat(path, &file);
+	if (errno)
+		return (NULL);
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
+		return (NULL);
+	return (path);
+}
 
 char	*build_path(const char *dirs, const char *entry)
 {
@@ -41,39 +54,12 @@ char	*build_path(const char *dirs, const char *entry)
 		if (dirs[i] == ':')
 		{
 			dir_path = ft_strnjoin(dirs, c_entry, i);
-			dirs += i + 1;								// move pointer to last ':' found
+			dirs += i + 1;
 			if (try_path(dir_path))
 				return (dir_path);
-			i = 0;										// reset iterator
+			i = 0;
 			free(dir_path);
 		}
 	}
 	return (NULL);
-}
-
-int		path_exec(char **sub)
-{
-	char	*path;
-	char	*tmp;
-
-	path = ft_strrchr(sub[0], '/');
-	if (path && !(path = ft_strdup(try_path(sub[0]))))
-		return (ft_strerror(path, sub, sub[0], NULL));
-	else if (!path)
-	{
-		tmp = get_var(g_env, "PATH=");
-		path = build_path(tmp, sub[0]);
-		free(tmp);
-	}
-	if (!path)
-		return (ft_error(CMD_NOT_FOUND, NULL, sub, sub[0]));
-	else
-	{
-		g_ret = ft_execve(path, sub);
-		set_io(1);
-		ft_tabdel((void *)sub);
-		free(path);
-		return (g_ret);
-	}
-	return (0);
 }
