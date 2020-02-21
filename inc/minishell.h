@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:06:40 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:23:14 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ int		ft_is_operand(char c);
 int		check_operand(char *s);
 int		ft_tab_chr_i_custom(char **tab);
 void	set_io(int i);
+int		path_exec(char **sub);
 
 #endif

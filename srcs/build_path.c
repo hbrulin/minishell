@@ -6,15 +6,19 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:45:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:45:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:26:49 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-**	Try to find the given entry in the directories listed in dirs by
-**	building an absolute path for each directory.
+**	Dans path_exec : trypath : a complete path was given / path absolu, we only
+**	want to check it, errors will be : ENOENT, EISDIR, ENOTDIR.
+**	OR if a command name was given, we'll try to build paths from $PATH var,
+**	error will be custom : 'command not found'
+**	Build_path : Try to find the given entry in the directories listed in dirs
+**	by building an absolute path for each directory.
 **	dirs must be formatted as follow -> dir1/:/dir2/:/dir3:/dir1/dir2
 **	returns the complete path where the entry was found or NULL
 **	also returns NULL if dirs or entry is NULL
@@ -45,4 +49,31 @@ char	*build_path(const char *dirs, const char *entry)
 		}
 	}
 	return (NULL);
+}
+
+int		path_exec(char **sub)
+{
+	char	*path;
+	char	*tmp;
+
+	path = ft_strrchr(sub[0], '/');
+	if (path && !(path = ft_strdup(try_path(sub[0]))))
+		return (ft_strerror(path, sub, sub[0], NULL));
+	else if (!path)
+	{
+		tmp = get_var(g_env, "PATH=");
+		path = build_path(tmp, sub[0]);
+		free(tmp);
+	}
+	if (!path)
+		return (ft_error(CMD_NOT_FOUND, NULL, sub, sub[0]));
+	else
+	{
+		g_ret = ft_execve(path, sub);
+		set_io(1);
+		ft_tabdel((void *)sub);
+		free(path);
+		return (g_ret);
+	}
+	return (0);
 }
