@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 16:56:56 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/24 17:01:11 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ int		check_operand(char *s)
 int		ft_is_operand(char c)
 {
 	if (c == '|' || c == '>' || c == '<')
+		return (1);
+	return (0);
+}
+
+int		check_next(char **args, int i)
+{
+	if (args[i + 1])
+	{
+		if (check_operand(args[i]) && check_operand(args[i + 1]))
+			return (1);
+	}
+	else if (check_operand(args[i]) && !args[i + 1])
 		return (1);
 	return (0);
 }
@@ -45,12 +57,7 @@ int		check_error_syntax(char **args)
 			return (1);
 		else if (args[i][0] == '>' && args[i][1] == '<')
 			return (1);
-		if (args[i + 1])
-		{
-			if (check_operand(args[i]) && check_operand(args[i + 1]))
-				return (1);
-		}
-		else if (check_operand(args[i]) && !args[i + 1])
+		if (check_next(args, i))
 			return (1);
 		i++;
 	}
