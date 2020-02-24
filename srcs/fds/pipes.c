@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 15:42:35 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/24 17:08:24 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int run_pipe(char **a_cmd, int *fd, int next)
 		if(run_dmc(a_cmd))
 		{
 			exit(EXIT_FAILURE);
-			return(1);
+			return (1);
 		}
 		exit(EXIT_SUCCESS);
 	}
@@ -46,13 +46,15 @@ int run_pipe(char **a_cmd, int *fd, int next)
 int	run_dmc_pipes(char **args)
 {
 	int fd[2];
-	char **a_cmd = NULL;
+	char **a_cmd;
 	int i;
-	int next = 0;
+	int next;
 	int adv;
 
 	adv = 0;
 	i = 0;
+	a_cmd = NULL;
+	next = 0;
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], "|") == 0)
@@ -65,7 +67,7 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 1;
 			if (run_pipe(a_cmd, fd, next))
-				return(ft_error(NULL, NULL, a_cmd, NULL));
+				return (ft_error(NULL, NULL, a_cmd, NULL));
 			ft_tabdel((void *)a_cmd);
 		}
 		else if (ft_iter_tab_cmp((char **)&args[i + 1], "|"))
@@ -74,9 +76,9 @@ int	run_dmc_pipes(char **args)
 			pipe(fd);
 			next = 0;
 			if (run_pipe(a_cmd, fd, next))
-				return(ft_error(NULL, NULL, a_cmd, NULL));
+				return (ft_error(NULL, NULL, a_cmd, NULL));
 			ft_tabdel((void *)a_cmd);
-			break;
+			break ;
 		}
 		i++;
 	}
