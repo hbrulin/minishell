@@ -6,7 +6,7 @@
 #    By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/24 15:59:23 by helenebruli      ###   ########.fr        #
+#    Updated: 2020/02/24 16:49:00 by helenebruli      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = main.c parsing/parse_cmds.c parsing/parse_args.c exec/run.c exec/execve.c
 	builtins/var_env.c error.c builtins/customs.c builtins/ft_cd.c \
 	builtins/ft_pwd.c builtins/ft_export.c builtins/ft_unset.c \
 	parsing/interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c \
-	exec/parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
+	parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
 	parsing/parse_args_utils.c parsing/expand.c
 
 SRC_DIR = srcs

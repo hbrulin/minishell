@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 15:48:47 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/24 16:57:06 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int		ft_tab_chr_i_custom(char **tab);
 void	set_io(int i);
 int		path_exec(char **sub);
 int		expand(char **arg, int i, int dquote);
+int		add_node(t_parse_tools *t, t_list **list);
 
 #endif

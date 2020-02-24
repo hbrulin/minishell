@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 13:49:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/24 16:56:56 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,19 @@ int		check_error_syntax(char **args)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int		add_node(t_parse_tools *t, t_list **list)
+{
+	t_list	*temp;
+
+	temp = NULL;
+	if (!(temp = malloc(sizeof(t_list))))
+		return (1);
+	if (!(temp->content = ft_strtrim(t->tmp, " ")))
+		return (1);
+	temp->next = 0;
+	ft_lstadd_back(list, temp);
 	return (0);
 }
