@@ -3,20 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
+#    By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/21 16:43:14 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/24 15:59:23 by helenebruli      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-SRCS = main.c parse_cmds.c parse_args.c run.c execve.c var_env.c error.c customs.c \
-	builtins/ft_cd.c builtins/ft_pwd.c builtins/ft_export.c builtins/ft_unset.c \
-	interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c parsexec.c build_path.c \
-	redirect.c pipes.c ft_rmfd.c parse_args_utils.c
+SRCS = main.c parsing/parse_cmds.c parsing/parse_args.c exec/run.c exec/execve.c \
+	builtins/var_env.c error.c builtins/customs.c builtins/ft_cd.c \
+	builtins/ft_pwd.c builtins/ft_export.c builtins/ft_unset.c \
+	parsing/interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c \
+	exec/parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
+	parsing/parse_args_utils.c parsing/expand.c
 
 SRC_DIR = srcs
 INC_DIR = inc
@@ -53,7 +55,7 @@ $(NAME): $(OBJ) make_ft make_ftp
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c Makefile
-	@mkdir -p $(BUILD_DIR) $(BUILD_DIR)/builtins
+	@mkdir -p $(BUILD_DIR) $(BUILD_DIR)/builtins $(BUILD_DIR)/exec $(BUILD_DIR)/fds $(BUILD_DIR)/parsing
 	$(CC) $(CFLAGS) $(FT_INC) $(FT_INCP) -o $@ -c $<
 
 clean:

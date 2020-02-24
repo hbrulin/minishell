@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:51:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/24 15:51:23 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int		path_exec(char **sub)
 		return (ft_strerror(path, sub, sub[0], NULL));
 	else if (!path)
 	{
-		tmp = get_var(g_env, "PATH=");
+		if (!(tmp = get_var(g_env, "PATH=")))
+			return (ft_strerror(path, sub, sub[0], NULL));
 		path = build_path(tmp, sub[0]);
 		free(tmp);
 	}

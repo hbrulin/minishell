@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:45:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:42:37 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/24 15:40:27 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*build_path(const char *dirs, const char *entry)
 	{
 		if (dirs[i] == ':')
 		{
-			dir_path = ft_strnjoin(dirs, c_entry, i);
+			if (!(dir_path = ft_strnjoin(dirs, c_entry, i)))
+				return (NULL);
 			dirs += i + 1;
 			if (try_path(dir_path))
 				return (dir_path);

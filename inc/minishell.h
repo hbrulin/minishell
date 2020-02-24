@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:45:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/24 15:48:47 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int		check_operand(char *s);
 int		ft_tab_chr_i_custom(char **tab);
 void	set_io(int i);
 int		path_exec(char **sub);
+int		expand(char **arg, int i, int dquote);
 
 #endif
