@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 12:52:52 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 19:20:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int		check_error(char *s)
 	while (s[t.i])
 	{
 		set_quote(s[t.i], &t);
-		if (s[t.i] == ';' && t.open == 0)
+		if (s[t.i] == ';' && t.open == 0 && s[t.i - 1] != '\\')
 		{
+			t.i++;
 			while (ft_is_space(s[t.i]))
 				t.i++;
 			if (s[t.i] == ';')
@@ -84,7 +85,7 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			break ;
 		}
 		set_quote(s[t->i], t);
-		if (s[t->i] == ';' && t->open == 0)
+		if (s[t->i] == ';' && t->open == 0 && s[t->i - 1] != '\\')
 		{
 			if (malloc_and_exec(cmd, s, t, 3))
 				return (1);
