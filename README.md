@@ -57,6 +57,7 @@ signal() installe le gestionnaire handler pour le signal signum. handler peut ê
 La fonction signal permet de spécifier ou de connaître le comportement du processus à la réception d'un signal donné, il faut donner en paramètre à la fonction le numéro du signal sig que l'on veut détourner et la fonction de traitement action à réaliser à la réception du signal.
 http://www-igm.univ-mlv.fr/~dr/NCSPDF/chapitre11.pdf
 https://fr.wikipedia.org/wiki/Signal_(informatique) 
+https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/19/lec.html
 
 #getcwd
 The getcwd() function copies the absolute pathname of the current working directory into the memory referenced by buf and returns a pointer to buf.  The size argument is the size, in bytes, of the array referenced by buf.
@@ -112,6 +113,8 @@ Data written to fildes[1] appears on (i.e., can be read from) fildes[0].
  ```c
  int dup2(int fildes, int fildes2);
  ```
+
+Infos pipes : http://www.zeitoun.net/articles/communication-par-tuyau/start
 
 #Detecter les fuites de fd :
 - ps aux | grep minishell -> recuperer le pid du processus

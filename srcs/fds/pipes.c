@@ -6,11 +6,29 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 09:59:25 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 11:42:22 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+**	dup2 transforme newfd (arg2) en une copie de old fd (arg1), fermant
+**	auparavant newfd. si oldfd n'est pas valide, l'appel echoue et newfd
+**	n'est pas fermé -> ligne 33 stdout normal si pas de next cmd a piper.
+**
+**	Deroulement : dans le fils, je ferme fd[0] car je ne vais qu'y ecrire.
+**	je tranforme ma sortie standard en une copie de fd[1], 
+**	l'extrémité d'ecriture du tube. je close cette extremité de lecture,
+**	car elle a ete copiee comme sortie standard. La commande run et va ecrire
+**	dans cette copie. Dans le pere, l'extremité de lecture fd[0] a recupéré
+**	ce qui a été écrit. Je met la valeur de ce fd dans fd_in, afin de pouvoir
+**	récupérer ce qui a été lu en entree standard pour la prochaine cmd.
+**	Pas besoin de close fd[0] dans le pere car cette lecture va tjrs etre 
+**	l'entree standard, et dup2 va tjrs tout fd de lecture supplémentaire.
+**	idem, la sortie standard est fermee par dup2 sauf en cas de fd[1] == -1.
+**	apres fin de la cmd tout est reset.
+*/
 
 int		run_pipe(char **a_cmd, int *fd, int next)
 {
@@ -20,11 +38,13 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 
 	if (!fd_in)
 		fd_in = 0;
-	pid = fork();
+	if ((pid = fork()) == -1)
+		return (ft_strerror(NULL, NULL, "fork", NULL));
 	if (pid == 0)
 	{
 		dup2(fd_in, 0);
 		dup2((next) ? fd[1] : -1, 1);
+		close(fd[0]);
 		close(fd[1]);
 		if (run_dmc(a_cmd))
 		{
@@ -35,7 +55,11 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 	}
 	else
 	{
-		wait(&status);
+		if (wait(&status) == -1)
+		{
+			close(fd[1]);
+			return (ft_strerror(NULL, NULL, "wait", NULL));
+		}
 		close(fd[1]);
 		fd_in = fd[0];
 	}

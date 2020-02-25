@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:06:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 10:23:31 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	signal_handler(int n)
 		g_ret = 1;
 	if (is_forking(2) && n == SIGQUIT)
 	{
-		ft_putstr("Quit: 3\n");
+		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
 		g_ret = SIGQUIT_ERR;
 	}
 	else if (n == SIGQUIT)
@@ -64,8 +64,16 @@ int		main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	if (signal(SIGINT, signal_handler) == SIG_ERR)
+	{
+		ft_strerror(NULL, NULL, "signal", NULL);
+		exit(1);
+	}
+	if (signal(SIGQUIT, signal_handler) == SIG_ERR)
+	{
+		ft_strerror(NULL, NULL, "signal", NULL);
+		exit(1);
+	}
 	g_env = ft_tab_to_list(&g_env, envp);
 	g_export = ft_tab_to_list_custom(&g_export, envp);
 	prompt();
