@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:33:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:20:09 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ int		redirect_left(char *path_from)
 	return (0);
 }
 
-int		ft_create(char *path)
-{
-	int fd;
-
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return (ft_error(RNO_CREA, NULL, NULL, path));
-	return (0);
-}
-
 char	**redirect(char **args)
 {
 	int		i;
@@ -66,11 +56,6 @@ char	**redirect(char **args)
 		else if (ft_strcmp(args[i], "<") == 0)
 		{
 			if (redirect_left(args[i + 1]))
-				return (NULL);
-		}
-		else if (ft_strcmp(args[i], "<>") == 0)
-		{
-			if (ft_create(args[i + 1]))
 				return (NULL);
 		}
 		i++;
