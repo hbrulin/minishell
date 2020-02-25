@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 17:08:24 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/25 09:59:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int run_pipe(char **a_cmd, int *fd, int next)
+int		run_pipe(char **a_cmd, int *fd, int next)
 {
 	static int	fd_in;
 	pid_t		pid;
@@ -20,14 +20,13 @@ int run_pipe(char **a_cmd, int *fd, int next)
 
 	if (!fd_in)
 		fd_in = 0;
-
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd_in, 0);
 		dup2((next) ? fd[1] : -1, 1);
 		close(fd[1]);
-		if(run_dmc(a_cmd))
+		if (run_dmc(a_cmd))
 		{
 			exit(EXIT_FAILURE);
 			return (1);
@@ -43,13 +42,13 @@ int run_pipe(char **a_cmd, int *fd, int next)
 	return (0);
 }
 
-int	run_dmc_pipes(char **args)
+int		run_dmc_pipes(char **args)
 {
-	int fd[2];
-	char **a_cmd;
-	int i;
-	int next;
-	int adv;
+	int		fd[2];
+	char	**a_cmd;
+	int		i;
+	int		next;
+	int		adv;
 
 	adv = 0;
 	i = 0;

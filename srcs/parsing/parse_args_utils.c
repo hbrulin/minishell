@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 17:01:11 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/25 10:01:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int		check_error_syntax(char **args)
 		else if ((args[i][0] == '<' || args[i][0] == '>') &&
 			ft_strlen(args[i]) > 1 && args[i][1] == '|')
 			return (1);
-		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1 && args[i][1] != '>')
+		else if (args[i][0] == '<' && ft_strlen(args[i]) > 1
+			&& args[i][1] != '>')
 			return (1);
 		else if (args[i][0] == '>' && args[i][1] == '<')
 			return (1);

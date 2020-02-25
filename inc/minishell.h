@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/24 16:57:06 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/02/25 10:05:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,75 +34,78 @@
 
 # define ESYNTAX 2
 
-# define	CMD_NOT_FOUND	"minishell: %s: command not found\n"
-# define	MANY_ARGS		"minishell: %s: too many arguments\n"
-# define	NO_ARG			"minishell: %s: not enough arguments\n"
-# define	NO_FILE			"minishell: cd: %s: No such file or directory\n"
-# define	EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
-# define	INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
-# define	INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
-# define	SYNTAX_ERR		"minishell: syntax error near unexpected token\n"
-# define	RNO_FILE		"minishell: %s: No such file or is a directory\n"
-# define	RNO_CREA		"minishell: %s: File could not be created\n"
+# define CMD_NOT_FOUND	"minishell: %s: command not found\n"
+# define MANY_ARGS		"minishell: %s: too many arguments\n"
+# define NO_ARG			"minishell: %s: not enough arguments\n"
+# define NO_FILE			"minishell: cd: %s: No such file or directory\n"
+# define EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
+# define INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
+# define INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
+# define SYNTAX_ERR		"minishell: syntax error near unexpected token\n"
+# define RNO_FILE		"minishell: %s: No such file or is a directory\n"
+# define RNO_CREA		"minishell: %s: File could not be created\n"
 
-typedef struct s_parse_tools
+typedef struct		s_parse_tools
 {
-    int		i;
+	int		i;
 	int		j;
 	int		open;
 	char	quote;
 	char	*tmp;
-}              t_parse_tools;
+}					t_parse_tools;
 
-typedef short int t_boolean;
-typedef int	(*t_builtin_fc)(char **args);
+typedef short int	t_boolean;
+typedef int			(*t_builtin_fc)(char **args);
 
-typedef int	t_ret;
-t_ret	g_ret;
+typedef int			t_ret;
+t_ret				g_ret;
 
-t_list *g_env;
-t_list *g_export;
+t_list				*g_env;
+t_list				*g_export;
 
-int		run_dmc(char **args);
-int		parse_cmds(char *s);
-int		parsexec(char *cmd);
-char	**parse_args(char *args);
-int		ft_exit(char **args);
-int		ft_env(char **args);
-int		ft_pwd(char **args);
-int		ft_echo(char **args);
-int		ft_execve(char *path, char **args);
-char	*get_var(t_list *lst, char *key);
-t_list	*del_var(t_list *lst, char *key);
-int		ft_cd(char **args);
-int		ft_access(char *path);
-void	signal_handler(int n);
-int		is_forking(int val);
-int		ft_export(char **args);
-t_list	*ft_tab_to_list_custom(t_list **lst, char **tab);
-int		ft_lstiter_custom(t_list *lst, char *arg);
-int		ft_unset(char **args);
-int		set_var(t_list *lst, char *key, char *value);
-int		interpreter(char **args);
-int		envvar_authorized_character(char c, int first_char);
-int		set_var_full(t_list *lst, char *key, char *value);
-int		ft_lstprint_export(t_list *lst);
-int		ft_error_tab(char *msg, int ret, char **befree, void *param);
-char	*try_path(char *path);
-char	*build_path(const char *dirs, const char *entry);
-char	**redirect(char **args);
-int		run_dmc_pipes(char **args);
-int		ft_error(char *msg, char *befree, char **tab_free, void *param);
-int		ft_strerror(char *befree, char **tabfree, void *param, void *param2);
-char	**ft_rmfd(char **args, char **sub);
-void	set_quote(char c, t_parse_tools *t);
-int		check_error_syntax(char **args);
-int		ft_is_operand(char c);
-int		check_operand(char *s);
-int		ft_tab_chr_i_custom(char **tab);
-void	set_io(int i);
-int		path_exec(char **sub);
-int		expand(char **arg, int i, int dquote);
-int		add_node(t_parse_tools *t, t_list **list);
+int					run_dmc(char **args);
+int					parse_cmds(char *s);
+int					parsexec(char *cmd);
+char				**parse_args(char *args);
+int					ft_exit(char **args);
+int					ft_env(char **args);
+int					ft_pwd(char **args);
+int					ft_echo(char **args);
+int					ft_execve(char *path, char **args);
+char				*get_var(t_list *lst, char *key);
+t_list				*del_var(t_list *lst, char *key);
+int					ft_cd(char **args);
+int					ft_access(char *path);
+void				signal_handler(int n);
+int					is_forking(int val);
+int					ft_export(char **args);
+t_list				*ft_tab_to_list_custom(t_list **lst, char **tab);
+int					ft_lstiter_custom(t_list *lst, char *arg);
+int					ft_unset(char **args);
+int					set_var(t_list *lst, char *key, char *value);
+int					interpreter(char **args);
+int					envvar_authorized_character(char c, int first_char);
+int					set_var_full(t_list *lst, char *key, char *value);
+int					ft_lstprint_export(t_list *lst);
+int					ft_error_tab(char *msg, int ret, char **befree,
+						void *param);
+char				*try_path(char *path);
+char				*build_path(const char *dirs, const char *entry);
+char				**redirect(char **args);
+int					run_dmc_pipes(char **args);
+int					ft_error(char *msg, char *befree, char **tab_free, void
+						*param);
+int					ft_strerror(char *befree, char **tabfree, void *param,
+						void *param2);
+char				**ft_rmfd(char **args, char **sub);
+void				set_quote(char c, t_parse_tools *t);
+int					check_error_syntax(char **args);
+int					ft_is_operand(char c);
+int					check_operand(char *s);
+int					ft_tab_chr_i_custom(char **tab);
+void				set_io(int i);
+int					path_exec(char **sub);
+int					expand(char **arg, int i, int dquote);
+int					add_node(t_parse_tools *t, t_list **list);
 
 #endif
