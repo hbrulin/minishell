@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 10:05:28 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 12:37:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 # define RNO_FILE		"minishell: %s: No such file or is a directory\n"
 # define RNO_CREA		"minishell: %s: File could not be created\n"
 
+typedef short int	t_boolean;
+typedef int			(*t_builtin_fc)(char **args);
+
 typedef struct		s_parse_tools
 {
 	int		i;
@@ -54,8 +57,13 @@ typedef struct		s_parse_tools
 	char	*tmp;
 }					t_parse_tools;
 
-typedef short int	t_boolean;
-typedef int			(*t_builtin_fc)(char **args);
+typedef struct		s_interp_tools
+{
+	t_boolean	sq;
+	t_boolean	dq;
+	int			i;
+	char		*s;
+}					t_interp_tools;
 
 typedef int			t_ret;
 t_ret				g_ret;

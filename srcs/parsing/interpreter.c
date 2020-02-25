@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:34:22 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 10:00:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 12:41:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,31 @@ int		escape_char(char **s, int i, int boolean_value)
 
 int		interpret_arg(char **or)
 {
-	t_boolean	sq;
-	t_boolean	dq;
-	int			i;
-	char		*s;
+	t_interp_tools t;
 
-	s = *or;
-	i = 0;
-	sq = FALSE;
-	dq = FALSE;
-	while (s && i != -1 && s[i])
+	t.s = *or;
+	t.i = 0;
+	t.sq = FALSE;
+	t.dq = FALSE;
+	while (t.s && t.i != -1 && t.s[t.i])
 	{
-		if (!sq && !dq && s[i] == 92)
-			i += escape_char(&s, i, TRUE);
-		else if (!sq && dq && s[i] == 92 && (s[i + 1] == '\\'
-				|| (s)[i + 1] == '$' || s[i + 1] == '\"'))
-			i += escape_char(&s, i, TRUE);
-		else if (!sq && (s)[i] == '$')
-			i = expand(&s, i, dq);
-		else if (!dq && (s)[i] == 39)
-			sq = escape_char(&s, i, !sq);
-		else if (!sq && (s)[i] == 34)
-			dq = escape_char(&s, i, !dq);
+		if (!t.sq && !t.dq && t.s[t.i] == 92)
+			t.i += escape_char(&t.s, t.i, TRUE);
+		else if (!t.sq && t.dq && t.s[t.i] == 92 && (t.s[t.i + 1] == '\\'
+				|| (t.s)[t.i + 1] == '$' || t.s[t.i + 1] == '\"'))
+			t.i += escape_char(&t.s, t.i, TRUE);
+		else if (!t.sq && (t.s)[t.i] == '$')
+			t.i = expand(&t.s, t.i, t.dq);
+		else if (!t.dq && (t.s)[t.i] == 39)
+			t.sq = escape_char(&t.s, t.i, !t.sq);
+		else if (!t.sq && (t.s)[t.i] == 34)
+			t.dq = escape_char(&t.s, t.i, !t.dq);
 		else
-			i++;
+			t.i++;
 	}
-	*or = s;
-	i = sq == TRUE || dq == TRUE || i == -1 ? 1 : 0;
-	return (i);
+	*or = t.s;
+	t.i = t.sq == TRUE || t.dq == TRUE || t.i == -1 ? 1 : 0;
+	return (t.i);
 }
 
 int		interpreter(char **args)
