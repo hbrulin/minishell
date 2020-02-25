@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 12:31:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 16:46:39 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_execve(char *path, char **args)
 	if (pid == 0)
 	{
 		if ((execve(path, args, tab_env)) == -1)
-			exit(ft_strerror(NULL, NULL, path, NULL));
+			exit(ft_ret_errno(NULL, NULL, path));
 	}
 	else if (pid > 0)
 	{
@@ -66,7 +66,10 @@ int		path_exec(char **sub)
 		free(tmp);
 	}
 	if (!path)
+	{
+		g_ret = 127;
 		return (ft_error(CMD_NOT_FOUND, NULL, sub, sub[0]));
+	}
 	else
 	{
 		ft_execve(path, sub);

@@ -1,5 +1,7 @@
 # minishell
 
+http://manpagesfr.free.fr/man/man1/bash.1.html
+
 #fork
 L'appel système fork permet le création d'un processus clône du processus courrant.
 pid_t  fork(void);

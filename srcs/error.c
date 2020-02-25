@@ -6,11 +6,23 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 14:14:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 16:48:02 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		ft_ret_errno(char *befree, char **tabfree, void *param)
+{
+	ft_printf_fd(2, "minishell: %s: %s\n", param, strerror(errno));
+	if (befree)
+		free(befree);
+	if (tabfree)
+		ft_tabdel((void *)befree);
+	if (errno == 13)
+		errno = 126;
+	return (errno);
+}
 
 int		ft_strerror(char *befree, char **tabfree, void *param, void *param2)
 {
