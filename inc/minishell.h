@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 16:46:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:47:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define CMD_NOT_FOUND	"minishell: %s: command not found\n"
 # define MANY_ARGS		"minishell: %s: too many arguments\n"
 # define NO_ARG			"minishell: %s: not enough arguments\n"
-# define NO_FILE			"minishell: cd: %s: No such file or directory\n"
+# define NO_FILE		"minishell: %s: No such file or directory\n"
 # define EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
 # define INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
 # define INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"

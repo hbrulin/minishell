@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 16:46:39 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:47:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int		path_exec(char **sub)
 	else if (!path)
 	{
 		if (!(tmp = get_var(g_env, "PATH=")))
-			return (ft_strerror(path, sub, sub[0], NULL));
+		{
+			g_ret = 127;
+			return (ft_error(NO_FILE, path, sub, sub[0]));
+		}
 		path = build_path(tmp, sub[0]);
 		free(tmp);
 	}
