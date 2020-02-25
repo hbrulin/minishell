@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 09:57:47 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/25 12:31:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		is_forking(int val)
 int		ft_execve(char *path, char **args)
 {
 	pid_t	pid;
-	pid_t	wpid;
 	int		status;
 	char	**tab_env;
 
@@ -41,7 +40,7 @@ int		ft_execve(char *path, char **args)
 	else if (pid > 0)
 	{
 		is_forking(1);
-		if ((wpid = wait(&status)) == -1)
+		if (wait(&status) == -1)
 			return (ft_strerror(NULL, NULL, "wait", NULL));
 		g_ret = WEXITSTATUS(status);
 		is_forking(0);
