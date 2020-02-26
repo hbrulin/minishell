@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 13:15:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:27:54 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,26 @@ void	signal_handler(int n)
 		g_ret = SIGINT_ERR;
 	}
 	else if (n == SIGINT)
+	{
+		ft_putstr("\033[1C");
+		ft_putstr("\b\b \b\b \b\b");
+		ft_putstr("\n");
+		ft_putstr("minishell > ");
 		g_ret = 1;
+	}
 	if (is_forking(2) && n == SIGQUIT)
 	{
 		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
 		g_ret = SIGQUIT_ERR;
 	}
 	else if (n == SIGQUIT)
+	{
+		ft_putstr("\033[1C");
+		ft_putstr("\b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b \b\b");
+		ft_putstr("minishell > ");
 		g_ret = 0;
+		return ;
+	}
 }
 
 void	prompt(void)
