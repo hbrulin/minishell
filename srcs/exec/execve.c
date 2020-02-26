@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 17:47:12 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:58:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,12 @@ int		path_exec(char **sub)
 		free(tmp);
 	}
 	if (!path)
-	{
-		g_ret = 127;
 		return (ft_error(CMD_NOT_FOUND, NULL, sub, sub[0]));
-	}
 	else
 	{
 		ft_execve(path, sub);
 		set_io(1);
-		ft_tabdel((void *)sub);
-		free(path);
-		return (0);
+		ft_error(NULL, path, sub, NULL);
 	}
 	return (0);
 }

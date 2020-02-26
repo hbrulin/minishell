@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:57:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 09:57:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:56:46 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ char	*build_path(const char *dirs, const char *entry)
 			free(dir_path);
 		}
 	}
+	g_ret = 127;
 	return (NULL);
 }
