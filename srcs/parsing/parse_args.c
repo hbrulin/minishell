@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:41:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 10:00:28 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:54:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int		set_node(t_list **list, char *s, t_parse_tools *t, int flag)
 	if (flag == 2)
 	{
 		if (!(t->tmp = ft_substr(s, t->j, t->i - t->j)))
+			return (1);
+		if (add_node(t, list))
+			return (1);
+		free(t->tmp);
+		return (0);
+	}
+	if (flag == 3)
+	{
+		if (!(t->tmp = ft_strdup((char *)&s[t->i])))
 			return (1);
 		if (add_node(t, list))
 			return (1);
@@ -85,6 +94,11 @@ int		loop_list(t_list **list, char *s, t_parse_tools *t)
 		else if (ft_is_operand(s[t->i]) && t->open == 0)
 		{
 			if (delim_is_operand(list, s, t))
+				return (1);
+		}
+		if (s[t->i + 1] == '\0')
+		{
+			if (set_node(list, s, t, 3))
 				return (1);
 		}
 		t->i++;
