@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 13:32:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:54:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 				t->i++;
 			t->j = t->i;
 		}
+		else if (s[t->i] == ';' && t->open == 0)
+			count = 0;
 		t->i++;
 	}
 	return (0);
