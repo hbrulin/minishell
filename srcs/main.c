@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 15:30:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:33:36 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ void	prompt(void)
 	{
 		ft_putstr("minishell > ");
 		ret = get_next_line(STDIN_FILENO, &input);
-		if (ret == 0)
+		if (ret == 0 && !is_forking(2))
 		{
 			ft_putstr("exit\n");
 			exit(0);
 		}
+		if (ret == 0 && is_forking(2))
+			signal_handler(2);
 		s = ft_strtrim(input, " ");
 		free(input);
 		parse_cmds(s);
