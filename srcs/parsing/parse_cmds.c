@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 15:43:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:45:38 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,13 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 		parsexec(cmd);
 		return (0);
 	}
+	if (flag == 4)
+	{
+		if (!(cmd = ft_substr(s, t->j, t->i - t->j + 1)))
+			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+		parsexec(cmd);
+		return (0);
+	}
 	return (1);
 }
 
@@ -123,7 +130,13 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			count = ft_count_back(s, t->i);
 			done = 1;
 		}
-		if (s[t->i] == ';' && t->open == 0 && (!count || count % 2 == 0))
+		if (s[t->i] == ';' && t->open == 0 && count == 1 && s[t->i + 1] == '\0')
+		{
+			if (malloc_and_exec(cmd, s, t, 4))
+				return (1);
+			t->j = t->i;
+		}
+		else if (s[t->i] == ';' && t->open == 0 && (!count || count % 2 == 0))
 		{
 			if (malloc_and_exec(cmd, s, t, 3))
 				return (1);
