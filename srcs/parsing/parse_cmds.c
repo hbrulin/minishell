@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 16:45:38 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:50:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			count = ft_count_back(s, t->i);
 			done = 1;
 		}
-		if (s[t->i] == ';' && t->open == 0 && count == 1 && s[t->i + 1] == '\0')
+		if (s[t->i] == ';' && t->open == 0 && count % 2 != 0 && s[t->i + 1] == '\0')
 		{
 			if (malloc_and_exec(cmd, s, t, 4))
 				return (1);
