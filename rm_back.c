@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 11:17:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 12:48:03 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:20:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_quote(char c, t_parse_tools *t)
 		t->open = !t->open;
 }
 
-int		ft_count(char *s, int i)
+int		ft_count_back(char *s, int i)
 {
 	int count = 0;
 	while (s[i] == '\\')
@@ -44,7 +44,7 @@ int		ft_count(char *s, int i)
 	return(count);
 }
 
-char	*rm_back(char *s)
+int		rm_back(char *s, int i)
 {
 	int count = 0;
 	int done = 0;
@@ -58,20 +58,14 @@ char	*rm_back(char *s)
 		set_quote(s[t.i], &t);
 		if (s[t.i] == '\\' && t.open == 0 && done == 0)
 		{
-			count = ft_count(s, t.i);
+			count = ft_count_back(s, t.i);
 			done = 1;
 		}
 		if (count && count % 2 == 0)
-		{
-			while (s[t.i] == '\\')
-			{
-				ft_memmove(((char *)&s[t.i]), ((char *)&s[t.i + 1]), ft_strlen(s) - t.i);
-				t.i--;
-			}
-		}
+			t.i++;
 		t.i++;		
 	}
-	return (s);
+	return (t.i++);
 }
 
 int main(void)

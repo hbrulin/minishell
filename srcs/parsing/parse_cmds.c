@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 11:14:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:32:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,22 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 	return (1);
 }
 
+int		ft_count_back(char *s, int i)
+{
+	int count = 0;
+	while (s[i] == '\\')
+	{
+		i++;
+		count++;
+	}
+	return(count);
+}
+
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
+	int done = 0;
+	int count = 0;
+
 	while (s[t->i])
 	{
 		if (ft_strchr(s + t->i, ';') == NULL)
@@ -85,7 +99,14 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			break ;
 		}
 		set_quote(s[t->i], t);
-		if (s[t->i] == ';' && t->open == 0 && s[t->i - 1] != '\\')
+		if (s[t->i] != '\\')
+			done = 0;
+		else if (s[t->i] == '\\' && t->open == 0 && done == 0)
+		{
+			count = ft_count_back(s, t->i);
+			done = 1;
+		}
+		if (s[t->i] == ';' && t->open == 0 && (!count || count % 2 == 0))
 		{
 			if (malloc_and_exec(cmd, s, t, 3))
 				return (1);
