@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 16:50:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:03:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		ft_count_back(char *s, int i)
 int		check_error(char *s)
 {
 	t_parse_tools	t;
-	int done;;
-	int count;
+	int				done;
+	int				count;
 
 	done = 0;
 	count = 0;
@@ -66,7 +66,7 @@ int		check_error(char *s)
 				return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
 			}
 			else if (s[t.i] == ';' && t.open == 0)
-			count = 0;
+				count = 0;
 		}
 		t.i++;
 	}
@@ -109,7 +109,7 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
-	int done;;
+	int done;
 	int count;
 
 	done = 0;
@@ -130,7 +130,8 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			count = ft_count_back(s, t->i);
 			done = 1;
 		}
-		if (s[t->i] == ';' && t->open == 0 && count % 2 != 0 && s[t->i + 1] == '\0')
+		if (s[t->i] == ';' && t->open == 0 && count % 2 != 0 && s[t->i + 1]
+			== '\0')
 		{
 			if (malloc_and_exec(cmd, s, t, 4))
 				return (1);

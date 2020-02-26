@@ -6,11 +6,32 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:35:57 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 16:38:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:18:35 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_write(char **args, int i)
+{
+	if (!(ft_strcmp(args[i], ".")) && g_ret == 0)
+	{
+		if (write(1, args[i], ft_strlen(args[i])) == -1)
+			return (1);
+		if (args[i + 1])
+			if (write(1, " ", 1) == -1)
+				return (1);
+	}
+	else if (ft_strcmp(args[i], "."))
+	{
+		if (write(1, args[i], ft_strlen(args[i])) == -1)
+			return (1);
+		if (args[i + 1])
+			if (write(1, " ", 1) == -1)
+				return (1);
+	}
+	return (0);
+}
 
 int	ft_echo(char **args)
 {
@@ -23,23 +44,8 @@ int	ft_echo(char **args)
 	i = opt;
 	while (args[++i])
 	{
-		if (!(ft_strcmp(args[i], ".")) && g_ret == 0)
-		{
-			if (write(1, args[i], ft_strlen(args[i])) == -1)
-				return (1);
-			g_ret = 0;
-		if (args[i + 1])
-			if (write(1, " ", 1) == -1)
-				return (1);
-		}
-		else if (ft_strcmp(args[i], "."))
-		{
-			if (write(1, args[i], ft_strlen(args[i])) == -1)
-				return (1);
-				if (args[i + 1])
-			if (write(1, " ", 1) == -1)
-				return (1);
-		}
+		if (ft_write(args, i))
+			return (1);
 	}
 	if (!opt)
 		if (write(1, "\n", 1) == -1)
