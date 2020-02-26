@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 10:33:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:14:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,12 @@ void	set_quote(char c, t_parse_tools *t)
 int		check_error(char *s)
 {
 	t_parse_tools	t;
-	int	back = 0;
 
 	ft_bzero(&t, sizeof(t_parse_tools));
 	while (s[t.i])
 	{
 		set_quote(s[t.i], &t);
-		if (s[t.i] == '\\')
-		{
-			back = t.i;
-			while (s[back] == '\\')
-			{
-				t.i++;
-				back++;
-			}
-			if (s[back] != ';')
-				back = 0;
-		}	
-		if (s[t.i] == ';' && t.open == 0 && (!back || back % 2 != 0))
+		if (s[t.i] == ';' && t.open == 0  && s[t.i - 1] != '\\')
 		{
 			t.i++;
 			while (ft_is_space(s[t.i]))
@@ -83,21 +71,11 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 		parsexec(cmd);
 		return (0);
 	}
-	if (flag == 4)
-	{
-		if (!(cmd = ft_substr(s, t->j, t->i - t->j + 1)))
-			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-		parsexec(cmd);
-		return (0);
-	}
 	return (1);
 }
 
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
-	int back = 0;
-	int count = 0;
-
 	while (s[t->i])
 	{
 		if (ft_strchr(s + t->i, ';') == NULL)
@@ -107,29 +85,7 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			break ;
 		}
 		set_quote(s[t->i], t);
-		if (s[t->i] == '\\')
-		{
-			back = t->i;
-			while (s[back] == '\\')
-			{
-				t->i++;
-				back++;
-				count++;
-			}
-			if (s[back] != ';')
-				back = 0;
-			//t->i++;
-		}
-		if (s[t->i] == ';' && t->open == 0 && count == 1)
-		{
-			if (malloc_and_exec(cmd, s, t, 4))
-				return (1);
-			t->i++;
-			while (ft_is_space(s[t->i]))
-				t->i++;
-			t->j = t->i;
-		}
-		else if (s[t->i] == ';' && t->open == 0 && (!back || back % 2 != 0))
+		if (s[t->i] == ';' && t->open == 0 && s[t->i - 1] != '\\')
 		{
 			if (malloc_and_exec(cmd, s, t, 3))
 				return (1);
@@ -138,7 +94,6 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 				t->i++;
 			t->j = t->i;
 		}
-		back = 0;
 		t->i++;
 	}
 	return (0);
