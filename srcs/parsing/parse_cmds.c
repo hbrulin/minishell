@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 13:54:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:43:51 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,39 @@ void	set_quote(char c, t_parse_tools *t)
 		t->open = !t->open;
 }
 
+int		ft_count_back(char *s, int i)
+{
+	int count;
+
+	count = 0;
+	while (s[i] == '\\')
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
 int		check_error(char *s)
 {
 	t_parse_tools	t;
+	int done;;
+	int count;
 
+	done = 0;
+	count = 0;
 	ft_bzero(&t, sizeof(t_parse_tools));
 	while (s[t.i])
 	{
 		set_quote(s[t.i], &t);
-		if (s[t.i] == ';' && t.open == 0  && s[t.i - 1] != '\\')
+		if (s[t.i] != '\\')
+			done = 0;
+		else if (s[t.i] == '\\' && t.open == 0 && done == 0)
+		{
+			count = ft_count_back(s, t.i);
+			done = 1;
+		}
+		if (s[t.i] == ';' && t.open == 0 && (!count || count % 2 == 0))
 		{
 			t.i++;
 			while (ft_is_space(s[t.i]))
@@ -41,6 +65,8 @@ int		check_error(char *s)
 				g_ret = ESYNTAX;
 				return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
 			}
+			else if (s[t.i] == ';' && t.open == 0)
+			count = 0;
 		}
 		t.i++;
 	}
@@ -74,22 +100,13 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 	return (1);
 }
 
-int		ft_count_back(char *s, int i)
-{
-	int count = 0;
-	while (s[i] == '\\')
-	{
-		i++;
-		count++;
-	}
-	return(count);
-}
-
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
-	int done = 0;
-	int count = 0;
+	int done;;
+	int count;
 
+	done = 0;
+	count = 0;
 	while (s[t->i])
 	{
 		if (ft_strchr(s + t->i, ';') == NULL)
