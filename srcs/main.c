@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 15:04:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:59:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	prompt(void)
 	while (!status)
 	{
 		ft_putstr("minishell > ");
+		//ft_putstr("\033[#;#R");
 		ret = get_next_line(STDIN_FILENO, &input);
 		if (ret == 0 && !is_forking(2))
 		{

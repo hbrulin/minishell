@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 15:50:58 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:12:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		parsexec(char *cmd)
 	char	**args;
 
 	set_io(0);
-	if (!cmd)
+	if (!cmd || !ft_strcmp(cmd, ""))
 		return (0);
 	if (!(args = parse_args(cmd)))
 	{

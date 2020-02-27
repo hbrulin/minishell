@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:53:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:07:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		check_error_syntax(char **args)
 {
 	int i;
 
+	if (!args || !*args)
+		return (0);
 	i = 0;
 	while (args[i])
 	{
