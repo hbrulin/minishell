@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:57:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 15:56:46 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:32:56 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ char	*build_path(const char *dirs, const char *entry)
 	c_entry[0] = '/';
 	ft_strcpy(&c_entry[1], entry);
 	i = -1;
+	if (!(ft_strchr(dirs, ':')))
+	{
+		dir_path = ft_strjoin(dirs, c_entry);
+		if (try_path(dir_path))
+			return (dir_path);
+		g_ret = 127;
+		free(dir_path);
+		return (NULL);
+	}
 	while (dirs[++i])
 	{
 		if (dirs[i] == ':')
