@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 15:54:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:59:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_is_pipe(char **args)
 	i = 0;
 	while (args[i])
 	{
-		if (ft_strcmp(args[i], "|") == 0)
+		if (ft_strcmp(args[i], "|") == 0 && ft_strcmp(args[i - 1], "\\"))
 			return (1);
 		i++;
 	}
@@ -57,6 +57,7 @@ int		parsexec(char *cmd)
 		g_ret = ESYNTAX;
 		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	}
+	//ft_tab_print(args);
 	free(cmd);
 	if (ft_is_pipe(args))
 		run_dmc_pipes(args);

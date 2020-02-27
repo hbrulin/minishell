@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:11:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 18:15:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:07:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_count(char **args)
 	count = 0;
 	while (args[i])
 	{
-		if (args[i][0] == '<' || args[i][0] == '>')
+		if ((args[i][0] == '<' || args[i][0] == '>') && ft_strcmp(args[i - 1], "\\"))
 			count++;
 		i++;
 	}
@@ -44,9 +44,9 @@ char	**ft_rmfd(char **args, char **sub)
 	j = 0;
 	while (args[i])
 	{
-		if (args[i][0] == '<' || args[i][0] == '>')
+		if ((args[i][0] == '<' || args[i][0] == '>') && ft_strcmp(args[i - 1], "\\"))
 			i++;
-		else if (args[i][0] != '<' && args[i][0] != '>')
+		else if ((args[i][0] != '<' && args[i][0] != '>') || !ft_strcmp(args[i - 1], "\\"))
 		{
 			if (!(sub[j] = ft_strdup(args[i])))
 				return (NULL);

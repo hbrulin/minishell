@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:35:57 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 19:18:35 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:09:38 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_write(char **args, int i)
 	{
 		if (write(1, args[i], ft_strlen(args[i])) == -1)
 			return (1);
-		if (args[i + 1])
+		if (args[i + 1] && ft_strcmp(args[i], ""))
 			if (write(1, " ", 1) == -1)
 				return (1);
 	}
@@ -26,7 +26,7 @@ int	ft_write(char **args, int i)
 	{
 		if (write(1, args[i], ft_strlen(args[i])) == -1)
 			return (1);
-		if (args[i + 1])
+		if (args[i + 1] && ft_strcmp(args[i], ""))
 			if (write(1, " ", 1) == -1)
 				return (1);
 	}

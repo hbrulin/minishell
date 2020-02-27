@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:41:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 18:54:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:49:23 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		set_node(t_list **list, char *s, t_parse_tools *t, int flag)
 	}
 	if (flag == 3)
 	{
-		if (!(t->tmp = ft_strdup((char *)&s[t->i])))
+		if (!(t->tmp = ft_substr(s, t->j, t->i - t->j + 1)))
 			return (1);
 		if (add_node(t, list))
 			return (1);
@@ -91,7 +91,7 @@ int		loop_list(t_list **list, char *s, t_parse_tools *t)
 			if (delim_is_space(list, s, t))
 				return (1);
 		}
-		else if (ft_is_operand(s[t->i]) && t->open == 0)
+		if (ft_is_operand(s[t->i]) && t->open == 0)
 		{
 			if (delim_is_operand(list, s, t))
 				return (1);
@@ -106,6 +106,8 @@ int		loop_list(t_list **list, char *s, t_parse_tools *t)
 	return (0);
 }
 
+//LEAKS ICI
+
 char	**parse_args(char *s)
 {
 	char			**ret;
@@ -118,8 +120,11 @@ char	**parse_args(char *s)
 	if (loop_list(&list, s, &t))
 		return (NULL);
 	ret = ft_lst_to_tab(list);
+	char **ret2 = copy_tab_void(ret);
+	//ft_tab_print(ret2);
+	//ft_lstprint(list);
 	ft_lstclear(&list, free);
-	if (check_error_syntax(ret))
+	if (check_error_syntax(ret2))
 		return (NULL);
-	return (ret);
+	return (ret2);
 }

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 14:38:14 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:58:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 	static int	fd_in;
 	pid_t		pid;
 	int			status;
-
 	if (!fd_in)
 		fd_in = 0;
 	if ((pid = fork()) == -1)
