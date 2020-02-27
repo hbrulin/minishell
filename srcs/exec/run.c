@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 13:57:02 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:15:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		run_dmc(char **args)
 {
 	int		i;
 	char	**sub;
+	char	**rm_void;
 
 	if (!args || !*args)
 		return (0);
@@ -39,12 +40,14 @@ int		run_dmc(char **args)
 	}
 	if (interpreter(sub) == 1)
 		return (g_ret = ft_error(SYNTAX_ERR, NULL, sub, NULL));
-	if ((i = builtin_fno(sub[0])) != -1)
+	rm_void = copy_tab_void(sub);
+	ft_tabdel((void *)sub);
+	if ((i = builtin_fno(rm_void[0])) != -1)
 	{
-		g_ret = g_builtin_functions[i](sub);
+		g_ret = g_builtin_functions[i](rm_void);
 		set_io(1);
-		ft_tabdel((void *)sub);
+		ft_tabdel((void *)rm_void);
 		return (g_ret);
 	}
-	return (path_exec(sub));
+	return (path_exec(rm_void));
 }

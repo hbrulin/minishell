@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 13:59:25 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:13:12 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		parsexec(char *cmd)
 		g_ret = ESYNTAX;
 		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	}
-	//ft_tab_print(args);
 	free(cmd);
 	if (ft_is_pipe(args))
 		run_dmc_pipes(args);
