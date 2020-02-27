@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:08:38 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:42:23 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		ft_lstiter_custom(t_list *lst, char *arg)
 {
 	t_list	*next;
 	char	*tmp;
+	char	*key_list;
 	int		i;
 
 	tmp = NULL;
@@ -28,12 +29,18 @@ int		ft_lstiter_custom(t_list *lst, char *arg)
 		return (1);
 	while (lst)
 	{
+		i = 0;
 		next = lst->next;
-		if (!(ft_strncmp(lst->content, tmp, (int)ft_strlen(tmp))))
+		while (lst->content[i] != '=' && lst->content[i])
+			i++;
+		key_list = ft_substr(lst->content, 0, i);
+		if (!(ft_strcmp(key_list, tmp)))
 		{
 			free(tmp);
+			free(key_list);
 			return (0);
 		}
+		free(key_list);
 		lst = next;
 	}
 	if (tmp)
