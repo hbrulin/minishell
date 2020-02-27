@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:41:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/19 18:43:51 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:47:59 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int		ft_exit(char **args)
 	unsigned int	j;
 
 	i = 0;
-	if (ft_tablen(args) > 2)
-		return (ft_error(MANY_ARGS, NULL, NULL, args[0]));
+	ft_putstr("exit\n");
 	if (ft_tablen(args) == 1)
 		exit(0);
 	if (args[1][i] == '+' || args[1][i] == '-')
@@ -33,6 +32,8 @@ int		ft_exit(char **args)
 		}
 		i++;
 	}
+	if (ft_tablen(args) > 2)
+		return (ft_error(MANY_ARGS, NULL, NULL, args[0]));
 	if ((i = ft_atoi(args[1])) < 0)
 		j = (unsigned char)i;
 	else
