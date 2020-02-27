@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 13:34:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:53:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		ft_is_operand(char c)
 
 int		check_next(char **args, int i)
 {
+	if (check_operand(args[0]))
+		return (1);
 	if (args[i + 1])
 	{
 		if (check_operand(args[i]) && check_operand(args[i + 1]))
