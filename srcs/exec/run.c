@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:15:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:25:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int		run_dmc(char **args)
 		return (g_ret = ft_error(NULL, NULL, NULL, NULL));
 	}
 	if (interpreter(sub) == 1)
-		return (g_ret = ft_error(SYNTAX_ERR, NULL, sub, NULL));
+	{
+		g_ret = 2;
+		return (ft_error(SYNTAX_ERR, NULL, sub, NULL));
+	}
 	rm_void = copy_tab_void(sub);
 	ft_tabdel((void *)sub);
 	if ((i = builtin_fno(rm_void[0])) != -1)

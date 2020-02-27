@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:59:41 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 19:00:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:22:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ void	expand_envvar(char **arg, int dr, int *i)
 	tmp = ft_substr(*arg, dr + 1, (*i - 1) - dr);
 	key = ft_strjoin(tmp, "=");
 	free(tmp);
-	if (!(tmp = get_var(g_env, key)))
-	{
-		g_ret = 158;
-		tmp = ft_strdup(".");
-	}
+	tmp = get_var(g_env, key);
 	free(key);
 	key = ft_strnjoin(*arg, tmp, dr);
 	free(tmp);
