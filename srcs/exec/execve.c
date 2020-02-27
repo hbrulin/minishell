@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 19:01:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:56:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		ft_execve(char *path, char **args)
 		if (wait(&status) == -1)
 			return (ft_strerror(NULL, NULL, "wait", NULL));
 		g_ret = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			g_ret = SIG_CODE + WTERMSIG(status);
 		is_forking(0);
 		ft_tabdel((void**)tab_env);
 		return (0);

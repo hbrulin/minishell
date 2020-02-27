@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/26 18:06:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:56:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ t_ret	g_ret = 0;
 void	signal_handler(int n)
 {
 	if (is_forking(2) && n == SIGINT)
-	{
 		ft_putstr("\n");
-		g_ret = SIGINT_ERR;
-	}
 	else if (n == SIGINT)
 	{
 		ft_putstr("\033[1C");
@@ -32,10 +29,7 @@ void	signal_handler(int n)
 		g_ret = 1;
 	}
 	if (is_forking(2) && n == SIGQUIT)
-	{
 		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
-		g_ret = SIGQUIT_ERR;
-	}
 	else if (n == SIGQUIT)
 	{
 		ft_putstr("\033[1C");
