@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 17:44:22 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:00:58 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,9 @@ int					ls_part(char **args);
 int					ft_count_back(char *s, int i);
 int					check_error_cmds(char *s);
 void				set_escape(t_parse_tools *t, char *s);
+int					set_node(t_list **list, char *s, t_parse_tools *t,
+						int flag);
+int					set_node2(t_list **list, char *s, t_parse_tools *t,
+						int flag);
 
 #endif
