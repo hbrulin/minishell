@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:25:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 13:30:07 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int		run_dmc(char **args)
 	{
 		set_io(1);
 		return (g_ret = ft_error(NULL, NULL, NULL, NULL));
+	}
+	if (!ft_strcmp(args[0], "ls"))
+	{
+		if(ls_part(args))
+			return(0);
 	}
 	if (interpreter(sub) == 1)
 	{
