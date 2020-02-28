@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:51:49 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 16:07:03 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:18:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int		check_next(char **args, int i)
 		if (check_operand(args[i]) && check_operand(args[i + 1]))
 			return (1);
 	}
-	else if (check_operand(args[i]) && !args[i + 1] && ft_strcmp(args[i - 1], "\\"))
+	else if (check_operand(args[i]) && !args[i + 1] &&
+		ft_strcmp(args[i - 1], "\\"))
 		return (1);
 	return (0);
 }

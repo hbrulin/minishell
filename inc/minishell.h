@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 17:15:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:29:40 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ int					add_node(t_parse_tools *t, t_list **list);
 int					ft_ret_errno(char *befree, char **tabfree, void *param);
 char				**copy_tab_void(char **tab);
 int					ls_part(char **args);
+int					ft_count_back(char *s, int i);
 
 #endif

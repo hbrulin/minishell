@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:41:46 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:14:16 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:19:46 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		loop_list(t_list **list, char *s, t_parse_tools *t)
 char	**parse_args(char *s)
 {
 	char			**ret;
+	char			**ret2;
 	t_parse_tools	t;
 	t_list			*list;
 
@@ -119,10 +120,8 @@ char	**parse_args(char *s)
 		return (NULL);
 	ret = ft_lst_to_tab(list);
 	ft_lstclear(&list, free);
-	char **ret2 = copy_tab_void(ret);
+	ret2 = copy_tab_void(ret);
 	ft_tabdel((void *)ret);
-	//ft_tab_print(ret2);
-	//ft_lstprint(list);
 	if (check_error_syntax(ret2))
 		return (NULL);
 	return (ret2);
