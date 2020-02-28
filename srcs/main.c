@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 13:14:05 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:07:29 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void	prompt(void)
 			exit(errno);
 		if (ret)
 		{
-			if (input[ret - 1] != '\n')
-				write(STDOUT_FILENO, "\n", 1);
-			else
-				input[ret- 1] = '\0';
+			while (input[ret - 1] != '\n')
+			{
+				ft_putstr("\033[2C\b\b  \033[2D");
+				ret += read(STDIN_FILENO, &input[ret], ARG_MAX);
+			}
+			input[ret - 1] = '\0';
 		}
 		else
 			ft_strlcpy(input, "exit", 5);
