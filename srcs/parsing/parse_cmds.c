@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 17:44:00 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:53:31 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,30 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 	return (1);
 }
 
+int		loop_cases(char *s, char *cmd, t_parse_tools *t)
+{
+	if (s[t->i] == ';' && t->open == 0 && t->count % 2 != 0 && s[t->i + 1]
+		== '\0')
+	{
+		if (malloc_and_exec2(cmd, s, t, 4))
+			return (1);
+		t->j = t->i;
+	}
+	else if (s[t->i] == ';' && t->open == 0 && (!t->count || t->count % 2
+		== 0))
+	{
+		if (malloc_and_exec2(cmd, s, t, 3))
+			return (1);
+		t->i++;
+		while (ft_is_space(s[t->i]))
+			t->i++;
+		t->j = t->i;
+	}
+	else if (s[t->i] == ';' && t->open == 0)
+		t->count = 0;
+	return (0);
+}
+
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
 	while (s[t->i])
@@ -63,25 +87,8 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 		}
 		set_quote(s[t->i], t);
 		set_escape(t, s);
-		if (s[t->i] == ';' && t->open == 0 && t->count % 2 != 0 && s[t->i + 1]
-			== '\0')
-		{
-			if (malloc_and_exec2(cmd, s, t, 4))
-				return (1);
-			t->j = t->i;
-		}
-		else if (s[t->i] == ';' && t->open == 0 && (!t->count || t->count % 2
-			== 0))
-		{
-			if (malloc_and_exec2(cmd, s, t, 3))
-				return (1);
-			t->i++;
-			while (ft_is_space(s[t->i]))
-				t->i++;
-			t->j = t->i;
-		}
-		else if (s[t->i] == ';' && t->open == 0)
-			t->count = 0;
+		if (loop_cases(s, cmd, t))
+			return (1);
 		t->i++;
 	}
 	return (0);
