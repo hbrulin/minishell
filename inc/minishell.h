@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 15:46:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:15:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define MANY_ARGS		"minishell: %s: too many arguments\n"
 # define NO_ARG			"minishell: %s: not enough arguments\n"
 # define NO_FILE		"minishell: %s: No such file or directory\n"
+# define NO_FILE_LS		"ls: : No such file or directory\n"
 # define EXIT_NUM		"minishell: exit: %s: numeric argument required\n"
 # define INVALID_ID_X	"minishell: export: %s: not a valid identifier\n"
 # define INVALID_ID_U	"minishell: unset: %s: not a valid identifier\n"
