@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 13:29:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:46:23 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	set_io(int i)
 int		ls_part(char **args)
 {
 	int i = 0;
+	int j;
+	char *tmp;
+
 	if (ft_tablen(args) < 2)
 		return (0);
 	if ((!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'")) && !args[2])
@@ -56,12 +59,41 @@ int		ls_part(char **args)
 		ft_printf_fd(2, "ls: : No such file or directory\n");
 		return (1);
 	}
+	else if (args[1][0] == '\"' && args[1][1] == '$')
+	{
+			j = 0;
+			tmp = ft_strdup(args[i]);
+			while (args[i][j] != '\"' && args[i][j])
+				j++;
+			tmp[j] = '=';
+			if (!get_var(g_env, tmp))
+			{
+				g_ret = 1;
+				ft_printf_fd(2, "ls: : No such file or directory\n");
+				return (ft_error(NULL, tmp, NULL, NULL));
+			}
+			free(tmp);
+	}
 	while (args[i])
 	{
 		if (!ft_strcmp(args[i], "\"\"") || !ft_strcmp(args[i], "\'\'"))
 		{
 			g_ret = 1;
 			ft_printf_fd(2, "ls: : No such file or directory\n");
+		}
+		else if (args[i][0] == '\"' && args[i][1] == '$')
+		{
+			j = 0;
+			tmp = ft_strdup(args[i]);
+			while (args[i][j] != '\"' && args[i][j])
+				j++;
+			tmp[j] = '=';
+			if (!get_var(g_env, tmp))
+			{
+				g_ret = 1;
+				ft_printf_fd(2, "ls: : No such file or directory\n");
+			}
+			free(tmp);
 		}
 		i++;
 	}

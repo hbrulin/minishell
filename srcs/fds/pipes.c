@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 13:58:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:25:17 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 	static int	fd_in;
 	pid_t		pid;
 	int			status;
+
 	if (!fd_in)
 		fd_in = 0;
 	if ((pid = fork()) == -1)
@@ -51,15 +52,13 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 	{
 		set_fd(fd, fd_in, next);
 		if (run_dmc(a_cmd))
-		{
 			exit(EXIT_FAILURE);
-			return (1);
-		}
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		wait(&status);
+		if (wait(&status) == -1)
+			return (ft_strerror(NULL, NULL, "wait", NULL));
 		close(fd[1]);
 		fd_in = fd[0];
 	}
