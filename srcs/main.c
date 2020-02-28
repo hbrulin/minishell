@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 15:07:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:35:08 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,27 @@ void	signal_handler(int n)
 	}
 }
 
+int		launch(char *input)
+{
+	char	*s;
+
+	if (!input)
+		return (1);
+	s = NULL;
+	if (!(s = ft_strtrim(input, " ")))
+		return (ft_strerror(NULL, NULL, NULL, NULL));
+	parse_cmds(s);
+	free(s);
+	return (0);
+}
+
 void	prompt(void)
 {
 	int		status;
 	char	input[ARG_MAX];
-	char	*s;
 	int		ret;
 
 	status = 0;
-	s = NULL;
 	while (!status)
 	{
 		ft_putstr("minishell > ");
@@ -61,9 +73,8 @@ void	prompt(void)
 		}
 		else
 			ft_strlcpy(input, "exit", 5);
-		s = ft_strtrim(input, " ");
-		parse_cmds(s);
-		free(s);
+		if (launch(input))
+			return ;
 	}
 }
 

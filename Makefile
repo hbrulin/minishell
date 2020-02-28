@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/27 16:05:08 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/02/28 15:39:11 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS = main.c parsing/parse_cmds.c parsing/parse_args.c exec/run.c exec/execve.c
 	builtins/ft_pwd.c builtins/ft_export.c builtins/ft_unset.c \
 	parsing/interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c \
 	parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
-	parsing/parse_args_utils.c parsing/expand.c copy_tab_void.c
+	parsing/parse_args_utils.c parsing/expand.c parsing/copy_tab_void.c \
+	parsing/ls_part.c
 
 SRC_DIR = srcs
 INC_DIR = inc
@@ -51,7 +52,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c Makefile

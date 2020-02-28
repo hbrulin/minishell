@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 13:29:42 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:46:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ typedef struct		s_pipe_tools
 	int		i;
 	int		adv;
 }					t_pipe_tools;
+
+typedef	struct		s_redir_tools
+{
+	int		i;
+	int		len;
+	int		j;
+}					t_redir_tools;
 
 typedef int			t_ret;
 t_ret				g_ret;

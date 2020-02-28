@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:11:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:07:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:48:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int		ft_count(char **args)
 	count = 0;
 	while (args[i])
 	{
-		if ((args[i][0] == '<' || args[i][0] == '>') && ft_strcmp(args[i - 1], "\\"))
+		if ((args[i][0] == '<' || args[i][0] == '>') &&
+			ft_strcmp(args[i - 1], "\\"))
 			count++;
 		i++;
 	}
@@ -30,29 +31,28 @@ int		ft_count(char **args)
 
 char	**ft_rmfd(char **args, char **sub)
 {
-	int		i;
-	int		len;
-	int		j;
+	t_redir_tools t;
 
+	ft_bzero(&t, sizeof(t_redir_tools));
 	if (ft_count(args) == 0)
 		return (sub = copy_tab(args));
-	len = ft_tablen(args) - (ft_count(args) * 2);
-	if (!(sub = (char **)malloc(sizeof(char *) * (len + 1))))
+	t.len = ft_tablen(args) - (ft_count(args) * 2);
+	if (!(sub = (char **)malloc(sizeof(char *) * (t.len + 1))))
 		return (NULL);
-	sub[len] = 0;
-	i = 0;
-	j = 0;
-	while (args[i])
+	sub[t.len] = 0;
+	while (args[t.i])
 	{
-		if ((args[i][0] == '<' || args[i][0] == '>') && ft_strcmp(args[i - 1], "\\"))
-			i++;
-		else if ((args[i][0] != '<' && args[i][0] != '>') || !ft_strcmp(args[i - 1], "\\"))
+		if ((args[t.i][0] == '<' || args[t.i][0] == '>') &&
+			ft_strcmp(args[t.i - 1], "\\"))
+			t.i++;
+		else if ((args[t.i][0] != '<' && args[t.i][0] != '>') ||
+			!ft_strcmp(args[t.i - 1], "\\"))
 		{
-			if (!(sub[j] = ft_strdup(args[i])))
+			if (!(sub[t.j] = ft_strdup(args[t.i])))
 				return (NULL);
-			j++;
+			t.j++;
 		}
-		i++;
+		t.i++;
 	}
 	return (sub);
 }

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:31:29 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:00:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:41:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	**redirect(char **args)
 	i = 0;
 	while (args[i])
 	{
-		if ((ft_strcmp(args[i], ">") == 0 || ft_strcmp(args[i], ">>") == 0) && ft_strcmp(args[i - 1], "\\"))
+		if ((ft_strcmp(args[i], ">") == 0 || ft_strcmp(args[i], ">>") == 0)
+			&& ft_strcmp(args[i - 1], "\\"))
 		{
 			if (redirect_right(args[i], args[i + 1]))
 				return (NULL);
