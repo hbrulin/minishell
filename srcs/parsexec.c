@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 16:12:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 13:07:59 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ void	set_io(int i)
 
 int		ls_part(char **args)
 {
-	if (!ft_strcmp(args[0], "ls") && (!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'")))
+	if (ft_tablen(args) >= 2)
 	{
-		g_ret = 1;
-		ft_printf_fd(2, "ls: : No such file or directory\n");
-		return(1);
+		if (!ft_strcmp(args[0], "ls") && (!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'")))
+		{
+			g_ret = 1;
+			ft_printf_fd(2, "ls: : No such file or directory\n");
+			return(1);
+		}
 	}
 	return (0);
 }

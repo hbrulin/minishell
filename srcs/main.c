@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 15:59:29 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 13:14:05 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,28 @@ void	signal_handler(int n)
 void	prompt(void)
 {
 	int		status;
-	char	*input;
+	char	input[ARG_MAX];
 	char	*s;
 	int		ret;
 
 	status = 0;
-	input = NULL;
 	s = NULL;
 	while (!status)
 	{
 		ft_putstr("minishell > ");
-		//ft_putstr("\033[#;#R");
-		ret = get_next_line(STDIN_FILENO, &input);
-		if (ret == 0 && !is_forking(2))
+		ret = read(STDIN_FILENO, input, ARG_MAX);
+		if (ret == ERROR)
+			exit(errno);
+		if (ret)
 		{
-			ft_putstr("exit\n");
-			exit(0);
+			if (input[ret - 1] != '\n')
+				write(STDOUT_FILENO, "\n", 1);
+			else
+				input[ret- 1] = '\0';
 		}
-		if (ret == 0 && is_forking(2))
-			signal_handler(2);
+		else
+			ft_strlcpy(input, "exit", 5);
 		s = ft_strtrim(input, " ");
-		free(input);
 		parse_cmds(s);
 		free(s);
 	}

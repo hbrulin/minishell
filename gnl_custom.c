@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   gnl_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 10:26:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 12:37:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 11:38:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_fill_line(char **s, char **line, int len)
 		{
 			free(*s);
 			*s = NULL;
+			return (0);
 		}
 	}
 	else if ((*s)[len] == '\0')
@@ -33,7 +34,7 @@ int		ft_fill_line(char **s, char **line, int len)
 		*line = ft_strdup(*s);
 		free(*s);
 		*s = NULL;
-		return (0);
+		//return (0);
 	}
 	return (1);
 }
@@ -44,9 +45,7 @@ int		ft_return(char **line, char **s, int ret)
 
 	len = 0;
 	if (ret < 0)
-	{
 		return (-1);
-	}
 	else if (ret == 0 && (*s == NULL || s[0] == '\0'))
 	{
 		*line = ft_strdup("");
@@ -57,18 +56,16 @@ int		ft_return(char **line, char **s, int ret)
 	return (ft_fill_line(s, line, len));
 }
 
-int		get_next_line(int fd, char **line)
+int		gnl_custom(int fd, char **line)
 {
 	static char		*s;
-	char			buf[BUFFER_SIZE + 1];
+	char			buf[2];
 	char			*tmp;
 	int				ret;
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE == 0)
-	{
+	if (fd < 0 || line == NULL)
 		return (-1);
-	}
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
+	while ((ret = read(fd, buf, 1)) > 0)
 	{
 		buf[ret] = '\0';
 		if (s == NULL)

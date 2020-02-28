@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:43:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/14 15:43:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 11:57:01 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# define BUFFER_SIZE 2048
+# define BUFFER_SIZE 1
 
 typedef	struct		s_list
 {

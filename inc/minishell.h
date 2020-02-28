@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:56:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 12:36:42 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
+# include <stdio.h>
 
 # define TRUE  1
 # define FALSE 0
 
 # define SIG_CODE 128
-
 # define ESYNTAX 258
+# define ARG_MAX 131072
+# define ERROR -1
 
 # define CMD_NOT_FOUND	"minishell: %s: command not found\n"
 # define MANY_ARGS		"minishell: %s: too many arguments\n"
