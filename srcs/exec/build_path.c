@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:57:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 15:32:56 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:02:48 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ char	*try_path(char *path)
 	return (path);
 }
 
+char	*no_colon(const char *dirs, char *c_entry)
+{
+	char	*dir_path;
+
+	if (!(dir_path = ft_strjoin(dirs, c_entry)))
+		return (NULL);
+	if (try_path(dir_path))
+		return (dir_path);
+	g_ret = 127;
+	free(dir_path);
+	return (NULL);
+}
+
+void	set_c_entry(char *c_entry, const char *entry)
+{
+	c_entry[0] = '/';
+	ft_strcpy(&c_entry[1], entry);
+}
+
 char	*build_path(const char *dirs, const char *entry)
 {
 	int		i;
@@ -45,19 +64,10 @@ char	*build_path(const char *dirs, const char *entry)
 
 	if (!dirs || !entry)
 		return (NULL);
-	errno = 0;
-	c_entry[0] = '/';
-	ft_strcpy(&c_entry[1], entry);
+	set_c_entry(c_entry, entry);
 	i = -1;
 	if (!(ft_strchr(dirs, ':')))
-	{
-		dir_path = ft_strjoin(dirs, c_entry);
-		if (try_path(dir_path))
-			return (dir_path);
-		g_ret = 127;
-		free(dir_path);
-		return (NULL);
-	}
+		return (no_colon(dirs, c_entry));
 	while (dirs[++i])
 	{
 		if (dirs[i] == ':')
