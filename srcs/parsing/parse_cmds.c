@@ -6,47 +6,29 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:33:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 17:29:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:44:00 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_error(char *s)
+int		malloc_and_exec2(char *cmd, char *s, t_parse_tools *t, int flag)
 {
-	t_parse_tools	t;
-	int				done;
-	int				count;
-
-	done = 0;
-	count = 0;
-	ft_bzero(&t, sizeof(t_parse_tools));
-	while (s[t.i])
+	if (flag == 3)
 	{
-		set_quote(s[t.i], &t);
-		if (s[t.i] != '\\')
-			done = 0;
-		else if (s[t.i] == '\\' && t.open == 0 && done == 0)
-		{
-			count = ft_count_back(s, t.i);
-			done = 1;
-		}
-		if (s[t.i] == ';' && t.open == 0 && (!count || count % 2 == 0))
-		{
-			t.i++;
-			while (ft_is_space(s[t.i]))
-				t.i++;
-			if (s[t.i] == ';')
-			{
-				g_ret = ESYNTAX;
-				return (ft_error(SYNTAX_ERR, NULL, NULL, NULL));
-			}
-			else if (s[t.i] == ';' && t.open == 0)
-				count = 0;
-		}
-		t.i++;
+		if (!(cmd = ft_substr(s, t->j, t->i - t->j)))
+			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+		parsexec(cmd);
+		return (0);
 	}
-	return (0);
+	if (flag == 4)
+	{
+		if (!(cmd = ft_substr(s, t->j, t->i - t->j + 1)))
+			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+		parsexec(cmd);
+		return (0);
+	}
+	return (1);
 }
 
 int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
@@ -66,30 +48,11 @@ int		malloc_and_exec(char *cmd, char *s, t_parse_tools *t, int flag)
 		parsexec(cmd);
 		return (0);
 	}
-	if (flag == 3)
-	{
-		if (!(cmd = ft_substr(s, t->j, t->i - t->j)))
-			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-		parsexec(cmd);
-		return (0);
-	}
-	if (flag == 4)
-	{
-		if (!(cmd = ft_substr(s, t->j, t->i - t->j + 1)))
-			return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-		parsexec(cmd);
-		return (0);
-	}
 	return (1);
 }
 
 int		loop(char *s, char *cmd, t_parse_tools *t)
 {
-	int done;
-	int count;
-
-	done = 0;
-	count = 0;
 	while (s[t->i])
 	{
 		if (ft_strchr(s + t->i, ';') == NULL)
@@ -99,23 +62,18 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			break ;
 		}
 		set_quote(s[t->i], t);
-		if (s[t->i] != '\\')
-			done = 0;
-		else if (s[t->i] == '\\' && t->open == 0 && done == 0)
-		{
-			count = ft_count_back(s, t->i);
-			done = 1;
-		}
-		if (s[t->i] == ';' && t->open == 0 && count % 2 != 0 && s[t->i + 1]
+		set_escape(t, s);
+		if (s[t->i] == ';' && t->open == 0 && t->count % 2 != 0 && s[t->i + 1]
 			== '\0')
 		{
-			if (malloc_and_exec(cmd, s, t, 4))
+			if (malloc_and_exec2(cmd, s, t, 4))
 				return (1);
 			t->j = t->i;
 		}
-		else if (s[t->i] == ';' && t->open == 0 && (!count || count % 2 == 0))
+		else if (s[t->i] == ';' && t->open == 0 && (!t->count || t->count % 2
+			== 0))
 		{
-			if (malloc_and_exec(cmd, s, t, 3))
+			if (malloc_and_exec2(cmd, s, t, 3))
 				return (1);
 			t->i++;
 			while (ft_is_space(s[t->i]))
@@ -123,7 +81,7 @@ int		loop(char *s, char *cmd, t_parse_tools *t)
 			t->j = t->i;
 		}
 		else if (s[t->i] == ';' && t->open == 0)
-			count = 0;
+			t->count = 0;
 		t->i++;
 	}
 	return (0);
@@ -138,7 +96,7 @@ int		parse_cmds(char *s)
 		return (1);
 	cmd = NULL;
 	ft_bzero(&t, sizeof(t_parse_tools));
-	if (check_error(s))
+	if (check_error_cmds(s))
 		return (1);
 	if (ft_strchr(s, ';') == NULL)
 		return (malloc_and_exec(cmd, s, &t, 1));
