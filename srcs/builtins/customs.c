@@ -6,11 +6,25 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 18:23:08 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:42:23 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:42:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_tmp(char *arg)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (arg[i] != '=' && arg[i])
+		i++;
+	if (i > 0)
+		return (tmp = ft_substr(arg, 0, i));
+	return (NULL);
+}
 
 int		ft_lstiter_custom(t_list *lst, char *arg)
 {
@@ -19,13 +33,7 @@ int		ft_lstiter_custom(t_list *lst, char *arg)
 	char	*key_list;
 	int		i;
 
-	tmp = NULL;
-	i = 0;
-	while (arg[i] != '=' && arg[i])
-		i++;
-	if (i > 0)
-		tmp = ft_substr(arg, 0, i);
-	else
+	if (!(tmp = get_tmp(arg)))
 		return (1);
 	while (lst)
 	{
@@ -43,8 +51,7 @@ int		ft_lstiter_custom(t_list *lst, char *arg)
 		free(key_list);
 		lst = next;
 	}
-	if (tmp)
-		free(tmp);
+	free(tmp);
 	return (1);
 }
 
