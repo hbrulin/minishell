@@ -124,3 +124,8 @@ Infos pipes : http://www.zeitoun.net/articles/communication-par-tuyau/start
 - ls -l | wc -l -> count open files
 - https://www.cyberciti.biz/tips/linux-procfs-file-descriptors.html 
 - https://stackoverflow.com/questions/6842113/how-to-detect-file-leak-and-the-corresponding-code-in-solaris 
+
+#Deplacement curseur, code ANSI
+- https://bluesock.org/~willg/dev/ansi.html
+- https://stackoverflow.com/questions/2386923/c-moving-the-cursor-to-the-beginning-of-the-current-line
+- cumuler avec \b 
