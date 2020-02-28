@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:40:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 16:00:49 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:06:09 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ int		is_forking(int val)
 	if (val != 2)
 		is_forking = val;
 	return (is_forking);
+}
+
+void	handle_sig(int status)
+{
+	g_ret = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		g_ret = SIG_CODE + WTERMSIG(status);
+	if (WTERMSIG(status) == 3)
+		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
+	if (WTERMSIG(status) == 2)
+		ft_putstr("\n");
 }
 
 int		ft_execve(char *path, char **args)
@@ -42,13 +53,7 @@ int		ft_execve(char *path, char **args)
 		is_forking(1);
 		if (wait(&status) == -1)
 			return (ft_strerror(NULL, NULL, "wait", NULL));
-		g_ret = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
-			g_ret = SIG_CODE + WTERMSIG(status);
-		if (WTERMSIG(status) == 3)
-			ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
-		if (WTERMSIG(status) == 2)
-			ft_putstr("\n");
+		handle_sig(status);
 		is_forking(0);
 		ft_tabdel((void**)tab_env);
 		return (0);
