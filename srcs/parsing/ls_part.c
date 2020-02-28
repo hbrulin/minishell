@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 15:37:18 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 15:38:26 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:32:10 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ int		ls_part(char **args)
 	}
 	else if (args[1][0] == '\"' && args[1][1] == '$')
 	{
-			j = 0;
-			tmp = ft_strdup(args[i]);
-			while (args[i][j] != '\"' && args[i][j])
+			j = 1;
+			tmp = ft_strdup(args[1]);
+			while (args[1][j] != '\"' && args[1][j])
 				j++;
 			tmp[j] = '=';
+			ft_memmove(&(tmp)[0], &(tmp)[2], ft_strlen(tmp));
 			if (!get_var(g_env, tmp))
 			{
 				g_ret = 1;
@@ -50,11 +51,12 @@ int		ls_part(char **args)
 		}
 		else if (args[i][0] == '\"' && args[i][1] == '$')
 		{
-			j = 0;
+			j = 1;
 			tmp = ft_strdup(args[i]);
 			while (args[i][j] != '\"' && args[i][j])
 				j++;
 			tmp[j] = '=';
+			ft_memmove(&(tmp)[0], &(tmp)[2], ft_strlen(tmp));
 			if (!get_var(g_env, tmp))
 			{
 				g_ret = 1;
