@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 13:07:59 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/02/28 13:23:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,23 @@ void	set_io(int i)
 
 int		ls_part(char **args)
 {
-	if (ft_tablen(args) >= 2)
+	int i = 0;
+	if (ft_tablen(args) < 2)
+		return (0);
+	if ((!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'")) && !args[2])
 	{
-		if (!ft_strcmp(args[0], "ls") && (!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'")))
+		g_ret = 1;
+		ft_printf_fd(2, "ls: : No such file or directory\n");
+		return (1);
+	}
+	while (args[i])
+	{
+		if (!ft_strcmp(args[i], "\"\"") || !ft_strcmp(args[i], "\'\'"))
 		{
 			g_ret = 1;
 			ft_printf_fd(2, "ls: : No such file or directory\n");
-			return(1);
 		}
+		i++;
 	}
 	return (0);
 }
@@ -71,10 +80,13 @@ int		parsexec(char *cmd)
 		g_ret = ESYNTAX;
 		return (ft_error(SYNTAX_ERR, cmd, NULL, NULL));
 	}
-	if (ls_part(args))
+	if (!ft_strcmp(args[0], "ls"))
 	{
-		ft_tabdel((void *)args);
-		return(0);
+		if(ls_part(args))
+		{
+			ft_tabdel((void *)args);
+			return(0);
+		}
 	}
 	free(cmd);
 	if (ft_is_pipe(args))
