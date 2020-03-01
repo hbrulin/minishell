@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 14:25:17 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 11:40:10 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ int		iter_pipes(char **args, t_pipe_tools *t, int *fd)
 			t->adv = t->i + 1;
 			pipe(fd);
 			if (run_pipe(t->a_cmd, fd, 1))
-				return (1);
+				return (ft_error(NULL, NULL, t->a_cmd, NULL));
+			ft_tabdel((void *)t->a_cmd);
 		}
 		else if (ft_iter_tab_cmp((char **)&args[t->i + 1], "|"))
 		{
@@ -110,7 +111,7 @@ int		iter_pipes(char **args, t_pipe_tools *t, int *fd)
 				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 			pipe(fd);
 			if (run_pipe(t->a_cmd, fd, 0))
-				return (1);
+				return (ft_error(NULL, NULL, t->a_cmd, NULL));
 			break ;
 		}
 		t->i++;
