@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:41:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/27 14:47:59 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 11:04:28 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_exit(char **args)
 		if (!(ft_isdigit(args[1][i])))
 		{
 			ft_error(EXIT_NUM, NULL, NULL, args[1]);
-			exit(0);
+			exit(255);
 		}
 		i++;
 	}
