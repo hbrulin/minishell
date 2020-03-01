@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 12:53:19 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 13:04:17 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,43 +76,48 @@ int		set_var(t_list *lst, char *key, char *value)
 	return (1);
 }
 
+int		cmp_key_list(char *s, char *key)
+{
+	int		i;
+	char	*key_list;
+
+	i = 0;
+	while (s[i] != '=' && s[i])
+		i++;
+	if (!(key_list = ft_substr(s, 0, i)))
+		return (0);
+	if (!(ft_strcmp(key_list, key)))
+	{
+		free(key_list);
+		return (1);
+	}
+	free(key_list);
+	return (0);
+}
+
 t_list	*del_var(t_list *lst, char *key)
 {
 	t_list	*tmp;
 	t_list	*previous;
-	char	*key_list;
-	int		i;
 
-	i = 0;
 	previous = lst;
-	while (previous->content[i] != '=' && previous->content[i])
-		i++;
-	key_list = ft_substr(previous->content, 0, i);
-	if (!(ft_strcmp(key_list, key)))
+	if (cmp_key_list(previous->content, key))
 	{
 		lst = lst->next;
 		ft_lstdelone(previous, free);
-		free(key_list);
 		return (lst);
 	}
-	free(key_list);
 	tmp = previous->next;
 	while (tmp != NULL)
 	{
-		i = 0;
-		while (tmp->content[i] != '=' && tmp->content[i])
-			i++;
-		key_list = ft_substr(tmp->content, 0, i);
-		if (!(ft_strcmp(key_list, key)))
+		if (cmp_key_list(tmp->content, key))
 		{
 			previous->next = tmp->next;
 			ft_lstdelone(tmp, free);
-			free(key_list);
 			return (lst);
 		}
 		previous = tmp;
 		tmp = tmp->next;
-		free(key_list);
 	}
 	return (lst);
 }
