@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 16:21:04 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 11:22:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ int		run_dmc(char **args)
 		ft_tabdel((void *)rm_void);
 		return (g_ret);
 	}
-	return (path_exec(rm_void));
+	path_exec(rm_void);
+	ft_tabdel((void *)rm_void);
+	return (0);
 }
