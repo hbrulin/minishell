@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:30:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/21 16:10:16 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 12:53:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int		ft_unset(char **args)
 	{
 		if (!(unset_error(args[i])))
 		{
-			del_var(g_export, args[i]);
-			del_var(g_env, args[i]);
+			g_export = del_var(g_export, args[i]);
+			g_env = del_var(g_env, args[i]);
 		}
 		else
 			return (1);

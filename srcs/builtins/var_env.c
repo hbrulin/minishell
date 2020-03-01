@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:09:00 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/20 17:26:43 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 12:53:19 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,39 @@ t_list	*del_var(t_list *lst, char *key)
 {
 	t_list	*tmp;
 	t_list	*previous;
-	int		ret;
+	char	*key_list;
+	int		i;
 
+	i = 0;
 	previous = lst;
-	if (!(ft_strncmp(previous->content, key, ft_strlen(key))))
+	while (previous->content[i] != '=' && previous->content[i])
+		i++;
+	key_list = ft_substr(previous->content, 0, i);
+	if (!(ft_strcmp(key_list, key)))
 	{
-		lst = previous->next;
+		lst = lst->next;
 		ft_lstdelone(previous, free);
+		free(key_list);
 		return (lst);
 	}
+	free(key_list);
 	tmp = previous->next;
 	while (tmp != NULL)
 	{
-		ret = ft_strncmp(tmp->content, key, ft_strlen(key));
-		if (ret == 0)
+		i = 0;
+		while (tmp->content[i] != '=' && tmp->content[i])
+			i++;
+		key_list = ft_substr(tmp->content, 0, i);
+		if (!(ft_strcmp(key_list, key)))
 		{
 			previous->next = tmp->next;
 			ft_lstdelone(tmp, free);
+			free(key_list);
 			return (lst);
 		}
 		previous = tmp;
 		tmp = tmp->next;
+		free(key_list);
 	}
 	return (lst);
 }
