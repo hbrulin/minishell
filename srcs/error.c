@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:08:53 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/25 16:48:02 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 11:09:04 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		ft_strerror(char *befree, char **tabfree, void *param, void *param2)
 		free(befree);
 	if (tabfree)
 		ft_tabdel((void *)befree);
+	if (errno == 2)
+		g_ret = 127;
 	return (1);
 }
 
