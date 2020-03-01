@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 15:37:18 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 17:15:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/01 13:10:18 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	loop_arg(char **args)
 	{
 		if (!ft_strcmp(args[i], "\"\"") || !ft_strcmp(args[i], "\'\'"))
 			g_ret = ft_error(NO_FILE_LS, NULL, NULL, NULL);
+		else if (!ft_strncmp(args[i], "\"\"", 2) || !ft_strncmp(args[i], "\'\'",
+			2))
+			g_ret = ft_error(NO_FILE_LS, NULL, NULL, NULL);
 		else if (args[i][0] == '\"' && args[i][1] == '$')
 		{
 			tmp = get_key(args, i);
@@ -58,6 +61,9 @@ int		ls_part(char **args)
 	if (ft_tablen(args) < 2)
 		return (0);
 	if ((!ft_strcmp(args[1], "\"\"") || !ft_strcmp(args[1], "\'\'"))
+		&& !args[2])
+		return (g_ret = ft_error(NO_FILE_LS, NULL, NULL, NULL));
+	if ((!ft_strncmp(args[1], "\"\"", 2) || !ft_strncmp(args[1], "\'\'", 2))
 		&& !args[2])
 		return (g_ret = ft_error(NO_FILE_LS, NULL, NULL, NULL));
 	else if (args[1][0] == '\"' && args[1][1] == '$')
