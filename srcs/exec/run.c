@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 11:22:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:41:03 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,48 @@ int		run_dmc(char **args)
 	ft_tabdel((void *)rm_void);
 	return (0);
 }
+
+char	**pre_run_pipes(char **args)
+{
+	char	**rm_void;
+
+	if (interpreter(args) == 1)
+	{
+		g_ret = 2;
+		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
+		return (NULL);
+	}
+	if (!(rm_void = copy_tab_void(args)))
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (NULL);
+	}
+	return (rm_void);
+}
+
+int		run_dmc_pipes(char **args)
+{
+	int		i;
+	char	**rm_void;
+
+	if (!args || !*args)
+		return (0);
+	if (!ft_strcmp(args[0], "ls"))
+	{
+		if (ls_part(args))
+			return (0);
+	}
+	if (!(rm_void = pre_run_pipes(args)))
+		return (0);
+	if ((i = builtin_fno(rm_void[0])) != -1)
+	{
+		g_ret = g_builtin_functions[i](rm_void);
+		set_io(1);
+		ft_tabdel((void *)rm_void);
+		return (g_ret);
+	}
+	path_exec_pipes(rm_void);
+	ft_tabdel((void *)rm_void);
+	return (0);
+}
+

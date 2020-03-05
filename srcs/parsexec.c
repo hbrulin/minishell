@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 11:36:44 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:20:59 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		parsexec(char *cmd)
 	}
 	free(cmd);
 	if (ft_is_pipe(args))
-		run_dmc_pipes(args);
+		handle_pipes(args);
 	else
 		run_dmc(args);
 	ft_tabdel((void *)args);

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/05 18:04:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:07:08 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,21 @@ typedef struct	s_cmd
 	char		**argv;
 }				t_cmd;
 
+void	handle_sig_pipes(int status)
+{
+	g_ret = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		g_ret = SIG_CODE + WTERMSIG(status);
+	if (WTERMSIG(status) == 3)
+		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
+	if (WTERMSIG(status) == 2)
+		ft_putstr("\n");
+}
+
 void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-
-	char	**tab_env;
-	if (!(tab_env = ft_lst_to_tab(g_env)))
-		return ;
 
 	if (index < len - 1)
 	{
@@ -38,19 +45,16 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 			EXIT_ERROR("fork");
 		if (pid == 0)
 			execute_pipes(cmd, index + 1, len, pipe_fd);
-		//ft_printf_fd(2, "dup out cmd %lu\n", index);
 		if (dup2(pipe_fd[0], STDIN_FILENO) == ERROR)
 			EXIT_ERROR("dup2");
 		if (close(pipe_fd[1]) == ERROR)
 			EXIT_ERROR("close");
 		if (close(pipe_fd[0]) == ERROR)
 			EXIT_ERROR("close");
-		//ft_printf_fd(2, "wait cmd %lu\n", index);
 		wait(NULL);
 	}
 	if (index)
 	{
-		//ft_printf_printf(2, "dup in cmd %lu\n", index);
 		if (dup2(parent_fd[1], STDOUT_FILENO) == ERROR)
 			EXIT_ERROR("dup2");
 		if (close(parent_fd[0]) == ERROR)
@@ -58,15 +62,21 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 		if (close(parent_fd[1]) == ERROR)
 			EXIT_ERROR("close");
 	}
-	//ft_printf_fd(2, "exec cmd %lu\n", index);
-	
-	//ft_printf_fd(1, "%s\n", cmd[index].path);
-	//dprintf(2, "%lu\n", index);
-	//ft_tab_print(cmd[index].argv);
 
-	if (execve(cmd[index].path, cmd[index].argv, tab_env) == ERROR)
+	char **sub;
+
+	if (!(sub = redirect(cmd[index].argv)))
+	{
+		set_io(1);
+		g_ret = ft_error(NULL, NULL, NULL, NULL);
+		return ;
+	}
+
+	if (run_dmc_pipes(sub) == 1)
 		EXIT_ERROR("execve");
-	ft_tabdel((void**)tab_env);
+	//ft_tabdel((void *)sub);
+	//if (execve(cmd[index].path, cmd[index].argv, tab_env) == ERROR)
+	//	EXIT_ERROR("execve");
 }
 
 char	**get_cmd(char **args, int adv, int i, int flag)
@@ -95,14 +105,28 @@ char	**get_cmd(char **args, int adv, int i, int flag)
 	return (cmd);
 }
 
+int		count_pipes(char **args)
+{
+	int i;
+	int count;
 
+	i = 0;
+	count = 0;
+	while (args[i])
+	{
+		if (!(ft_strcmp(args[i], "|")))
+			count++;
+		i++;
+	}
+	return (count);
+}
 
-int		run_dmc_pipes(char **args)
+int		handle_pipes(char **args)
 {
 	t_pipe_tools	t;
 	pid_t	pid;
 	int status;
-	int len = 2; //countnb pipes
+	int len = count_pipes(args) + 1;
 	ft_bzero(&t, sizeof(t_pipe_tools));
 
 	t_cmd	*cmd;
@@ -128,17 +152,21 @@ int		run_dmc_pipes(char **args)
 				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 			cmd[j].path = ft_strdup(t.a_cmd[0]);
 			cmd[j].argv = copy_tab(t.a_cmd);
-			//ft_tab_print(cmd[j].argv);
 			break ;
 		}
 		t.i++;
 	}
-
 	pid = fork();
 	if (pid == 0)
 		execute_pipes(cmd, 0, len, 0);
-	if (pid > 0)
-		wait(&status);
-
+	else if (pid > 0)
+	{
+		is_forking(1);
+		if (wait(&status) == -1)
+			return (ft_strerror(NULL, NULL, "wait", NULL));
+		handle_sig_pipes(status);
+		is_forking(0);
+	}
+	//FREE T_CMD
 	return (0);
 }

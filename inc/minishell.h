@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 12:53:52 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:26:36 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int					ft_error_tab(char *msg, int ret, char **befree,
 char				*try_path(char *path);
 char				*build_path(const char *dirs, const char *entry);
 char				**redirect(char **args);
-int					run_dmc_pipes(char **args);
+int					handle_pipes(char **args);
 int					ft_error(char *msg, char *befree, char **tab_free, void
 						*param);
 int					ft_strerror(char *befree, char **tabfree, void *param,
@@ -143,5 +143,7 @@ int					set_node(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
+int					run_dmc_pipes(char **args);
+int					path_exec_pipes(char **sub);
 
 #endif
