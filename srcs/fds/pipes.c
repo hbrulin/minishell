@@ -6,63 +6,67 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 11:40:10 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:04:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-**	dup2 transforme newfd (arg2) en une copie de old fd (arg1), fermant
-**	auparavant newfd. si oldfd n'est pas valide, l'appel echoue et newfd
-**	n'est pas fermé -> ligne 33 stdout normal si pas de next cmd a piper.
-**
-**	Deroulement : dans le fils, je ferme fd[0] car je ne vais qu'y ecrire.
-**	je tranforme ma sortie standard en une copie de fd[1],
-**	l'extrémité d'ecriture du tube. je close cette extremité de lecture,
-**	car elle a ete copiee comme sortie standard. La commande run et va ecrire
-**	dans cette copie. Dans le pere, l'extremité de lecture fd[0] a recupéré
-**	ce qui a été écrit. Je met la valeur de ce fd dans fd_in, afin de pouvoir
-**	récupérer ce qui a été lu en entree standard pour la prochaine cmd.
-**	Pas besoin de close fd[0] dans le pere car cette lecture va tjrs etre
-**	l'entree standard, et dup2 va tjrs tout fd de lecture supplémentaire.
-**	idem, la sortie standard est fermee par dup2 sauf en cas de fd[1] == -1.
-**	apres fin de la cmd tout est reset.
-*/
+#define ERROR -1
+#define EXIT_ERROR(message) { perror(message); exit(errno);} //retirer 
 
-void	set_fd(int *fd, int fd_in, int next)
+typedef struct	s_cmd
 {
-	dup2(fd_in, 0);
-	dup2((next) ? fd[1] : -1, 1);
-	close(fd[0]);
-	close(fd[1]);
-}
+	char		*path;
+	char		**argv;
+}				t_cmd;
 
-int		run_pipe(char **a_cmd, int *fd, int next)
+void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
-	static int	fd_in;
-	pid_t		pid;
-	int			status;
+	pid_t	pid;
+	int		pipe_fd[2];
 
-	if (!fd_in)
-		fd_in = 0;
-	if ((pid = fork()) == -1)
-		return (ft_strerror(NULL, NULL, "fork", NULL));
-	if (pid == 0)
+	char	**tab_env;
+	if (!(tab_env = ft_lst_to_tab(g_env)))
+		return ;
+
+	if (index < len - 1)
 	{
-		set_fd(fd, fd_in, next);
-		if (run_dmc(a_cmd))
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+		if (pipe(pipe_fd) == ERROR)
+			EXIT_ERROR("pipe");
+		if ((pid = fork()) == ERROR)
+			EXIT_ERROR("fork");
+		if (pid == 0)
+			execute_pipes(cmd, index + 1, len, pipe_fd);
+		//ft_printf_fd(2, "dup out cmd %lu\n", index);
+		if (dup2(pipe_fd[0], STDIN_FILENO) == ERROR)
+			EXIT_ERROR("dup2");
+		if (close(pipe_fd[1]) == ERROR)
+			EXIT_ERROR("close");
+		if (close(pipe_fd[0]) == ERROR)
+			EXIT_ERROR("close");
+		//ft_printf_fd(2, "wait cmd %lu\n", index);
+		wait(NULL);
 	}
-	else
+	if (index)
 	{
-		if (wait(&status) == -1)
-			return (ft_strerror(NULL, NULL, "wait", NULL));
-		close(fd[1]);
-		fd_in = fd[0];
+		//ft_printf_printf(2, "dup in cmd %lu\n", index);
+		if (dup2(parent_fd[1], STDOUT_FILENO) == ERROR)
+			EXIT_ERROR("dup2");
+		if (close(parent_fd[0]) == ERROR)
+			EXIT_ERROR("close");
+		if (close(parent_fd[1]) == ERROR)
+			EXIT_ERROR("close");
 	}
-	return (0);
+	//ft_printf_fd(2, "exec cmd %lu\n", index);
+	
+	//ft_printf_fd(1, "%s\n", cmd[index].path);
+	//dprintf(2, "%lu\n", index);
+	//ft_tab_print(cmd[index].argv);
+
+	if (execve(cmd[index].path, cmd[index].argv, tab_env) == ERROR)
+		EXIT_ERROR("execve");
+	ft_tabdel((void**)tab_env);
 }
 
 char	**get_cmd(char **args, int adv, int i, int flag)
@@ -91,42 +95,50 @@ char	**get_cmd(char **args, int adv, int i, int flag)
 	return (cmd);
 }
 
-int		iter_pipes(char **args, t_pipe_tools *t, int *fd)
-{
-	while (args[t->i])
-	{
-		if (ft_strcmp(args[t->i], "|") == 0)
-		{
-			if (!(t->a_cmd = get_cmd(args, t->adv, t->i, 1)))
-				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-			t->adv = t->i + 1;
-			pipe(fd);
-			if (run_pipe(t->a_cmd, fd, 1))
-				return (ft_error(NULL, NULL, t->a_cmd, NULL));
-			ft_tabdel((void *)t->a_cmd);
-		}
-		else if (ft_iter_tab_cmp((char **)&args[t->i + 1], "|"))
-		{
-			if (!(t->a_cmd = get_cmd(args, t->adv, t->i, 2)))
-				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-			pipe(fd);
-			if (run_pipe(t->a_cmd, fd, 0))
-				return (ft_error(NULL, NULL, t->a_cmd, NULL));
-			break ;
-		}
-		t->i++;
-	}
-	return (0);
-}
+
 
 int		run_dmc_pipes(char **args)
 {
-	int				fd[2];
 	t_pipe_tools	t;
-
+	pid_t	pid;
+	int status;
+	int len = 2; //countnb pipes
 	ft_bzero(&t, sizeof(t_pipe_tools));
-	if (iter_pipes(args, &t, fd))
-		return (ft_error(NULL, NULL, t.a_cmd, NULL));
-	ft_tabdel((void *)t.a_cmd);
+
+	t_cmd	*cmd;
+	cmd = malloc(sizeof(t_cmd) * len);
+	
+	int j = len - 1;
+
+	while (args[t.i])
+	{
+		if (ft_strcmp(args[t.i], "|") == 0)
+		{
+			if (!(t.a_cmd = get_cmd(args, t.adv, t.i, 1)))
+				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			cmd[j].path = ft_strdup(t.a_cmd[0]);
+			cmd[j].argv = copy_tab(t.a_cmd);
+			t.adv = t.i + 1;
+			ft_tabdel((void *)t.a_cmd);
+			j--;
+		}
+		else if (ft_iter_tab_cmp((char **)&args[t.i + 1], "|"))
+		{
+			if (!(t.a_cmd = get_cmd(args, t.adv, t.i, 2)))
+				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			cmd[j].path = ft_strdup(t.a_cmd[0]);
+			cmd[j].argv = copy_tab(t.a_cmd);
+			//ft_tab_print(cmd[j].argv);
+			break ;
+		}
+		t.i++;
+	}
+
+	pid = fork();
+	if (pid == 0)
+		execute_pipes(cmd, 0, len, 0);
+	if (pid > 0)
+		wait(&status);
+
 	return (0);
 }
