@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/05 19:07:08 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/06 19:46:06 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,23 @@ void	handle_sig_pipes(int status)
 		ft_putstr("\n");
 }
 
+void	dup_stdio(int pipe_fd[2], int std_fileno)
+{
+	if (dup2(pipe_fd[std_fileno], std_fileno) == ERROR)
+		EXIT_ERROR("dup2");
+	if (close(pipe_fd[1]) == ERROR)
+		EXIT_ERROR("close");
+	if (close(pipe_fd[0]) == ERROR)
+		EXIT_ERROR("close");
+}
+
 void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
 	pid_t	pid;
 	int		pipe_fd[2];
 
+	if (index)
+		dup_stdio(parent_fd, STDIN_FILENO);
 	if (index < len - 1)
 	{
 		if (pipe(pipe_fd) == ERROR)
@@ -45,22 +57,7 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 			EXIT_ERROR("fork");
 		if (pid == 0)
 			execute_pipes(cmd, index + 1, len, pipe_fd);
-		if (dup2(pipe_fd[0], STDIN_FILENO) == ERROR)
-			EXIT_ERROR("dup2");
-		if (close(pipe_fd[1]) == ERROR)
-			EXIT_ERROR("close");
-		if (close(pipe_fd[0]) == ERROR)
-			EXIT_ERROR("close");
-		wait(NULL);
-	}
-	if (index)
-	{
-		if (dup2(parent_fd[1], STDOUT_FILENO) == ERROR)
-			EXIT_ERROR("dup2");
-		if (close(parent_fd[0]) == ERROR)
-			EXIT_ERROR("close");
-		if (close(parent_fd[1]) == ERROR)
-			EXIT_ERROR("close");
+		dup_stdio(pipe_fd, STDOUT_FILENO);
 	}
 
 	char **sub;
@@ -132,7 +129,7 @@ int		handle_pipes(char **args)
 	t_cmd	*cmd;
 	cmd = malloc(sizeof(t_cmd) * len);
 	
-	int j = len - 1;
+	int j = 0;
 
 	while (args[t.i])
 	{
@@ -144,7 +141,7 @@ int		handle_pipes(char **args)
 			cmd[j].argv = copy_tab(t.a_cmd);
 			t.adv = t.i + 1;
 			ft_tabdel((void *)t.a_cmd);
-			j--;
+			j++;
 		}
 		else if (ft_iter_tab_cmp((char **)&args[t.i + 1], "|"))
 		{
