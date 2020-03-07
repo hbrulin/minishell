@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/06 19:46:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/07 10:59:05 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
 	pid_t	pid;
 	int		pipe_fd[2];
+	char **sub;
+	int status;
 
 	if (index)
 		dup_stdio(parent_fd, STDIN_FILENO);
@@ -53,6 +55,7 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 	{
 		if (pipe(pipe_fd) == ERROR)
 			EXIT_ERROR("pipe");
+		wait(&status);
 		if ((pid = fork()) == ERROR)
 			EXIT_ERROR("fork");
 		if (pid == 0)
@@ -60,17 +63,16 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 		dup_stdio(pipe_fd, STDOUT_FILENO);
 	}
 
-	char **sub;
-
 	if (!(sub = redirect(cmd[index].argv)))
 	{
 		set_io(1);
 		g_ret = ft_error(NULL, NULL, NULL, NULL);
 		return ;
 	}
-
 	if (run_dmc_pipes(sub) == 1)
 		EXIT_ERROR("execve");
+	//wait(&status);
+	
 	//ft_tabdel((void *)sub);
 	//if (execve(cmd[index].path, cmd[index].argv, tab_env) == ERROR)
 	//	EXIT_ERROR("execve");
