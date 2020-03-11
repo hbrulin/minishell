@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:38:15 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 19:45:31 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:20:08 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int		ft_cd(char **args)
 	}
 	else if (len >= 2)
 	{
+		if (!ft_strcmp(args[1], ""))
+			return (0);
 		if ((chdir(args[1])) == -1)
 			return (ft_strerror(NULL, NULL, "cd", args[1]));
 	}
