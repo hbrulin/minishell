@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 16:33:02 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:41:45 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ typedef	struct		s_redir_tools
 	int		j;
 }					t_redir_tools;
 
+typedef struct		s_cmd
+{
+	char			*path;
+	char			**argv;
+}					t_cmd;
+
 typedef int			t_ret;
 t_ret				g_ret;
 
@@ -145,5 +151,8 @@ int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 int					run_dmc_pipes(char **args);
 int					path_exec_pipes(char **sub);
+void				handle_sig_pipes(int status);
+char				**get_cmd(char **args, int adv, int i, int flag);
+int					count_pipes(char **args);
 
 #endif
