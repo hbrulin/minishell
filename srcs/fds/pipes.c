@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 16:52:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:41:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-	char	**sub;
-	int		status;
-	int		ret;
+	char **sub;
+	int status;
 
 	set_io(0);
 	if (index)
@@ -53,13 +52,9 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 		return ;
 	}
 	if (run_dmc_pipes(sub) == 1)
-	{
-		ft_tabdel((void **)sub);
 		EXIT_ERROR("execve");
-	}
-	ft_tabdel((void **)sub);
 	set_io(1);
-	ret = 1;
+	int ret = 1;
 	while (ret == 1)
 		ret = wait(&status);
 	exit(0);
@@ -96,7 +91,6 @@ int		handle_pipes(char **args)
 				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 			cmd[j].path = ft_strdup(t.a_cmd[0]);
 			cmd[j].argv = copy_tab(t.a_cmd);
-			ft_tabdel((void *)t.a_cmd);
 			break ;
 		}
 		t.i++;
@@ -111,6 +105,6 @@ int		handle_pipes(char **args)
 		handle_sig_pipes(status);
 		is_forking(0);
 	}
-	free_t_cmd(cmd);
+	//FREE T_CMD
 	return (0);
 }
