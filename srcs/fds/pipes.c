@@ -6,13 +6,12 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/07 10:59:05 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 15:50:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define ERROR -1
 #define EXIT_ERROR(message) { perror(message); exit(errno);} //retirer 
 
 typedef struct	s_cmd
@@ -49,21 +48,33 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 	char **sub;
 	int status;
 
+	set_io(0);
 	if (index)
 		dup_stdio(parent_fd, STDIN_FILENO);
 	if (index < len - 1)
 	{
 		if (pipe(pipe_fd) == ERROR)
 			EXIT_ERROR("pipe");
-		wait(&status);
 		if ((pid = fork()) == ERROR)
 			EXIT_ERROR("fork");
 		if (pid == 0)
 			execute_pipes(cmd, index + 1, len, pipe_fd);
 		dup_stdio(pipe_fd, STDOUT_FILENO);
 	}
-
-	if (!(sub = redirect(cmd[index].argv)))
+	/*if (index == len - 1)
+	{
+		if (pipe(pipe_fd) == ERROR)
+			EXIT_ERROR("pipe");
+		if ((pid = fork()) == ERROR)
+			EXIT_ERROR("fork");
+		if (pid == 0)
+		{
+			sub = redirect_pipes(cmd[index].argv, pipe_fd);
+			run_dmc_pipes(sub);
+		}
+		set_io(1);
+	}*/
+	if (!(sub = redirect_pipes(cmd[index].argv, pipe_fd)))
 	{
 		set_io(1);
 		g_ret = ft_error(NULL, NULL, NULL, NULL);
@@ -71,11 +82,12 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 	}
 	if (run_dmc_pipes(sub) == 1)
 		EXIT_ERROR("execve");
-	//wait(&status);
-	
-	//ft_tabdel((void *)sub);
-	//if (execve(cmd[index].path, cmd[index].argv, tab_env) == ERROR)
-	//	EXIT_ERROR("execve");
+	set_io(1);
+	int ret = 1;
+	while (ret == 1)
+		ret = wait(&status);
+	exit(0);
+	//set_io(1);
 }
 
 char	**get_cmd(char **args, int adv, int i, int flag)
@@ -161,8 +173,9 @@ int		handle_pipes(char **args)
 	else if (pid > 0)
 	{
 		is_forking(1);
-		if (wait(&status) == -1)
-			return (ft_strerror(NULL, NULL, "wait", NULL));
+		waitpid(pid, &status, 0);
+		//if (wait(&status) == -1)
+		//	return (ft_strerror(NULL, NULL, "wait", NULL));
 		handle_sig_pipes(status);
 		is_forking(0);
 	}

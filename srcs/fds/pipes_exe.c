@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:19:55 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/07 11:00:11 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 14:31:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_execve_pipes(char *path, char **args)
 		return (ft_strerror(NULL, NULL, NULL, NULL));
 	
 	if ((execve(path, args, tab_env)) == -1)
-			exit(ft_ret_errno(NULL, NULL, path));
+		exit(ft_ret_errno(NULL, NULL, path));
 	return (0);
 }
 
@@ -48,7 +48,7 @@ int		path_exec_pipes(char **sub)
 	else
 	{
 		ft_execve_pipes(path, sub);
-		set_io(1);
+		//set_io(1);
 		free(path);
 	}
 	return (0);

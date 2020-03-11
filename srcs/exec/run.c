@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/07 11:00:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/07 16:29:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		run_dmc_pipes(char **args)
 	if ((i = builtin_fno(rm_void[0])) != -1)
 	{
 		g_ret = g_builtin_functions[i](rm_void);
-		set_io(1);
+		//set_io(1);
 		ft_tabdel((void *)rm_void);
 		return (g_ret);
 	}
