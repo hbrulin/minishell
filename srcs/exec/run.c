@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 20:03:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:08:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int		builtin_fno(const char *name)
 char	**pre_run(char **args)
 {
 	char	**sub;
-	//char	**rm_void;
 
 	if (!(sub = redirect(args)))
 	{
@@ -42,12 +41,6 @@ char	**pre_run(char **args)
 		ft_error(SYNTAX_ERR, NULL, sub, NULL);
 		return (NULL);
 	}
-	/*if (!(rm_void = copy_tab_void(sub)))
-	{
-		ft_strerror(NULL, sub, NULL, NULL);
-		return (NULL);
-	}
-	ft_tabdel((void *)sub);*/
 	return (sub);
 }
 
@@ -58,11 +51,6 @@ int		run_dmc(char **args)
 
 	if (!args || !*args)
 		return (0);
-	/*if (!ft_strcmp(args[0], "ls"))
-	{
-		if (ls_part(args))
-			return (0);
-	}*/
 	if (!(sub = pre_run(args)))
 		return (0);
 	if ((i = builtin_fno(sub[0])) != -1)
@@ -79,19 +67,12 @@ int		run_dmc(char **args)
 
 char	**pre_run_pipes(char **args)
 {
-	//char	**rm_void;
-
 	if (interpreter(args) == 1)
 	{
 		g_ret = 2;
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
-	/*if (!(rm_void = copy_tab_void(args)))
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (NULL);
-	}*/
 	return (args);
 }
 
@@ -102,17 +83,11 @@ int		run_dmc_pipes(char **args)
 
 	if (!args || !*args)
 		return (0);
-	/*if (!ft_strcmp(args[0], "ls"))
-	{
-		if (ls_part(args))
-			return (0);
-	}*/
 	if (!(sub = pre_run_pipes(args)))
 		return (0);
 	if ((i = builtin_fno(sub[0])) != -1)
 	{
 		g_ret = g_builtin_functions[i](sub);
-		//set_io(1);
 		ft_tabdel((void *)sub);
 		return (g_ret);
 	}
