@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 16:38:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 18:51:54 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:24:47 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	free_t_cmd(t_cmd *cmd, int len)
 		free(cmd);
 	}
 }
-
 
 void	handle_sig_pipes(int status)
 {

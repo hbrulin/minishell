@@ -6,14 +6,13 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 18:53:24 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:28:53 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define EXIT_ERROR(message) { perror(message); exit(errno);} //retirer 
-
 
 void	dup_stdio(int pipe_fd[2], int std_fileno)
 {
@@ -29,8 +28,8 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-	char **sub;
-	int status;
+	char	**sub;
+	int		status;
 
 	set_io(0);
 	if (index)
@@ -63,16 +62,16 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 int		handle_pipes(char **args)
 {
 	t_pipe_tools	t;
-	pid_t	pid;
-	int status;
-	int len = count_pipes(args) + 1;
+	pid_t			pid;
+	int				status;
+	int				len;
+	t_cmd			*cmd;
+	int				j;
+
+	len = count_pipes(args) + 1;
 	ft_bzero(&t, sizeof(t_pipe_tools));
-
-	t_cmd	*cmd;
 	cmd = malloc(sizeof(t_cmd) * len);
-	
-	int j = 0;
-
+	j = 0;
 	while (args[t.i])
 	{
 		if (ft_strcmp(args[t.i], "|") == 0)

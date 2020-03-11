@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:16:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:27:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef	struct		s_rm_var_tools
 	int		j;
 	int		k;
 	int		l;
-	int count;
+	int		count;
 }					t_rm_var_tools;
 
 typedef struct		s_cmd

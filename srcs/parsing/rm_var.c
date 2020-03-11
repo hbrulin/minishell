@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:17:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:36:26 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ int		count_rm(char **args)
 	return (t.count);
 }
 
+int		copy_if(t_rm_var_tools *t, char **args, char **cpy)
+{
+	t->k = t->j + 1;
+	while (args[t->i][t->k] != '\"' && args[t->i][t->k])
+		t->k++;
+	if (!(t->key = ft_substr(args[t->i], t->j + 1, t->k - 1)))
+		return (-1);
+	if ((t->tmp = get_var(g_env, t->key)) != NULL)
+	{
+		if (!(cpy[t->l] = ft_strdup(args[t->i])))
+			return (-1);
+		t->l++;
+	}
+	free(t->tmp);
+	free(t->key);
+	return (0);
+}
+
+
 char	**rm_wrong_var(char **args)
 {
 	char			**cpy;
@@ -47,7 +66,7 @@ char	**rm_wrong_var(char **args)
 	ft_bzero(&t, sizeof(t_rm_var_tools));
 	if ((t.count = count_rm(args)) == -1)
 		return (NULL);
-	if(!(cpy = (char **)malloc(sizeof(char *) * (t.count + 1))))
+	if (!(cpy = (char **)malloc(sizeof(char *) * (t.count + 1))))
 		return (NULL);
 	cpy[t.count] = NULL;
 	while (args[t.i])
@@ -55,19 +74,8 @@ char	**rm_wrong_var(char **args)
 		t.j = 0;
 		if (args[t.i][t.j] == '$')
 		{
-			t.k = t.j + 1;
-			while (args[t.i][t.k] != '\"' && args[t.i][t.k])
-				t.k++;
-			if(!(t.key = ft_substr(args[t.i], t.j + 1, t.k - 1)))
+			if ((copy_if(&t, args, cpy)) == -1)
 				return (NULL);
-			if ((t.tmp = get_var(g_env, t.key)) != NULL)
-			{
-				if (!(cpy[t.l] = ft_strdup(args[t.i])))
-					return (NULL);
-				t.l++;
-			}
-			free(t.tmp);
-			free(t.key);
 		}
 		else
 		{
