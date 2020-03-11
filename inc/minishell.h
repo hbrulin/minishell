@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/07 11:28:25 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:33:02 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,5 @@ int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 int					run_dmc_pipes(char **args);
 int					path_exec_pipes(char **sub);
-char				**redirect_pipes(char **args, int *pipe_fd);
 
 #endif

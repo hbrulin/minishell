@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 16:16:01 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:34:43 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 			execute_pipes(cmd, index + 1, len, pipe_fd);
 		dup_stdio(pipe_fd, STDOUT_FILENO);
 	}
-	if (!(sub = redirect_pipes(cmd[index].argv, pipe_fd)))
+	if (!(sub = redirect(cmd[index].argv)))
 	{
 		set_io(1);
 		g_ret = ft_error(NULL, NULL, NULL, NULL);
@@ -74,7 +74,6 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 	while (ret == 1)
 		ret = wait(&status);
 	exit(0);
-	//set_io(1);
 }
 
 char	**get_cmd(char **args, int adv, int i, int flag)
@@ -161,8 +160,6 @@ int		handle_pipes(char **args)
 	{
 		is_forking(1);
 		waitpid(pid, &status, 0);
-		//if (wait(&status) == -1)
-		//	return (ft_strerror(NULL, NULL, "wait", NULL));
 		handle_sig_pipes(status);
 		is_forking(0);
 	}
