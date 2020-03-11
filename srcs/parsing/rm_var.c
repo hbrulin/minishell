@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:11:59 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:17:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,68 @@
 
 int		count_rm(char **args)
 {
-	char	*key;
-	char	*tmp;
-	int i = 0;
-	int j = 0;
-	int k;
-	int count = 0;
+	t_rm_var_tools	t;
 
-	while (args[i])
+	ft_bzero(&t, sizeof(t_rm_var_tools));
+	while (args[t.i])
 	{
-		j = 0;
-		if (args[i][j] == '$')
+		t.j = 0;
+		if (args[t.i][t.j] == '$')
 		{
-			k = j + 1;
-			while (args[i][k] != '\"' && args[i][k])
-				k++;
-			if (!(key = ft_substr(args[i], j + 1, k - 1)))
+			t.k = t.j + 1;
+			while (args[t.i][t.k] != '\"' && args[t.i][t.k])
+				t.k++;
+			if (!(t.key = ft_substr(args[t.i], t.j + 1, t.k - 1)))
 				return (-1);
-			if ((tmp = get_var(g_env, key)) != NULL)
-				count++;
-			free(tmp);
-			free(key);
+			if ((t.tmp = get_var(g_env, t.key)) != NULL)
+				t.count++;
+			free(t.tmp);
+			free(t.key);
 		}
 		else
-			count++;
-		i++;
+			t.count++;
+		t.i++;
 	}
-	return (count);
+	return (t.count);
 }
 
 char	**rm_wrong_var(char **args)
 {
-	char	**cpy;
-	char	*key;
-	char	*tmp;
-	int i = 0;
-	int j = 0;
-	int k;
-	int l = 0;
-	int count;
+	char			**cpy;
+	t_rm_var_tools	t;
 
-	if ((count = count_rm(args)) == -1)
+	ft_bzero(&t, sizeof(t_rm_var_tools));
+	if ((t.count = count_rm(args)) == -1)
 		return (NULL);
-	if(!(cpy = (char **)malloc(sizeof(char *) * (count + 1))))
+	if(!(cpy = (char **)malloc(sizeof(char *) * (t.count + 1))))
 		return (NULL);
-	cpy[count] = NULL;
-	while (args[i])
+	cpy[t.count] = NULL;
+	while (args[t.i])
 	{
-		j = 0;
-		if (args[i][j] == '$')
+		t.j = 0;
+		if (args[t.i][t.j] == '$')
 		{
-			k = j + 1;
-			while (args[i][k] != '\"' && args[i][k])
-				k++;
-			if(!(key = ft_substr(args[i], j + 1, k - 1)))
+			t.k = t.j + 1;
+			while (args[t.i][t.k] != '\"' && args[t.i][t.k])
+				t.k++;
+			if(!(t.key = ft_substr(args[t.i], t.j + 1, t.k - 1)))
 				return (NULL);
-			if ((tmp = get_var(g_env, key)) != NULL)
+			if ((t.tmp = get_var(g_env, t.key)) != NULL)
 			{
-				if (!(cpy[l] = ft_strdup(args[i])))
+				if (!(cpy[t.l] = ft_strdup(args[t.i])))
 					return (NULL);
-				l++;
+				t.l++;
 			}
-			free(tmp);
-			free(key);
+			free(t.tmp);
+			free(t.key);
 		}
 		else
 		{
-			if (!(cpy[l] = ft_strdup(args[i])))
+			if (!(cpy[t.l] = ft_strdup(args[t.i])))
 				return (NULL);
-			l++;
+			t.l++;
 		}
-		i++;
+		t.i++;
 	}
 	return (cpy);
 }

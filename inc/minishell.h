@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:05:30 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:16:20 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,17 @@ typedef	struct		s_redir_tools
 	int		len;
 	int		j;
 }					t_redir_tools;
+
+typedef	struct		s_rm_var_tools
+{
+	char	*key;
+	char	*tmp;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int count;
+}					t_rm_var_tools;
 
 typedef struct		s_cmd
 {
