@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 18:47:20 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 18:52:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,6 @@ int					path_exec_pipes(char **sub);
 void				handle_sig_pipes(int status);
 char				**get_cmd(char **args, int adv, int i, int flag);
 int					count_pipes(char **args);
+void				free_t_cmd(t_cmd *cmd, int len);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 16:41:55 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 18:53:24 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		handle_pipes(char **args)
 				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
 			cmd[j].path = ft_strdup(t.a_cmd[0]);
 			cmd[j].argv = copy_tab(t.a_cmd);
+			ft_tabdel((void *)t.a_cmd);
 			break ;
 		}
 		t.i++;
@@ -105,6 +106,6 @@ int		handle_pipes(char **args)
 		handle_sig_pipes(status);
 		is_forking(0);
 	}
-	//FREE T_CMD
+	free_t_cmd(cmd, len);
 	return (0);
 }
