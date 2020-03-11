@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:36:26 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:39:27 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		count_rm(char **args)
 	return (t.count);
 }
 
-int		copy_if(t_rm_var_tools *t, char **args, char **cpy)
+int		copy_if(t_rm_var_tools *t, char **args)
 {
 	t->k = t->j + 1;
 	while (args[t->i][t->k] != '\"' && args[t->i][t->k])
@@ -48,7 +48,7 @@ int		copy_if(t_rm_var_tools *t, char **args, char **cpy)
 		return (-1);
 	if ((t->tmp = get_var(g_env, t->key)) != NULL)
 	{
-		if (!(cpy[t->l] = ft_strdup(args[t->i])))
+		if (!(t->cpy[t->l] = ft_strdup(args[t->i])))
 			return (-1);
 		t->l++;
 	}
@@ -57,33 +57,31 @@ int		copy_if(t_rm_var_tools *t, char **args, char **cpy)
 	return (0);
 }
 
-
 char	**rm_wrong_var(char **args)
 {
-	char			**cpy;
 	t_rm_var_tools	t;
 
 	ft_bzero(&t, sizeof(t_rm_var_tools));
 	if ((t.count = count_rm(args)) == -1)
 		return (NULL);
-	if (!(cpy = (char **)malloc(sizeof(char *) * (t.count + 1))))
+	if (!(t.cpy = (char **)malloc(sizeof(char *) * (t.count + 1))))
 		return (NULL);
-	cpy[t.count] = NULL;
+	t.cpy[t.count] = NULL;
 	while (args[t.i])
 	{
 		t.j = 0;
 		if (args[t.i][t.j] == '$')
 		{
-			if ((copy_if(&t, args, cpy)) == -1)
+			if ((copy_if(&t, args)) == -1)
 				return (NULL);
 		}
 		else
 		{
-			if (!(cpy[t.l] = ft_strdup(args[t.i])))
+			if (!(t.cpy[t.l] = ft_strdup(args[t.i])))
 				return (NULL);
 			t.l++;
 		}
 		t.i++;
 	}
-	return (cpy);
+	return (t.cpy);
 }
