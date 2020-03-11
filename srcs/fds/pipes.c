@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 15:50:34 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:16:01 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,6 @@ void	execute_pipes(t_cmd *cmd, size_t index, size_t len, int parent_fd[2])
 			execute_pipes(cmd, index + 1, len, pipe_fd);
 		dup_stdio(pipe_fd, STDOUT_FILENO);
 	}
-	/*if (index == len - 1)
-	{
-		if (pipe(pipe_fd) == ERROR)
-			EXIT_ERROR("pipe");
-		if ((pid = fork()) == ERROR)
-			EXIT_ERROR("fork");
-		if (pid == 0)
-		{
-			sub = redirect_pipes(cmd[index].argv, pipe_fd);
-			run_dmc_pipes(sub);
-		}
-		set_io(1);
-	}*/
 	if (!(sub = redirect_pipes(cmd[index].argv, pipe_fd)))
 	{
 		set_io(1);
