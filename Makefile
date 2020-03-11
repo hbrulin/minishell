@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/03/11 16:38:48 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/03/11 20:32:30 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ make_ftp:
 	@make -C $(FTDIRP)
 
 $(NAME): $(OBJ) make_ft make_ftp
-	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
+	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g -fsanitize=address
 	@echo "$(NAME) created"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c Makefile

@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:38:15 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:07 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 19:45:31 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_cd(char **args)
 	char	*home;
 
 	len = ft_tablen(args);
-	if (len == 1 || !(ft_strcmp(args[1], "")))
+	if (len == 1)
 	{
 		if (!(home = get_var(g_env, "HOME=")))
 			return (ft_error("cd: HOME not set\n", NULL, NULL, NULL));

@@ -6,11 +6,12 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 15:37:18 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/01 13:10:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 19:54:59 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 char	*get_key(char **args, int i)
 {
