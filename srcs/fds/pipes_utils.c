@@ -6,11 +6,18 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 16:38:04 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 16:43:21 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/11 16:47:52 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_t_cmd(t_cmd *cmd)
+{
+	free(cmd->path);
+	ft_tabdel((void **)cmd->argv);
+	free(cmd);
+}
 
 void	handle_sig_pipes(int status)
 {
