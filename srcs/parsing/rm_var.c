@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:39:27 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/12 17:07:39 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		count_rm(char **args)
 	while (args[t.i])
 	{
 		t.j = 0;
-		if (args[t.i][t.j] == '$')
+		if (args[t.i][t.j] == '$' && args[t.i][t.j + 1] != '?')
 		{
 			t.k = t.j + 1;
 			while (args[t.i][t.k] != '\"' && args[t.i][t.k])
@@ -70,7 +70,7 @@ char	**rm_wrong_var(char **args)
 	while (args[t.i])
 	{
 		t.j = 0;
-		if (args[t.i][t.j] == '$')
+		if (args[t.i][t.j] == '$' && args[t.i][t.j + 1] != '?')
 		{
 			if ((copy_if(&t, args)) == -1)
 				return (NULL);

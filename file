@@ -1,1 +1,10 @@
-prout
+Makefile
+README.md
+file
+inc
+libft
+libftprintf
+minishell
+obj
+srcs
+tests
