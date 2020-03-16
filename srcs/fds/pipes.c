@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/16 15:02:20 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/03/16 15:17:52 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void	set_fd(int *fd, int fd_in, int next)
 	dup2(fd_in, 0);
 	dup2((next) ? fd[1] : -1, 1);
 	close(fd[0]);
-	close(fd[1]);
+	//close(fd[1]);
 }
 
 int		run_pipe(char **a_cmd, int *fd, int next)
 {
 	static int	fd_in;
 	pid_t		pid;
-	//int			status;
 
 	if (!fd_in)
 		fd_in = 0;
@@ -39,8 +38,6 @@ int		run_pipe(char **a_cmd, int *fd, int next)
 	}
 	else
 	{
-		//if (wait(&status) == -1)
-		//	return (ft_strerror(NULL, NULL, "wait", NULL));
 		close(fd[1]);
 		fd_in = fd[0];
 	}
@@ -76,7 +73,6 @@ char	**get_cmd(char **args, int adv, int i, int flag)
 int		iter_pipes(char **args, t_pipe_tools *t, int *fd)
 {
 	int status;
-	//int old_status = 1;
 	int ret = 1;
 
 	while (args[t->i])
