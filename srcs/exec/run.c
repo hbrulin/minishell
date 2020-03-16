@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:47:06 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/11 21:29:00 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/03/16 14:51:52 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,37 +61,6 @@ int		run_dmc(char **args)
 		return (g_ret);
 	}
 	path_exec(sub);
-	ft_tabdel((void *)sub);
-	return (0);
-}
-
-char	**pre_run_pipes(char **args)
-{
-	if (interpreter(args) == 1)
-	{
-		g_ret = 2;
-		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
-		return (NULL);
-	}
-	return (args);
-}
-
-int		run_dmc_pipes(char **args)
-{
-	int		i;
-	char	**sub;
-
-	if (!args || !*args)
-		return (0);
-	if (!(sub = pre_run_pipes(args)))
-		return (0);
-	if ((i = builtin_fno(sub[0])) != -1)
-	{
-		g_ret = g_builtin_functions[i](sub);
-		ft_tabdel((void *)sub);
-		return (g_ret);
-	}
-	path_exec_pipes(sub);
 	ft_tabdel((void *)sub);
 	return (0);
 }

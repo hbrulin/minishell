@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
+#    By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/03/11 21:05:41 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/03/16 14:53:11 by helenebruli      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,7 @@ SRCS = main.c parsing/parse_cmds.c parsing/parse_args.c exec/run.c exec/execve.c
 	parsing/interpreter.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_exit.c \
 	parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
 	parsing/parse_args_utils.c parsing/expand.c parsing/copy_tab_void.c \
-	parsing/parse_args_utils2.c parsing/parse_args2.c fds/pipes_exe.c \
-	fds/pipes_utils.c parsing/rm_var.c
+	parsing/parse_args_utils2.c parsing/parse_args2.c parsing/rm_var.c
 
 SRC_DIR = srcs
 INC_DIR = inc
