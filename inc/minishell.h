@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:24:33 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 19:59:46 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,9 @@ char				**rm_wrong_var(char **args);
 t_redir				**build_redir(char **a_cmd);
 char				**ft_rmfd_pipes(char **args);
 t_status			execute_cmds(t_cmd **cmds, char **env);
+void				create_pipeline(t_cmd **cmds, t_cmd **pipeline);
+t_size				count_pipes(t_cmd **cmds);
+t_status			ret_status(t_pid last_pid);
+void		     	apply_redirs(t_redir **redirs);
 
 #endif

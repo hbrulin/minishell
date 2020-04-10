@@ -1,56 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_pipes.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 19:52:56 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/04/10 19:56:48 by hbrulin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-static void     apply_redirs(t_redir **redirs)
-{
-    t_fd    redir_fd;
-
-    while (*redirs)
-	{
-		if ((*redirs)->direction == INPUT)
-		{
-			if ((redir_fd = open((*redirs)->name, O_RDONLY)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDIN) == ERROR)
-			{
-				perror("dup input redirection");
-				exit(errno);
-			}
-		}
-		else if ((*redirs)->direction == OUTPUT)
-		{
-			if ((redir_fd = \
-			open((*redirs)->name, O_WRONLY | O_CREAT, 0644)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDOUT) == ERROR)
-			{
-				perror("dup output redirection");
-				exit(errno);
-			}
-		}
-		if ((*redirs)->direction == APPEND)
-		{
-			if ((redir_fd = open((*redirs)->name, \
-			O_WRONLY | O_CREAT | O_APPEND, 0644)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDOUT) == ERROR)
-			{
-				perror("dup append redirection");
-				exit(errno);
-			}
-		}
-        close(redir_fd);
-		redirs++;
-	}
-}
 
 static void     execute_cmd(t_cmd *cmd, char **env)
 {
@@ -58,24 +18,6 @@ static void     execute_cmd(t_cmd *cmd, char **env)
         apply_redirs(cmd->redirs);
 	execve(cmd->path, cmd->arguments, env);
 	exit(errno);
-}
-
-static t_status	ret_status(t_pid last_pid)
-{
-	t_pid		pid;
-	t_status	status;
-	t_status	last_status;
-
-	is_forking(3);
-	while ((pid = waitpid(-1, &status, 0)) != ERROR)
-		if (pid == last_pid)
-			last_status = status;
-	if (errno != ECHILD)
-	{
-		perror("wait pipe childs");
-		return (errno);
-	}
-	return (last_status);
 }
 
 static t_status execute_pipeline (t_cmd **pipeline, char **env)
@@ -145,30 +87,6 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 	return (ret_status(pid));
 }
 
-static t_size   count_pipes(t_cmd **cmds)
-{
-    t_size len;
-
-    len = 1;
-	while (cmds[len]->pipe_flag)
-		len++;
-	return (len + 1);
-}
-
-static void     create_pipeline(t_cmd **cmds, t_cmd **pipeline)
-{
-    t_index i;
-
-    i = 0;
-	while (cmds[i]->pipe_flag)
-	{
-		pipeline[i] = cmds[i];
-		i++;
-	}
-	pipeline[i] = cmds[i];
-	pipeline[i + 1] = NULL;
-}
-
 static t_status	execute_pipes(t_cmd ***cmds, char **env)
 {
 	t_size	pipeline_len = count_pipes(*cmds);
@@ -179,7 +97,7 @@ static t_status	execute_pipes(t_cmd ***cmds, char **env)
 	return (execute_pipeline(pipeline, env));
 }
 
-t_status execute_cmds(t_cmd **cmds, char **env)
+t_status		execute_cmds(t_cmd **cmds, char **env)
 {
     t_pid       pid;
     t_status    status;

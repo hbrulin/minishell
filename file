@@ -2,6 +2,7 @@ Makefile
 README.md
 file
 inc
+jj
 libft
 libftprintf
 minishell
