@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 18:54:03 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 18:55:05 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_redirs(t_redir **redirs)
 	while (redirs[i])
 	{
 		free(redirs[i]->name);
+		free(redirs[i]);
 		i++;
 	}
 	free(redirs);
