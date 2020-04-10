@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:59:46 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:29:30 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,6 @@ int					set_node(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
-char				**get_cmd(char **args, int adv, int i, int flag);
 char				**rm_wrong_var(char **args);
 t_redir				**build_redir(char **a_cmd);
 char				**ft_rmfd_pipes(char **args);
@@ -197,6 +196,10 @@ t_status			execute_cmds(t_cmd **cmds, char **env);
 void				create_pipeline(t_cmd **cmds, t_cmd **pipeline);
 t_size				count_pipes(t_cmd **cmds);
 t_status			ret_status(t_pid last_pid);
-void		     	apply_redirs(t_redir **redirs);
+void				apply_redirs(t_redir **redirs);
+void				free_redirs(t_redir **redirs);
+void				free_t_cmd(t_cmd **cmd);
+int					count_pip(char **args);
+char				**get_cmd(char **args, int adv, int i, int flag);
 
 #endif

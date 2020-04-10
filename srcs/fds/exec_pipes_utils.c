@@ -6,17 +6,17 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:55:47 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:59:23 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:22:44 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void     apply_redirs(t_redir **redirs)
+void			apply_redirs(t_redir **redirs)
 {
-    t_fd    redir_fd;
+	t_fd	redir_fd;
 
-    while (*redirs)
+	while (*redirs)
 	{
 		if ((*redirs)->direction == INPUT)
 		{
@@ -33,8 +33,8 @@ void     apply_redirs(t_redir **redirs)
 		}
 		else if ((*redirs)->direction == OUTPUT)
 		{
-			if ((redir_fd = \
-			open((*redirs)->name, O_WRONLY | O_CREAT, 0644)) == ERROR)
+			if ((redir_fd =
+					open((*redirs)->name, O_WRONLY | O_CREAT, 0644)) == ERROR)
 			{
 				perror((*redirs)->name);
 				exit(errno);
@@ -47,8 +47,8 @@ void     apply_redirs(t_redir **redirs)
 		}
 		if ((*redirs)->direction == APPEND)
 		{
-			if ((redir_fd = open((*redirs)->name, \
-			O_WRONLY | O_CREAT | O_APPEND, 0644)) == ERROR)
+			if ((redir_fd = open((*redirs)->name,
+								O_WRONLY | O_CREAT | O_APPEND, 0644)) == ERROR)
 			{
 				perror((*redirs)->name);
 				exit(errno);
@@ -59,12 +59,12 @@ void     apply_redirs(t_redir **redirs)
 				exit(errno);
 			}
 		}
-        close(redir_fd);
+		close(redir_fd);
 		redirs++;
 	}
 }
 
-t_status	ret_status(t_pid last_pid)
+t_status		ret_status(t_pid last_pid)
 {
 	t_pid		pid;
 	t_status	status;
@@ -82,21 +82,21 @@ t_status	ret_status(t_pid last_pid)
 	return (last_status);
 }
 
-t_size   count_pipes(t_cmd **cmds)
+t_size			count_pipes(t_cmd **cmds)
 {
-    t_size len;
+	t_size		len;
 
-    len = 1;
+	len = 1;
 	while (cmds[len]->pipe_flag)
 		len++;
 	return (len + 1);
 }
 
-void     create_pipeline(t_cmd **cmds, t_cmd **pipeline)
+void			create_pipeline(t_cmd **cmds, t_cmd **pipeline)
 {
-    t_index i;
+	t_index		i;
 
-    i = 0;
+	i = 0;
 	while (cmds[i]->pipe_flag)
 	{
 		pipeline[i] = cmds[i];

@@ -3,88 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 18:59:23 by helenebruli      ###   ########.fr       */
+/*   Created: 2020/04/10 20:24:33 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/04/10 20:31:04 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_redirs(t_redir **redirs)
-{
-	int i;
-	
-	i = 0;
-	if (!redirs)
-		return;
-	while (redirs[i])
-	{
-		free(redirs[i]->name);
-		free(redirs[i]);
-		i++;
-	}
-	free(redirs);
-}
-
-void	free_t_cmd(t_cmd **cmd)
-{
-	int i;
-	
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]->path);
-		ft_tabdel((void *)cmd[i]->arguments);
-		free_redirs(cmd[i]->redirs);
-		free (cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
-
-char 	**get_cmd(char **args, int adv, int i, int flag)
-{
-	char **cmd;
-
-	if (flag == 1)
-	{
-		if (adv == 0)
-		{
-			if (!(cmd = ft_sub_tab(args, adv, i)))
-				return (NULL);
-		}
-		else
-		{
-			if (!(cmd = ft_sub_tab(args, adv, (ft_tab_chr_i((char **)&args[adv],
-				"|")))))
-				return (NULL);
-		}
-	}
-	if (flag == 2)
-	{
-		if (!(cmd = ft_sub_tab(args, i, ft_tablen(args) - i)))
-			return (NULL);
-	}
-	return (cmd);
-}
-
-int		count_pip(char **args)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (args[i])
-	{
-		if (!(ft_strcmp(args[i], "|")))
-			count++;
-		i++;
-	}
-	return (count);
-}
 
 t_cmd	*build_cmd(char **a_cmd, int pipeflag)
 {
@@ -106,7 +32,6 @@ t_cmd	*build_cmd(char **a_cmd, int pipeflag)
 		{
 			g_ret = 127;
 			ft_error(NO_FILE, path, NULL, a_cmd[0]);
-			
 		}
 		path = build_path(tmp, a_cmd[0]);
 		free(tmp);
