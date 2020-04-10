@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 16:49:28 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 19:24:33 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # define ARG_MAX 131072
 # define ERROR -1
 
+# define STDIN 0
+# define STDOUT 1
+# define CHILD 0
+# define PIPEIN 0
+# define PIPEOUT 1
+
 # define CMD_NOT_FOUND	"minishell: %s: command not found\n"
 # define MANY_ARGS		"minishell: %s: too many arguments\n"
 # define NO_ARG			"minishell: %s: not enough arguments\n"
@@ -47,43 +53,36 @@
 # define RNO_FILE		"minishell: %s: No such file or is a directory\n"
 # define RNO_CREA		"minishell: %s: File could not be created\n"
 
-# define ERROR -1
-# define STDIN 0
-# define STDOUT 1
-# define CHILD 0
-# define PIPEIN 0
-# define PIPEOUT 1
-
 typedef short int	t_boolean;
 typedef int			(*t_builtin_fc)(char **args);
 
-typedef size_t	t_size;
-typedef size_t	t_index;
-typedef	int		t_fd;
-typedef pid_t	t_pid;
-typedef int		t_status;
+typedef size_t		t_size;
+typedef size_t		t_index;
+typedef	int			t_fd;
+typedef pid_t		t_pid;
+typedef int			t_status;
 
-typedef enum	e_dir
+typedef enum		e_dir
 {
 	NO_REDIR,
 	INPUT,
 	OUTPUT,
 	APPEND
-}				t_dir;
+}					t_dir;
 
-typedef struct	s_redir
+typedef struct		s_redir
 {
 	t_dir		direction;
 	char		*name;
-}				t_redir;
+}					t_redir;
 
-typedef struct s_cmd
+typedef struct		s_cmd
 {
 	char		*path;
 	char		**arguments;
 	int			pipe_flag;
 	t_redir		**redirs;
-}				t_cmd;
+}					t_cmd;
 
 typedef struct		s_parse_tools
 {
@@ -192,9 +191,8 @@ int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 char				**get_cmd(char **args, int adv, int i, int flag);
 char				**rm_wrong_var(char **args);
-t_redir				**build_redir(char ** a_cmd);
-char	**ft_rmfd_pipes(char **args);
-t_status execute_cmds(t_cmd **cmds, char **env);
-void	handle_sig(int status);
+t_redir				**build_redir(char **a_cmd);
+char				**ft_rmfd_pipes(char **args);
+t_status			execute_cmds(t_cmd **cmds, char **env);
 
 #endif
