@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 18:05:23 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 18:54:03 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_t_cmd(t_cmd **cmd)
 		free(cmd[i]->path);
 		ft_tabdel((void *)cmd[i]->arguments);
 		free_redirs(cmd[i]->redirs);
+		free (cmd[i]);
 		i++;
 	}
 	free(cmd);
@@ -163,6 +164,6 @@ int		handle_pipes(char **args)
 	g_ret = execute_cmds(cmd, tab_env);
 	is_forking(0); //modif ici
 	free_t_cmd(cmd);
-	free(tab_env);
+	ft_tabdel((void *)tab_env);
 	return (0);
 }
