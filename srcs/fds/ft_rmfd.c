@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rmfd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/19 13:11:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 15:41:51 by helenebruli      ###   ########.fr       */
+/*   Created: 2020/04/10 19:25:43 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/04/10 19:26:11 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char	**ft_rmfd(char **args, char **sub)
 
 char	**ft_rmfd_pipes(char **args)
 {
-	t_redir_tools t;
-	char **sub = NULL;
+	t_redir_tools	t;
+	char			**sub;
 
 	ft_bzero(&t, sizeof(t_redir_tools));
 	if (ft_count(args) == 0)
@@ -85,4 +85,3 @@ char	**ft_rmfd_pipes(char **args)
 	}
 	return (sub);
 }
-
