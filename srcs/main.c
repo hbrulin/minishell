@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 16:52:16 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 17:35:07 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,17 @@ void	signal_handler(int n)
 	}
 	if (!is_forking(3) && n == SIGINT)
 	{
-		g_ret = 1;
+		ft_putstr("\033[1C");
+		ft_putstr("\b\b \b\b \b\b");
+		ft_putstr("\033[1C");
+		ft_putstr("\n");
 	}
 	if (!is_forking(3) && n == SIGQUIT)
 	{
-		g_ret = 0;
+		ft_putstr("\033[1C");
+		ft_putstr("\b\b \b\b \b\b");
+		ft_putstr("\033[1C");
+		ft_putstr("\n");
 	}
 }
 

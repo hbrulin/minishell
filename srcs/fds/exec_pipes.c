@@ -68,12 +68,12 @@ static t_status	ret_status(t_pid last_pid)
 	t_status	status;
 	t_status	last_status;
 
-	//is_forking(3);//MODIF ICI
+	is_forking(3);
 	while ((pid = waitpid(-1, &status, 0)) != ERROR)
 		if (pid == last_pid)
 			last_status = status;
     //handle_sig(status);
-    //is_forking(0);
+    is_forking(0);
 	if (errno != ECHILD)
 	{
 		perror("wait pipe childs");
