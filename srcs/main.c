@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 17:35:07 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 17:42:49 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ t_ret	g_ret = 0;
 
 void	signal_handler(int n)
 {
-	if (!is_forking(2) && n == SIGINT)
+	if (is_forking(3))
+	{
+		ft_putstr("\n");
+	}
+	else if (!is_forking(2) && n == SIGINT)
 	{
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
@@ -26,26 +30,12 @@ void	signal_handler(int n)
 		ft_putstr("minishell > ");
 		g_ret = 1;
 	}
-	if (!is_forking(2) && n == SIGQUIT)
+	else if (!is_forking(2) && n == SIGQUIT)
 	{
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\033[1C");
 		g_ret = 0;
-	}
-	if (!is_forking(3) && n == SIGINT)
-	{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
-		ft_putstr("\033[1C");
-		ft_putstr("\n");
-	}
-	if (!is_forking(3) && n == SIGQUIT)
-	{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
-		ft_putstr("\033[1C");
-		ft_putstr("\n");
 	}
 }
 

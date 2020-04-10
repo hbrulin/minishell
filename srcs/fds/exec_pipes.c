@@ -73,7 +73,7 @@ static t_status	ret_status(t_pid last_pid)
 		if (pid == last_pid)
 			last_status = status;
     //handle_sig(status);
-    is_forking(0);
+    //is_forking(0);
 	if (errno != ECHILD)
 	{
 		perror("wait pipe childs");
