@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   rm_var.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/12 17:07:39 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 18:39:01 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		check_character(char *arg)
+{
+	int i = 1;
+	
+	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
+			return (1);
+	while (arg[i])
+	{
+		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int		count_rm(char **args)
 {
@@ -20,7 +35,7 @@ int		count_rm(char **args)
 	while (args[t.i])
 	{
 		t.j = 0;
-		if (args[t.i][t.j] == '$' && args[t.i][t.j + 1] != '?')
+		if (args[t.i][t.j] == '$' && !(check_character(args[t.i])))
 		{
 			t.k = t.j + 1;
 			while (args[t.i][t.k] != '\"' && args[t.i][t.k])
@@ -70,7 +85,7 @@ char	**rm_wrong_var(char **args)
 	while (args[t.i])
 	{
 		t.j = 0;
-		if (args[t.i][t.j] == '$' && args[t.i][t.j + 1] != '?')
+		if (args[t.i][t.j] == '$' && !(check_character(args[t.i])))
 		{
 			if ((copy_if(&t, args)) == -1)
 				return (NULL);

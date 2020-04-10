@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 17:51:29 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 18:05:23 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int		handle_pipes(char **args)
 		return (ft_strerror(NULL, NULL, NULL, NULL));
 	g_ret = execute_cmds(cmd, tab_env);
 	is_forking(0); //modif ici
-	//free_t_cmd(cmd);
-	//free env
+	free_t_cmd(cmd);
+	free(tab_env);
 	return (0);
 }
