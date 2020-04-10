@@ -1,10 +1,12 @@
 Makefile
 README.md
+a.out
 file
 inc
 libft
 libftprintf
 minishell
 obj
+pipes.c
 srcs
 tests

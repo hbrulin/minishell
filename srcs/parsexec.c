@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 13:33:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/16 14:52:42 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 13:01:03 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		parsexec(char *cmd)
 		return (ft_ret_errno(NULL, args, NULL));
 	ft_tabdel((void *)args);
 	if (ft_is_pipe(good_var))
-		run_dmc_pipes(good_var);
+		handle_pipes(good_var);
 	else
 		run_dmc(good_var);
 	ft_tabdel((void *)good_var);

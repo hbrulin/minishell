@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/16 14:53:32 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 15:46:43 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,43 @@
 # define RNO_FILE		"minishell: %s: No such file or is a directory\n"
 # define RNO_CREA		"minishell: %s: File could not be created\n"
 
+# define ERROR -1
+# define STDIN 0
+# define STDOUT 1
+# define CHILD 0
+# define PIPEIN 0
+# define PIPEOUT 1
+
 typedef short int	t_boolean;
 typedef int			(*t_builtin_fc)(char **args);
+
+typedef size_t	t_size;
+typedef size_t	t_index;
+typedef	int		t_fd;
+typedef pid_t	t_pid;
+typedef int		t_status;
+
+typedef enum	e_dir
+{
+	NO_REDIR,
+	INPUT,
+	OUTPUT,
+	APPEND
+}				t_dir;
+
+typedef struct	s_redir
+{
+	t_dir		direction;
+	char		*name;
+}				t_redir;
+
+typedef struct s_cmd
+{
+	char		*path;
+	char		**arguments;
+	int			pipe_flag;
+	t_redir		**redirs;
+}				t_cmd;
 
 typedef struct		s_parse_tools
 {
@@ -95,12 +130,6 @@ typedef	struct		s_rm_var_tools
 	int		count;
 }					t_rm_var_tools;
 
-typedef struct		s_cmd
-{
-	char			*path;
-	char			**argv;
-}					t_cmd;
-
 typedef int			t_ret;
 t_ret				g_ret;
 
@@ -136,7 +165,7 @@ int					ft_error_tab(char *msg, int ret, char **befree,
 char				*try_path(char *path);
 char				*build_path(const char *dirs, const char *entry);
 char				**redirect(char **args);
-int					handle_pipes(char **args);
+int					handle_pipes(char **good_var);
 int					ft_error(char *msg, char *befree, char **tab_free, void
 						*param);
 int					ft_strerror(char *befree, char **tabfree, void *param,
@@ -161,9 +190,10 @@ int					set_node(t_list **list, char *s, t_parse_tools *t,
 						int flag);
 int					set_node2(t_list **list, char *s, t_parse_tools *t,
 						int flag);
-int					run_dmc_pipes(char **args);
 char				**get_cmd(char **args, int adv, int i, int flag);
-void				free_t_cmd(t_cmd *cmd, int len);
 char				**rm_wrong_var(char **args);
+t_redir				**build_redir(char ** a_cmd);
+char	**ft_rmfd_pipes(char **args);
+t_status execute_cmds(t_cmd **cmds, char **env);
 
 #endif

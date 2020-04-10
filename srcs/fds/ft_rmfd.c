@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rmfd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 13:11:24 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 15:48:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 15:41:51 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,33 @@ char	**ft_rmfd(char **args, char **sub)
 	}
 	return (sub);
 }
+
+char	**ft_rmfd_pipes(char **args)
+{
+	t_redir_tools t;
+	char **sub = NULL;
+
+	ft_bzero(&t, sizeof(t_redir_tools));
+	if (ft_count(args) == 0)
+		return (sub = copy_tab(args));
+	t.len = ft_tablen(args) - (ft_count(args) * 2);
+	if (!(sub = (char **)malloc(sizeof(char *) * (t.len + 1))))
+		return (NULL);
+	sub[t.len] = 0;
+	while (args[t.i])
+	{
+		if ((args[t.i][0] == '<' || args[t.i][0] == '>') &&
+			ft_strcmp(args[t.i - 1], "\\"))
+			t.i++;
+		else if ((args[t.i][0] != '<' && args[t.i][0] != '>') ||
+			!ft_strcmp(args[t.i - 1], "\\"))
+		{
+			if (!(sub[t.j] = ft_strdup(args[t.i])))
+				return (NULL);
+			t.j++;
+		}
+		t.i++;
+	}
+	return (sub);
+}
+

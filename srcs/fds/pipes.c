@@ -6,45 +6,39 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/03/16 15:17:52 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 16:30:12 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_fd(int *fd, int fd_in, int next)
+void	free_redirs(t_redir **redirs)
 {
-	dup2(fd_in, 0);
-	dup2((next) ? fd[1] : -1, 1);
-	close(fd[0]);
-	//close(fd[1]);
+	int i = 0;
+	if (!redirs)
+		return;
+	while (redirs[i])
+	{
+		free(redirs[i]->name);
+		i++;
+	}
+	free(redirs);
 }
 
-int		run_pipe(char **a_cmd, int *fd, int next)
+void	free_t_cmd(t_cmd **cmd)
 {
-	static int	fd_in;
-	pid_t		pid;
-
-	if (!fd_in)
-		fd_in = 0;
-	if ((pid = fork()) == -1)
-		return (ft_strerror(NULL, NULL, "fork", NULL));
-	if (pid == 0)
+	int i = 0;
+	while (cmd[i])
 	{
-		set_fd(fd, fd_in, next);
-		if (run_dmc(a_cmd))
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+		free(cmd[i]->path);
+		ft_tabdel((void *)cmd[i]->arguments);
+		free_redirs(cmd[i]->redirs);
+		i++;
 	}
-	else
-	{
-		close(fd[1]);
-		fd_in = fd[0];
-	}
-	return (0);
+	free(cmd);
 }
 
-char	**get_cmd(char **args, int adv, int i, int flag)
+char 	**get_cmd(char **args, int adv, int i, int flag)
 {
 	char **cmd;
 
@@ -70,47 +64,104 @@ char	**get_cmd(char **args, int adv, int i, int flag)
 	return (cmd);
 }
 
-int		iter_pipes(char **args, t_pipe_tools *t, int *fd)
+int		count_pip(char **args)
 {
-	int status;
-	int ret = 1;
+	int i;
+	int count;
 
-	while (args[t->i])
+	i = 0;
+	count = 0;
+	while (args[i])
 	{
-		if (ft_strcmp(args[t->i], "|") == 0)
-		{
-			if (!(t->a_cmd = get_cmd(args, t->adv, t->i, 1)))
-				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-			t->adv = t->i + 1;
-			pipe(fd);
-			if (run_pipe(t->a_cmd, fd, 1))
-				return (ft_error(NULL, NULL, t->a_cmd, NULL));
-			ft_tabdel((void *)t->a_cmd);
-		}
-		else if (ft_iter_tab_cmp((char **)&args[t->i + 1], "|"))
-		{
-			if (!(t->a_cmd = get_cmd(args, t->adv, t->i, 2)))
-				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
-			pipe(fd);
-			if (run_pipe(t->a_cmd, fd, 0))
-				return (ft_error(NULL, NULL, t->a_cmd, NULL));
-			break ;
-		}
-		t->i++;
+		if (!(ft_strcmp(args[i], "|")))
+			count++;
+		i++;
 	}
-	while (ret == 1)
-		ret = wait(&status);
-	return (0);
+	return (count);
 }
 
-int		run_dmc_pipes(char **args)
+t_cmd	*build_cmd(char **a_cmd, int pipeflag)
 {
-	int				fd[2];
-	t_pipe_tools	t;
+	char	*path;
+	char	*tmp;
 
+	path = ft_strrchr(a_cmd[0], '/');
+	if (path && !(path = ft_strdup(try_path(a_cmd[0]))))
+	{
+		ft_strerror(NULL, NULL, a_cmd[0], NULL);
+		return (NULL);
+	}
+	else if (!path)
+	{
+		if (!(tmp = get_var(g_env, "PATH=")))
+		{
+			g_ret = 127;
+			ft_error(NO_FILE, path, NULL, a_cmd[0]);
+			return (NULL);
+		}
+		path = build_path(tmp, a_cmd[0]);
+		free(tmp);
+	}
+	if (!path)
+	{
+		ft_error(CMD_NOT_FOUND, NULL, NULL, a_cmd[0]);
+		return (NULL);
+	}
+
+	t_redir **redirs = build_redir(a_cmd);
+	char	**args = ft_rmfd_pipes(a_cmd);
+	t_cmd *cmd = malloc(sizeof(t_cmd));
+
+	cmd->path = path;
+	cmd->arguments = args;
+	cmd->pipe_flag = pipeflag;
+	cmd->redirs = redirs;
+	return (cmd);
+}
+
+int		handle_pipes(char **args)
+{
+	t_pipe_tools	t;
+	int				len;
+	t_cmd			**cmd;
+	int				j;
+	int k = 0;
+
+	len = count_pip(args) + 1;
 	ft_bzero(&t, sizeof(t_pipe_tools));
-	if (iter_pipes(args, &t, fd))
-		return (ft_error(NULL, NULL, t.a_cmd, NULL));
-	ft_tabdel((void *)t.a_cmd);
+	cmd = malloc(sizeof(t_cmd) * len);
+	j = 0;
+	while (args[t.i])
+	{
+		if (ft_strcmp(args[t.i], "|") == 0)
+		{
+			if (!(t.a_cmd = get_cmd(args, t.adv, t.i, 1)))
+				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			cmd[k] = build_cmd(t.a_cmd, 1); //prevoir si erreur path
+			k++;
+			t.adv = t.i + 1;
+			ft_tabdel((void *)t.a_cmd);
+			j++;
+		}
+		else if (ft_iter_tab_cmp((char **)&args[t.i + 1], "|"))
+		{
+			if (!(t.a_cmd = get_cmd(args, t.adv, t.i, 2)))
+				return (g_ret = ft_strerror(NULL, NULL, NULL, NULL));
+			cmd[k] = build_cmd(t.a_cmd, 0); //prevoir si erreur path
+			k++;
+			ft_tabdel((void *)t.a_cmd);
+			break ;
+		}
+		t.i++;
+	}
+	cmd[k] = NULL;
+
+	char	**tab_env;
+	tab_env = NULL;
+	if (!(tab_env = ft_lst_to_tab(g_env)))
+		return (ft_strerror(NULL, NULL, NULL, NULL));
+	g_ret = execute_cmds(cmd, tab_env);
+	//free_t_cmd(cmd);
+	//free env
 	return (0);
 }
