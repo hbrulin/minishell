@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:36:39 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:41:45 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 19:48:34 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,8 @@ t_redir		*make_tmp(int dir, char *file)
 	return (tmp);
 }
 
-t_redir		**build_redir(char **a_cmd)
+void		fill_redirs(t_redir **redirs, char **a_cmd, int i, int j)
 {
-	t_redir **redirs;
-	int		len;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!(ft_tab_chr(a_cmd, "<")) && !(ft_tab_chr(a_cmd, ">"))
-		&& !(ft_tab_chr(a_cmd, ">>")))
-		return (NULL);
-	len = count_redir(a_cmd) + 1;
-	redirs = malloc(sizeof(t_cmd) * len);
 	while (a_cmd[i])
 	{
 		if ((ft_strcmp(a_cmd[i], ">") == 0 && ft_strcmp(a_cmd[i - 1], "\\")))
@@ -75,5 +63,22 @@ t_redir		**build_redir(char **a_cmd)
 		i++;
 	}
 	redirs[j] = NULL;
+}
+
+t_redir		**build_redir(char **a_cmd)
+{
+	t_redir **redirs;
+	int		len;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!(ft_tab_chr(a_cmd, "<")) && !(ft_tab_chr(a_cmd, ">"))
+		&& !(ft_tab_chr(a_cmd, ">>")))
+		return (NULL);
+	len = count_redir(a_cmd) + 1;
+	redirs = malloc(sizeof(t_cmd) * len);
+	fill_redirs(redirs, a_cmd, i, j);
 	return (redirs);
 }
