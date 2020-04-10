@@ -47,7 +47,7 @@ static void     apply_redirs(t_redir **redirs)
 				exit(errno);
 			}
 		}
-        //close(redir_fd);
+        close(redir_fd);
 		redirs++;
 	}
 }

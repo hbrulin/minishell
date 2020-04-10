@@ -16,10 +16,18 @@ int		count_redir(char **args)
 	return (count);
 }
 
+t_redir		*make_tmp(int dir, char *file)
+{
+	t_redir *tmp;
+	tmp = malloc(sizeof(t_cmd));
+	tmp->direction = dir;
+	tmp->name = ft_strdup(file);
+	return (tmp);
+}
+
 t_redir **build_redir(char ** a_cmd)
 {
 	t_redir **redirs;
-    t_redir tmp;
 	int				len;
     int i = 0;
     int j = 0;
@@ -34,23 +42,17 @@ t_redir **build_redir(char ** a_cmd)
 	{
 		if ((ft_strcmp(a_cmd[i], ">") == 0 && ft_strcmp(a_cmd[i - 1], "\\")))
 		{
-            tmp.direction = OUTPUT;
-	    	tmp.name = ft_strdup(a_cmd[i + 1]);
-            redirs[j] = &tmp;
+            redirs[j] = make_tmp(OUTPUT, a_cmd[i + 1]);
             j++;
 		}
         else if ((ft_strcmp(a_cmd[i], ">>") == 0 && ft_strcmp(a_cmd[i - 1], "\\")))
 		{
-			tmp.direction = APPEND;
-	    	tmp.name = ft_strdup(a_cmd[i + 1]);
-            redirs[j] = &tmp;
+			redirs[j] = make_tmp(APPEND, a_cmd[i + 1]);
             j++;
 		}
 		else if ((ft_strcmp(a_cmd[i], "<") == 0 && ft_strcmp(a_cmd[i - 1], "\\")))
 		{
-			tmp.direction = INPUT;
-	    	tmp.name = ft_strdup(a_cmd[i + 1]);
-            redirs[j] = &tmp;
+			redirs[j] = make_tmp(INPUT, a_cmd[i + 1]);
             j++;
 		}
 		i++;
