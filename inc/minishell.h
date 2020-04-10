@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 15:46:43 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 16:49:28 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,6 @@ char				**rm_wrong_var(char **args);
 t_redir				**build_redir(char ** a_cmd);
 char	**ft_rmfd_pipes(char **args);
 t_status execute_cmds(t_cmd **cmds, char **env);
+void	handle_sig(int status);
 
 #endif

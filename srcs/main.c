@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:12:38 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 15:35:08 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:52:16 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ void	signal_handler(int n)
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\033[1C");
+		g_ret = 0;
+	}
+	if (!is_forking(3) && n == SIGINT)
+	{
+		g_ret = 1;
+	}
+	if (!is_forking(3) && n == SIGQUIT)
+	{
 		g_ret = 0;
 	}
 }

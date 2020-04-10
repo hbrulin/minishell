@@ -47,6 +47,7 @@ static void     apply_redirs(t_redir **redirs)
 				exit(errno);
 			}
 		}
+        close(redir_fd);
 		redirs++;
 	}
 }
@@ -66,10 +67,13 @@ static t_status	ret_status(t_pid last_pid)
 	t_pid		pid;
 	t_status	status;
 	t_status	last_status;
-	
+
+	//is_forking(3);//MODIF ICI
 	while ((pid = waitpid(-1, &status, 0)) != ERROR)
 		if (pid == last_pid)
 			last_status = status;
+    //handle_sig(status);
+    //is_forking(0);
 	if (errno != ECHILD)
 	{
 		perror("wait pipe childs");
@@ -152,7 +156,7 @@ static t_size   count_pipes(t_cmd **cmds)
     len = 1;
 	while (cmds[len]->pipe_flag)
 		len++;
-	return (len);
+	return (len + 1);
 }
 
 static void     create_pipeline(t_cmd **cmds, t_cmd **pipeline)
@@ -171,20 +175,10 @@ static void     create_pipeline(t_cmd **cmds, t_cmd **pipeline)
 
 static t_status	execute_pipes(t_cmd ***cmds, char **env)
 {
-	/*
-	** A la norme on ne pourrais pas faire ça il faudrait
-	** soit compter avant et envoyer en paramètre
-	** soit malloc mais la c'est plus simple comme ça.
-	*/
 	t_size	pipeline_len = count_pipes(*cmds);
-	t_cmd	*pipeline[pipeline_len + 1];
+	t_cmd	*pipeline[pipeline_len];
 
 	create_pipeline(*cmds, pipeline);
-	/*
-	** On fait avancer le pointeur sur commande
-	** jusqu'a la prochaine commande sans pipe
-	** déréférençant le pointeur sur pointeur.
-	*/
 	(*cmds) += pipeline_len;
 	return (execute_pipeline(pipeline, env));
 }
@@ -196,10 +190,6 @@ t_status execute_cmds(t_cmd **cmds, char **env)
 
 	while (*cmds)
 	{
-		/*
-		** On envoi un pointeur sur pointeur pour avoir
-		** directement la prochaine commande au retour.
-		*/
 		if ((*cmds)->pipe_flag)
 			status = execute_pipes(&cmds, env);
 		else

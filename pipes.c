@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 09:15:17 by fhenrion          #+#    #+#             */
-/*   Updated: 2020/04/10 16:14:58 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 16:39:44 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,17 +313,13 @@ static t_status	execute_cmds(t_cmd **cmds, char **env)
 
 int				main(int argc, char *argv[], char *env[])
 {
-	/* commandes créées sans parsing */
-	/* fuck la norme ici */
-	/* ls > file | cat | wc < file */
-	/* ls */
-	char	*ls_args[] = {"cat", NULL};
+	char	*ls_args[] = {"cat Makefile", NULL};
 	t_redir *ls_redirs[] = {NULL};
 	t_cmd	ls = {"/bin/cat", ls_args, 1, ls_redirs};
 	/* cat */
-	char	*cat_args[] = {"ls", NULL};
+	char	*cat_args[] = {"wc", NULL};
 	t_redir *cat_redirs[] = {NULL};
-	t_cmd	cat = {"/bin/ls", cat_args, 0, cat_redirs};
+	t_cmd	cat = {"/usr/bin/wc", cat_args, 0, cat_redirs};
 	/* tableau des commandes */
 	t_cmd	*fake_cmds[] = {&ls, &cat, NULL};
 
