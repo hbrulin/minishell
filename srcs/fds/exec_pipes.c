@@ -57,8 +57,6 @@ static void     execute_cmd(t_cmd *cmd, char **env)
 	if (cmd->redirs)
         apply_redirs(cmd->redirs);
 	execve(cmd->path, cmd->arguments, env);
-	/* si on reviens ici c'est qu'il a eu erreur. */
-	//perror(cmd->arguments[0]);
 	exit(errno);
 }
 
@@ -72,8 +70,6 @@ static t_status	ret_status(t_pid last_pid)
 	while ((pid = waitpid(-1, &status, 0)) != ERROR)
 		if (pid == last_pid)
 			last_status = status;
-    //handle_sig(status);
-    //is_forking(0);
 	if (errno != ECHILD)
 	{
 		perror("wait pipe childs");
@@ -103,7 +99,7 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 		}
 		else if (pid == CHILD)
 		{
-			if (input_pipe) // sauf la première commande
+			if (input_pipe)
 			{
 				if (dup2(input_pipe, STDIN) == ERROR)
 				{
@@ -111,7 +107,7 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 					exit(errno);
 				}
 			}
-			if (*(pipeline + 1)) // sauf la dernière commande
+			if (*(pipeline + 1))
 			{
 				if (dup2(pipes[PIPEOUT], STDOUT) == ERROR)
 				{
@@ -128,7 +124,7 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 		}
 		else
 		{
-			if (input_pipe) // sauf la première commande
+			if (input_pipe)
 			{
 				if (close(input_pipe) == ERROR)
 				{
@@ -136,7 +132,7 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 					return (errno);
 				}
 			}
-			if (*(pipeline + 1)) // sauf la dernière commande
+			if (*(pipeline + 1))
 				input_pipe = pipes[PIPEIN];
 			if (close(pipes[PIPEOUT]) == ERROR)
 			{
@@ -169,7 +165,7 @@ static void     create_pipeline(t_cmd **cmds, t_cmd **pipeline)
 		pipeline[i] = cmds[i];
 		i++;
 	}
-	pipeline[i] = cmds[i]; // la dernière commande avec pipe en entrée
+	pipeline[i] = cmds[i];
 	pipeline[i + 1] = NULL;
 }
 

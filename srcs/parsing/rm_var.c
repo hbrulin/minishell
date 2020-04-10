@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_var.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/11 21:04:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 18:39:01 by helenebruli      ###   ########.fr       */
+/*   Created: 2020/04/10 19:13:47 by hbrulin           #+#    #+#             */
+/*   Updated: 2020/04/10 19:14:25 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int		check_character(char *arg)
 {
-	int i = 1;
-	
+	int i;
+
+	i = 1;
 	if (envvar_authorized_character(arg[i], TRUE) == FALSE)
-			return (1);
+		return (1);
 	while (arg[i])
 	{
 		if (envvar_authorized_character(arg[i], FALSE) == FALSE)
