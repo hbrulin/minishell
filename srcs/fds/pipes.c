@@ -6,7 +6,7 @@
 /*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:56:35 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 17:40:16 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 17:51:29 by helenebruli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_cmd	*build_cmd(char **a_cmd, int pipeflag)
 		{
 			g_ret = 127;
 			ft_error(NO_FILE, path, NULL, a_cmd[0]);
-			return (NULL);
+			
 		}
 		path = build_path(tmp, a_cmd[0]);
 		free(tmp);
@@ -105,7 +105,7 @@ t_cmd	*build_cmd(char **a_cmd, int pipeflag)
 	if (!path)
 	{
 		ft_error(CMD_NOT_FOUND, NULL, NULL, a_cmd[0]);
-		return (NULL);
+		
 	}
 
 	t_redir **redirs = build_redir(a_cmd);

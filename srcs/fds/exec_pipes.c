@@ -47,7 +47,7 @@ static void     apply_redirs(t_redir **redirs)
 				exit(errno);
 			}
 		}
-        close(redir_fd);
+        //close(redir_fd);
 		redirs++;
 	}
 }
@@ -58,7 +58,7 @@ static void     execute_cmd(t_cmd *cmd, char **env)
         apply_redirs(cmd->redirs);
 	execve(cmd->path, cmd->arguments, env);
 	/* si on reviens ici c'est qu'il a eu erreur. */
-	perror(cmd->arguments[0]);
+	//perror(cmd->arguments[0]);
 	exit(errno);
 }
 
