@@ -6,25 +6,25 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:52:56 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:56:48 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:09:41 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void     execute_cmd(t_cmd *cmd, char **env)
+static void		execute_cmd(t_cmd *cmd, char **env)
 {
 	if (cmd->redirs)
-        apply_redirs(cmd->redirs);
+		apply_redirs(cmd->redirs);
 	execve(cmd->path, cmd->arguments, env);
 	exit(errno);
 }
 
-static t_status execute_pipeline (t_cmd **pipeline, char **env)
+static t_status	execute_pipeline(t_cmd **pipeline, char **env)
 {
-    t_pid pid;
-    t_fd    pipes[2];
-    t_fd    input_pipe;
+	t_pid	pid;
+	t_fd	pipes[2];
+	t_fd	input_pipe;
 
 	input_pipe = 0;
 	while (*pipeline)
@@ -87,9 +87,8 @@ static t_status execute_pipeline (t_cmd **pipeline, char **env)
 	return (ret_status(pid));
 }
 
-static t_status	execute_pipes(t_cmd ***cmds, char **env)
+static t_status	execute_pipes(t_cmd ***cmds, char **env, t_size pipeline_len)
 {
-	t_size	pipeline_len = count_pipes(*cmds);
 	t_cmd	*pipeline[pipeline_len];
 
 	create_pipeline(*cmds, pipeline);
@@ -99,13 +98,13 @@ static t_status	execute_pipes(t_cmd ***cmds, char **env)
 
 t_status		execute_cmds(t_cmd **cmds, char **env)
 {
-    t_pid       pid;
-    t_status    status;
+	t_pid		pid;
+	t_status	status;
 
 	while (*cmds)
 	{
 		if ((*cmds)->pipe_flag)
-			status = execute_pipes(&cmds, env);
+			status = execute_pipes(&cmds, env, count_pipes(cmds));
 		else
 		{
 			if ((pid = fork()) == ERROR)
