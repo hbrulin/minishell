@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/04/10 20:26:41 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/04/11 19:06:07 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = main.c parsing/parse_cmds.c parsing/parse_args.c exec/run.c exec/execve.c
 	parsexec.c exec/build_path.c fds/redirect.c fds/pipes.c fds/ft_rmfd.c \
 	parsing/parse_args_utils.c parsing/expand.c parsing/copy_tab_void.c \
 	parsing/parse_args_utils2.c parsing/parse_args2.c parsing/rm_var.c fds/exec_pipes.c \
-	fds/redir_pipes.c fds/exec_pipes_utils.c fds/pipes_utils.c
+	fds/redir_pipes.c fds/exec_pipes_utils.c fds/pipes_utils.c fds/exec_pipes_utils2.c
 
 SRC_DIR = srcs
 INC_DIR = inc

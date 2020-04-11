@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/11 18:51:50 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/11 19:11:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,5 +212,8 @@ void				free_redirs(t_redir **redirs);
 void				free_t_cmd(t_cmd **cmd);
 int					count_pip(char **args);
 char				**get_cmd(char **args, int adv, int i, int flag);
+void				input(t_redir **redirs, t_fd *redir_fd);
+void				output(t_redir **redirs, t_fd *redir_fd);
+void				append(t_redir **redirs, t_fd *redir_fd);
 
 #endif

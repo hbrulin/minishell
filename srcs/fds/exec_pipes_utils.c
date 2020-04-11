@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:55:47 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 20:22:44 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/11 19:12:16 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,11 @@ void			apply_redirs(t_redir **redirs)
 	while (*redirs)
 	{
 		if ((*redirs)->direction == INPUT)
-		{
-			if ((redir_fd = open((*redirs)->name, O_RDONLY)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDIN) == ERROR)
-			{
-				perror("dup input redirection");
-				exit(errno);
-			}
-		}
+			input(redirs, &redir_fd);
 		else if ((*redirs)->direction == OUTPUT)
-		{
-			if ((redir_fd =
-					open((*redirs)->name, O_WRONLY | O_CREAT, 0644)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDOUT) == ERROR)
-			{
-				perror("dup output redirection");
-				exit(errno);
-			}
-		}
+			output(redirs, &redir_fd);
 		if ((*redirs)->direction == APPEND)
-		{
-			if ((redir_fd = open((*redirs)->name,
-								O_WRONLY | O_CREAT | O_APPEND, 0644)) == ERROR)
-			{
-				perror((*redirs)->name);
-				exit(errno);
-			}
-			if (dup2(redir_fd, STDOUT) == ERROR)
-			{
-				perror("dup append redirection");
-				exit(errno);
-			}
-		}
+			append(redirs, &redir_fd);
 		close(redir_fd);
 		redirs++;
 	}
