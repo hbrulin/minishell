@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 15:44:02 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/11 18:38:50 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/11 18:51:50 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,13 @@ typedef	struct		s_rm_var_tools
 	int		l;
 	int		count;
 }					t_rm_var_tools;
+
+typedef struct		s_pipeline_tools
+{
+	t_pid	pid;
+	t_fd	pipes[2];
+	t_fd	input_pipe;
+}					t_pipeline_tools;
 
 typedef int			t_ret;
 t_ret				g_ret;

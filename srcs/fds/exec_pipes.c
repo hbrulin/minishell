@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:52:56 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 20:09:41 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/11 18:59:37 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,71 +20,57 @@ static void		execute_cmd(t_cmd *cmd, char **env)
 	exit(errno);
 }
 
+void			child_exec(t_cmd **pipeline, char **env, t_pipeline_tools *t)
+{
+	if (t->input_pipe)
+	{
+		if (dup2(t->input_pipe, STDIN) == ERROR)
+		{
+			perror("dup pipe stdin");
+			exit(errno);
+		}
+	}
+	if (*(pipeline + 1))
+	{
+		if (dup2(t->pipes[PIPEOUT], STDOUT) == ERROR)
+		{
+			perror("dup pipe stdout");
+			exit(errno);
+		}
+	}
+	if (close(t->pipes[PIPEIN]) == ERROR)
+	{
+		perror("child close pipe input");
+		exit(errno);
+	}
+	execute_cmd(*pipeline, env);
+}
+
 static t_status	execute_pipeline(t_cmd **pipeline, char **env)
 {
-	t_pid	pid;
-	t_fd	pipes[2];
-	t_fd	input_pipe;
+	t_pipeline_tools t;
 
-	input_pipe = 0;
+	t.input_pipe = 0;
 	while (*pipeline)
 	{
-		if (pipe(pipes) == ERROR)
-		{
-			perror("pipe");
+		if (pipe(t.pipes) == ERROR)
 			return (errno);
-		}
-		if ((pid = fork()) == ERROR)
-		{
-			perror("fork");
+		if ((t.pid = fork()) == ERROR)
 			return (errno);
-		}
-		else if (pid == CHILD)
-		{
-			if (input_pipe)
-			{
-				if (dup2(input_pipe, STDIN) == ERROR)
-				{
-					perror("dup pipe stdin");
-					exit(errno);
-				}
-			}
-			if (*(pipeline + 1))
-			{
-				if (dup2(pipes[PIPEOUT], STDOUT) == ERROR)
-				{
-					perror("dup pipe stdout");
-					exit(errno);
-				}
-			}
-			if (close(pipes[PIPEIN]) == ERROR)
-			{
-				perror("child close pipe input");
-				exit(errno);
-			}
-			execute_cmd(*pipeline, env);
-		}
+		else if (t.pid == CHILD)
+			child_exec(pipeline, env, &t);
 		else
 		{
-			if (input_pipe)
-			{
-				if (close(input_pipe) == ERROR)
-				{
-					perror("parent close pipe input");
-					return (errno);
-				}
-			}
+			if (t.input_pipe)
+				close(t.input_pipe);
 			if (*(pipeline + 1))
-				input_pipe = pipes[PIPEIN];
-			if (close(pipes[PIPEOUT]) == ERROR)
-			{
-				perror("parent close pipe output");
+				t.input_pipe = t.pipes[PIPEIN];
+			if (close(t.pipes[PIPEOUT]) == ERROR)
 				return (errno);
-			}
 			pipeline++;
 		}
 	}
-	return (ret_status(pid));
+	return (ret_status(t.pid));
 }
 
 static t_status	execute_pipes(t_cmd ***cmds, char **env, t_size pipeline_len)
