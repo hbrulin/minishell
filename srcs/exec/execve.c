@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:19:52 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:19:53 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/12 17:26:39 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_sig(int status)
 	if (WIFSIGNALED(status))
 		g_ret = SIG_CODE + WTERMSIG(status);
 	if (WTERMSIG(status) == 3)
-		ft_printf_fd(1, "Quit: %i\n", SIGQUIT);
+		ft_printf_fd(1, "Quitter (core dumped)\n");
 	if (WTERMSIG(status) == 2)
 		ft_putstr("\n");
 }

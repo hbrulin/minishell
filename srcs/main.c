@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:12:43 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/12 17:05:02 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/12 17:22:32 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	signal_handler(int n)
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\033[1C");
-		g_ret = 0;
+		g_ret = 131;
 	}
 }
 
