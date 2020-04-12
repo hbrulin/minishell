@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:12:43 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/10 19:31:18 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/12 17:05:02 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void	signal_handler(int n)
 		ft_putstr("\n");
 	else if (!is_forking(2) && n == SIGINT)
 	{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\n");
 		ft_putstr("minishell > ");
-		g_ret = 1;
+		g_ret = 130;
 	}
 	else if (!is_forking(2) && n == SIGQUIT)
 	{
