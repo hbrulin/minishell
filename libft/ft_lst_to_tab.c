@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 11:17:41 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/04/12 16:19:32 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/12 16:21:55 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ char	**ft_lst_to_tab(t_list *list)
 	t_list	*tmp;
 	int		i;
 
+	ret = NULL;
+	tmp = NULL;
 	if (!(ret = malloc((ft_lstsize(list) + 1) * sizeof(*ret))))
-        return (NULL);
+		return (NULL);
 	i = 0;
 	tmp = list;
 	while (tmp)
