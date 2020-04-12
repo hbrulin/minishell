@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/04/12 13:59:18 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/04/12 15:48:33 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ make_ft:
 make_ftp:
 	@make -C $(FTDIRP)
 
-$(NAME): $(OBJ) make_ft make_ftp
+$(NAME): $(OBJ) make_ftp make_ft
 	$(CC) $(OBJ) $(FT_LNK) $(FT_LNKP) -lm -o $(NAME) -g
 	@echo "$(NAME) created"
 
