@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/14 15:44:39 by hbrulin           #+#    #+#              #
-#    Updated: 2020/04/11 19:06:07 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/04/12 13:59:18 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,3 @@ re :
 .PHONY: all, clean, fclean, re, opti, make_ft, make_ftp
 
 -include $(DPD)
-
-for_linux:
-	gcc -g -Wall -Wextra -Werror -I./inc/ srcs/*.c srcs/builtins/*.c -L./libftprintf/ -lftprintf -I./libftprintf/ -I./libft/ libft/libft.a
