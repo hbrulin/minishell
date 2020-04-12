@@ -6,7 +6,7 @@
 /*   By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 10:26:33 by hbrulin           #+#    #+#             */
-/*   Updated: 2020/02/28 12:37:06 by hbrulin          ###   ########.fr       */
+/*   Updated: 2020/04/12 13:51:05 by hbrulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_return(char **line, char **s, int ret)
 	{
 		return (-1);
 	}
-	else if (ret == 0 && (*s == NULL || s[0] == '\0'))
+	else if (ret == 0 && (*s == NULL || (*s)[0] == '\0'))
 	{
 		*line = ft_strdup("");
 		return (0);

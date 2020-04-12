@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helenebrulin <helenebrulin@student.42.f    +#+  +:+       +#+        */
+/*   By: fhenrion <fhenrion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 09:15:17 by fhenrion          #+#    #+#             */
-/*   Updated: 2020/04/10 16:39:44 by helenebruli      ###   ########.fr       */
+/*   Updated: 2020/04/10 17:10:51 by fhenrion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ static void		apply_redirs(t_redir **redirs)
 				exit(errno);
 			}
 		}
+		close(redir_fd);
 		redirs++;
 	}
 }
@@ -229,7 +230,7 @@ static t_size	count_pipes(t_cmd **cmds)
 {
 	t_size len;
 
-	len = 1;
+	len = 2;
 	while (cmds[len]->pipe_flag)
 		len++;
 	return (len);
@@ -262,7 +263,7 @@ static t_status	execute_pipes(t_cmd ***cmds, char **env)
 	** soit malloc mais la c'est plus simple comme ça.
 	*/
 	t_size	pipeline_len = count_pipes(*cmds);
-	t_cmd	*pipeline[pipeline_len + 1];
+	t_cmd	*pipeline[pipeline_len];
 
 	create_pipeline(*cmds, pipeline);
 	/*
@@ -276,7 +277,7 @@ static t_status	execute_pipes(t_cmd ***cmds, char **env)
 
 /*
 ** on execute commande par commande et sinon
-** une fonction spéciale poir les pipes
+** une fonction spéciale pour les pipes
 */
 static t_status	execute_cmds(t_cmd **cmds, char **env)
 {
@@ -313,15 +314,25 @@ static t_status	execute_cmds(t_cmd **cmds, char **env)
 
 int				main(int argc, char *argv[], char *env[])
 {
-	char	*ls_args[] = {"cat Makefile", NULL};
-	t_redir *ls_redirs[] = {NULL};
-	t_cmd	ls = {"/bin/cat", ls_args, 1, ls_redirs};
+	/* commandes créées sans parsing */
+	/* fuck la norme ici */
+	/* ls > file | cat | wc < file */
+	/* ls */
+	char	*ls_args[] = {"ls", NULL};
+	t_redir	ls_out_redir = {OUTPUT, "file"};
+	t_redir *ls_redirs[] = {&ls_out_redir, NULL};
+	t_cmd	ls = {"/bin/ls", ls_args, 1, ls_redirs};
 	/* cat */
-	char	*cat_args[] = {"wc", NULL};
+	char	*cat_args[] = {"cat", "pipes.c", NULL};
 	t_redir *cat_redirs[] = {NULL};
-	t_cmd	cat = {"/usr/bin/wc", cat_args, 0, cat_redirs};
+	t_cmd	cat = {"/bin/cat", cat_args, 1, cat_redirs};
+	/* wc */
+	char	*wc_args[] = {"wc", NULL};
+	t_redir	wc_in_redir = {INPUT, "file"};
+	t_redir *wc_redirs[] = {NULL};
+	t_cmd	wc = {"/usr/bin/wc", wc_args, 0, wc_redirs};
 	/* tableau des commandes */
-	t_cmd	*fake_cmds[] = {&ls, &cat, NULL};
+	t_cmd	*fake_cmds[] = {&cat, &wc, NULL};
 
 	printf("\nCode de retour : %i\n", execute_cmds(fake_cmds, env));
 	return (0);

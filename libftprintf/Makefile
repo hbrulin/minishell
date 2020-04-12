@@ -6,7 +6,7 @@
 #    By: hbrulin <hbrulin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/08 15:50:08 by hbrulin           #+#    #+#              #
-#    Updated: 2020/02/06 11:58:16 by hbrulin          ###   ########.fr        #
+#    Updated: 2020/04/12 13:53:49 by hbrulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS =	ft_printf.c ft_struct.c ft_conversion.c ft_flags.c ft_output.c \
 
 HEADER = printf.h
 INC_LIBFT = ../libft
-CFLAGS = -Wall -Werror -Wextra -MMD -I$(HEADER) -I$(INC_LIBFT)
+CFLAGS = -Wall -Werror -Wextra -MMD -I$(INC_LIBFT)
 BUILD_DIR = obj
 
 OBJS = $(SRCS:.c=.o)

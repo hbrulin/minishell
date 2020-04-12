@@ -36,7 +36,7 @@ $(NAME): $(OBJ)
 	
 $(BUILD_DIR)/%.o: %.c Makefile
 	@mkdir -p $(BUILD_DIR)
-	@gcc $(CFLAGS) -I $(INC) -c $< -o $@
+	@gcc $(CFLAGS) -c $< -o $@
 
 clean:
 	@/bin/rm -rf $(BUILD_DIR)
